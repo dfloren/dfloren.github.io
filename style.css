@@ -27,7 +27,6 @@ body {
     background-color: #0d1117;
     transition: 0.4s;
     justify-content: center;
-    overflow: scroll;
 }
 
 .nav-link {
@@ -68,17 +67,15 @@ a {
 .row-align-items-center {
     margin-left: 250px;
     margin-right: 0;
-    height: 100vh;
+    min-height: 100vh;
     /* justify-content: center; */
     align-items: center;
-    overflow: scroll;
 }
 
 .row-no-align {
     margin-left: 250px;
     margin-right: 0;
-    height: 100vh;
-    overflow: scroll;
+    min-height: 100vh;
 }
 
 #intro {
