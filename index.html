@@ -30,9 +30,6 @@
     <div id="sidebar_div">
         <nav class="navbar navbar-expand d-flex flex-column">
             <ul class="navbar-nav d-flex flex-column w-100">
-                <li class="p-3">
-                    <img id="profile" src="images/profile.png" width="100%">
-                </li>
                 <li>
                     <a href="#intro">
                         <img id="sidebar_logo" class="w-100" src="images/logo_horizontal.png">
@@ -366,18 +363,6 @@
         const parallax = document.getElementById("workExperience");
         window.addEventListener("scroll", function () {
             parallax.style.backgroundPositionY = window.scrollY * 0.7 + "px";
-        });
-
-        $(document).ready(function () {
-            $(window).scroll(function (e) {
-                e.preventDefault();
-                if ($(window).scrollTop() > $(window).height() / 2.5) {
-                    $("#profile").hide('slow');
-                }
-                else {
-                    $("#profile").show('slow');
-                }
-            });
         });
     </script>
 
