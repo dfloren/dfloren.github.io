@@ -1,0 +1,148 @@
+html,
+body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+#loading-banner {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.flex-row {
+    display: flex;
+    flex-flow: row wrap;
+    align-items: stretch;
+}
+
+.header {
+    text-align: center;
+    /* background-color: tomato; */
+    width: 100%;
+    padding: 5px;
+    font-size: 2em;
+    font-weight: 500;
+}
+
+.header-instructions {
+    text-align: center;
+    /* width: 100%; */
+    /* background-color: yellow; */
+}
+
+.results-header {
+    font-size: 1.5em;
+    font-weight: 400;
+    /* background-color: lightblue; */
+}
+
+.game-container {
+    display: flex;
+    align-items: flex-start;
+    flex-grow: 1;
+    /* background-color: deepskyblue; */
+    justify-content: space-evenly;
+    padding: 5px;
+}
+
+.tiles-and-btns-container {
+    /* background-color: red; */
+    padding: 5px;
+}
+
+.game-btns-container {
+    display: flex;
+    justify-content: space-evenly;
+    padding: 5px;
+    /* background-color: yellow; */
+}
+
+.results-container {
+    width: 50%;
+    /* background-color: hotpink; */
+    text-align: center;
+    padding: 5px;
+}
+
+.words-container {
+    display: flex;
+    flex-flow: row wrap;
+    height: 600px;
+    overflow: auto;
+    padding: 10px;
+    align-items: flex-start;
+    margin-right: 5px;
+}
+
+.justify-content-center {
+    justify-content: center;
+}
+
+@media all and (max-height: 720px) {
+    .words-container {
+        height: 400px;
+    }
+}
+
+.words-container > button {
+    padding: 5px;
+    border-radius: 5px;
+    margin-top: 5px;
+    margin-left: 5px;
+    text-align: left;
+    /* background-color: green; */
+    background-color: rgb(196, 255, 196);
+    border: none;
+}
+
+.words-container > button:hover {
+    background-color: green;
+    color: white;
+}
+
+.not-selectable {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.padding-top-1em {
+    padding-top: 1em;
+}
+
+#tiles-table {
+    background-color: green;
+    border-radius: 15px;
+}
+
+.tile-input {
+    font-size: 2em;
+    width: 1.75em;
+    margin: 7px;
+    background-color: rgb(196, 255, 196);
+    text-align: center;
+    border: none;
+    border-radius: 5px;
+    text-transform: uppercase;
+    outline: none;
+    box-shadow: 2px 2px 2px 2px rgb(0, 56, 0);
+}
+
+.tile-input:invalid {
+    background-color: rgb(237, 255, 237);
+}
+
+#solve-btn-container {
+    padding-top: 0.5em;
+}
+
+#solve-btn-container>button {
+    margin: 5px;
+}

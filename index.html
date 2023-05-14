@@ -27,335 +27,345 @@
 </head>
 
 <body>
-    <div id="sidebar_div">
-        <nav class="navbar navbar-expand d-flex flex-column">
-            <ul class="navbar-nav d-flex flex-column w-100">
-                <li>
-                    <a href="#intro">
-                        <img id="sidebar_logo" class="w-100" src="images/logo_horizontal.png">
-                    </a>
-                </li>
-                <li class="nav-item w-100">
-                    <a href="#intro" class="nav-link text-light ps-4">Intro</a>
-                </li>
-                <li class="nav-item w-100">
-                    <a href="#workExperience" class="nav-link text-light ps-4">Work Experience</a>
-                    <ul>
-                        <a href="#workExperience">
-                            <li class="nav-link w-100 text-light ps-4 list-nest-1">
-                                Xanantec
-                            </li>
+    <div id="parent-container" hidden>
+        <div id="sidebar_div">
+            <nav class="navbar navbar-expand d-flex flex-column">
+                <ul class="navbar-nav d-flex flex-column w-100">
+                    <li>
+                        <a href="#intro">
+                            <img id="sidebar_logo" class="w-100" src="images/logo_horizontal.png">
                         </a>
-                        <a href="#workExperience">
-                            <li class="nav-link w-100 text-light ps-4 list-nest-1">
-                                Electronic Arts
-                            </li>
-                        </a>
-                    </ul>
-                </li>
-                <li class="nav-item w-100">
-                    <a href="#row_projects" class="nav-link text-light ps-4">Projects</a>
-                    <ul>
-                        <a href="#row_projects">
-                            <li class="nav-link w-100 text-light ps-4 list-nest-1">CoinStash</li>
-                        </a>
-                        <a href="#row_projects">
-                            <li class="nav-link w-100 text-light ps-4 list-nest-1">Crowder</li>
-                        </a>
-                        <a href="#row_projects">
-                            <li class="nav-link w-100 text-light ps-4 list-nest-1">Circuit Builder</li>
-                        </a>
-                    </ul>
-                </li>
-                <li class="nav-item w-100">
-                    <a href="#row_skills" class="nav-link text-light ps-4">Skills</a>
-                </li>
-            </ul>
-        </nav>
-    </div>
-    <div class="container-fill">
-        <div class="row p-4 row-align-items-center" id="intro">
-            <div>
-                <h1 id="intro_header"><span id="cmd_prefix">C:\Users\Daniel> </span>Hello, world!</h1>
-                <p>
-                <h5>
-                    My name is Daniel, I'm a Canadian Computer Engineering student at the University of Alberta.
-                </h5>
-                </p>
-                <p>
-                <h5>
-                    I enjoy creating software applications with great user experience in mind. I have worked
-                    with large code bases from my internship at Electronic Arts where I fixed numerous bugs and
-                    developed an upcoming feature of FIFA Ultimate Team 21. I also have experience programming
-                    microcontrollers and system-on-chips, and consulting various documents such as datasheets of
-                    components like analog-to-digital converters, thermistors, dc motors, and bootloader documentation.
-                </h5>
-                </p>
-                <h5>
-                    If I'm not working on a project, I spend my free time going on hikes, chasing the northern lights
-                    with my DSLR, or learning some random hobby!
-                </h5>
-                </p>
+                    </li>
+                    <li class="nav-item w-100">
+                        <a href="#intro" class="nav-link text-light ps-4">Intro</a>
+                    </li>
+                    <li class="nav-item w-100">
+                        <a href="#workExperience" class="nav-link text-light ps-4">Work Experience</a>
+                        <ul>
+                            <a href="#workExperience">
+                                <li class="nav-link w-100 text-light ps-4 list-nest-1">
+                                    Xanantec
+                                </li>
+                            </a>
+                            <a href="#workExperience">
+                                <li class="nav-link w-100 text-light ps-4 list-nest-1">
+                                    Electronic Arts
+                                </li>
+                            </a>
+                        </ul>
+                    </li>
+                    <li class="nav-item w-100">
+                        <a href="#row_projects" class="nav-link text-light ps-4">Projects</a>
+                        <ul>
+                            <a href="#row_projects">
+                                <li class="nav-link w-100 text-light ps-4 list-nest-1">CoinStash</li>
+                            </a>
+                            <a href="#row_projects">
+                                <li class="nav-link w-100 text-light ps-4 list-nest-1">Crowder</li>
+                            </a>
+                            <a href="#row_projects">
+                                <li class="nav-link w-100 text-light ps-4 list-nest-1">Circuit Builder</li>
+                            </a>
+                        </ul>
+                    </li>
+                    <li class="nav-item w-100">
+                        <a href="#row_skills" class="nav-link text-light ps-4">Skills</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        <div class="container-fill">
+            <div class="row p-4 row-align-items-center" id="intro">
+                <div>
+                    <h1 id="intro_header"><span id="cmd_prefix">C:\Users\Daniel> </span>Hello, world!</h1>
+                    <p>
+                    <h5>
+                        My name is Daniel, I'm a Canadian Computer Engineering student at the University of Alberta.
+                    </h5>
+                    </p>
+                    <p>
+                    <h5>
+                        I enjoy creating software applications with great user experience in mind. I have worked
+                        with large code bases from my internship at Electronic Arts where I fixed numerous bugs and
+                        developed an upcoming feature of FIFA Ultimate Team 21. I also have experience programming
+                        microcontrollers and system-on-chips, and consulting various documents such as datasheets of
+                        components like analog-to-digital converters, thermistors, dc motors, and bootloader
+                        documentation.
+                    </h5>
+                    </p>
+                    <h5>
+                        If I'm not working on a project, I spend my free time going on hikes, chasing the northern
+                        lights
+                        with my DSLR, or learning some random hobby!
+                    </h5>
+                    </p>
+                </div>
             </div>
-        </div>
-        <div class="row p-4 row-align-items-center" id="workExperience">
-            <table id="workexp_table">
-                <tbody>
-                    <tr id="xanantec_row">
-                        <td style="text-align: center;">
-                            <img height="100" src="images/xanantec.png" alt="xanantec_logo">
-                        </td>
-                        <td>
-                            <h1>Xanantec Technologies</h1>
-                            <h5 class="mb-0"><em>Embedded Software Developer</em></h5>
-                            <p class="mb-0"><em>May 2021 - December 2021</em></p>
-                            <p><em>Edmonton, AB</em></p>
-                            <ul>
-                                <li>
-                                    Implemented a <strong>proportional-integral-derivative (PID)</strong> controller in
-                                    <strong>C</strong> to <strong>prolong useful life</strong> of dc motors by ~40%.
-                                </li>
-                                <li>
-                                    Realized a state machine for an automated bird feeding system that entailed
-                                    controlling ejector panels, implementing door timeouts, and charging/discharging
-                                    RFID antennas.
-                                </li>
-                                <li>
-                                    Fixed bugs in an existing implementation of Modbus and <strong>increased data
-                                        throughput</strong> by up to 50%
-                                    by grouping relevant data in a single register.
-                                </li>
-                                <li>
-                                    Interfaced a 24-bit analog-to-digital converter (ADC) via 8-bit SPI, performing
-                                    <strong>bit-wise operations</strong> to convert between 32 and 24 bit
-                                    representations of signed numbers.
-                                </li>
-                                <li>
-                                    Ported Debian for a custom ARM-based printed circuit board using
-                                    <strong>Debootstrap</strong>.
-                                </li>
-                                <li>
-                                    Configured a version of the <strong>Linux kernel</strong> maintained by Texas
-                                    Instruments and wrote a device tree to define custom hardware components.
-                                </li>
-                            </ul>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="text-align: center;">
-                            <img height="150" src="images/easports.png" alt="easports_logo">
-                        </td>
-                        <td>
-                            <h1>Electronic Arts</h1>
-                            <h5 class="mb-0"><em>Associate Developer Co-op - FIFA Ultimate Team 21</em></h5>
-                            <p class="mb-0"><em>January 2020 - August 2020</em></p>
-                            <p><em>Burnaby, BC</em></p>
-                            <ul>
-                                <li>
-                                    Fixed 5 to 8 bugs per week, in <strong>C++</strong> and
-                                    <strong>ActionScript</strong>, while adhering to the <strong>Model-View-View
-                                        Model (MVVM)</strong> paradigm and <strong>OOP</strong> best practices.
-                                </li>
-                                <li>
-                                    Implemented hide/show mechanism for managing visibility of game widget across
-                                    multiple screens.
-                                </li>
-                                <li>
-                                    <strong>Mapped control buttons</strong> according to technical artist specifications
-                                    with minimal guidance.
-                                </li>
-                                <li>
-                                    <strong>Updated 50+ art assets</strong> using ActionScript to reflect theme of the
-                                    new game while coordinating with a diverse group of local and remote graphic
-                                    artists.
-                                </li>
-                                <li>
-                                    Modified API calls to process additional data necessary for displaying new game
-                                    screens.
-                                </li>
-                                <li>
-                                    Used <strong>Kanban</strong> to prioritize requirements and communicated findings in
-                                    <strong>Jira</strong>.
-                                </li>
-                                <li>
-                                    Participated in regular stand ups, sprints, code reviews, and task estimation in an
-                                    <strong>Agile</strong> team.
-                                </li>
-                            </ul>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+            <div class="row p-4 row-align-items-center" id="workExperience">
+                <table id="workexp_table">
+                    <tbody>
+                        <tr id="xanantec_row">
+                            <td style="text-align: center;">
+                                <img height="100" src="images/xanantec.png" alt="xanantec_logo">
+                            </td>
+                            <td>
+                                <h1>Xanantec Technologies</h1>
+                                <h5 class="mb-0"><em>Embedded Software Developer</em></h5>
+                                <p class="mb-0"><em>May 2021 - December 2021</em></p>
+                                <p><em>Edmonton, AB</em></p>
+                                <ul>
+                                    <li>
+                                        Implemented a <strong>proportional-integral-derivative (PID)</strong> controller
+                                        in
+                                        <strong>C</strong> to <strong>prolong useful life</strong> of dc motors by ~40%.
+                                    </li>
+                                    <li>
+                                        Realized a state machine for an automated bird feeding system that entailed
+                                        controlling ejector panels, implementing door timeouts, and charging/discharging
+                                        RFID antennas.
+                                    </li>
+                                    <li>
+                                        Fixed bugs in an existing implementation of Modbus and <strong>increased data
+                                            throughput</strong> by up to 50%
+                                        by grouping relevant data in a single register.
+                                    </li>
+                                    <li>
+                                        Interfaced a 24-bit analog-to-digital converter (ADC) via 8-bit SPI, performing
+                                        <strong>bit-wise operations</strong> to convert between 32 and 24 bit
+                                        representations of signed numbers.
+                                    </li>
+                                    <li>
+                                        Ported Debian for a custom ARM-based printed circuit board using
+                                        <strong>Debootstrap</strong>.
+                                    </li>
+                                    <li>
+                                        Configured a version of the <strong>Linux kernel</strong> maintained by Texas
+                                        Instruments and wrote a device tree to define custom hardware components.
+                                    </li>
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: center;">
+                                <img height="150" src="images/easports.png" alt="easports_logo">
+                            </td>
+                            <td>
+                                <h1>Electronic Arts</h1>
+                                <h5 class="mb-0"><em>Associate Developer Co-op - FIFA Ultimate Team 21</em></h5>
+                                <p class="mb-0"><em>January 2020 - August 2020</em></p>
+                                <p><em>Burnaby, BC</em></p>
+                                <ul>
+                                    <li>
+                                        Fixed 5 to 8 bugs per week, in <strong>C++</strong> and
+                                        <strong>ActionScript</strong>, while adhering to the <strong>Model-View-View
+                                            Model (MVVM)</strong> paradigm and <strong>OOP</strong> best practices.
+                                    </li>
+                                    <li>
+                                        Implemented hide/show mechanism for managing visibility of game widget across
+                                        multiple screens.
+                                    </li>
+                                    <li>
+                                        <strong>Mapped control buttons</strong> according to technical artist
+                                        specifications
+                                        with minimal guidance.
+                                    </li>
+                                    <li>
+                                        <strong>Updated 50+ art assets</strong> using ActionScript to reflect theme of
+                                        the
+                                        new game while coordinating with a diverse group of local and remote graphic
+                                        artists.
+                                    </li>
+                                    <li>
+                                        Modified API calls to process additional data necessary for displaying new game
+                                        screens.
+                                    </li>
+                                    <li>
+                                        Used <strong>Kanban</strong> to prioritize requirements and communicated
+                                        findings in
+                                        <strong>Jira</strong>.
+                                    </li>
+                                    <li>
+                                        Participated in regular stand ups, sprints, code reviews, and task estimation in
+                                        an
+                                        <strong>Agile</strong> team.
+                                    </li>
+                                </ul>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
 
-        </div>
-        <div class="row p-4 row-no-align" id="row_projects">
-            <div id="project1_row" class="row p-5 align-self-end">
-                <div class="col ps-4 pe-0 align-self-center" style="border-radius: 5px;">
-                    <h1 class="display-3 mb-0" style="text-decoration: underline;">CoinStash</h1>
-                    <h4 class="display-6 mb-0">A cryptocurrency portfolio management system.</h4>
-                    <div class="mb-2">
-                        <em>
-                            <a class="mb-0 project_link" href="https://coinstashproject.herokuapp.com/" target="_blank"
-                                style="color: black;">
-                                https://coinstashproject.herokuapp.com/</a>
-                            <i class="fa-solid fa-arrow-up-right-from-square hide"></i>
-                            <br>
-                            <a class="project_link" href="https://github.com/dfloren/CoinStash-public" target="_blank"
-                                style="color: black;">
-                                https://github.com/dfloren/CoinStash-public</a>
-                            <i class="fa-solid fa-arrow-up-right-from-square hide"></i>
-                        </em>
+            </div>
+            <div class="row p-4 row-no-align" id="row_projects">
+                <div id="project1_row" class="row p-5 align-self-end">
+                    <div class="col ps-4 pe-0 align-self-center" style="border-radius: 5px;">
+                        <h1 class="display-3 mb-0" style="text-decoration: underline;">CoinStash</h1>
+                        <h4 class="display-6 mb-0">A cryptocurrency portfolio management system.</h4>
+                        <div class="mb-2">
+                            <em>
+                                <a class="mb-0 project_link" href="https://coinstashproject.herokuapp.com/"
+                                    target="_blank" style="color: black;">
+                                    https://coinstashproject.herokuapp.com/</a>
+                                <i class="fa-solid fa-arrow-up-right-from-square hide"></i>
+                                <br>
+                                <a class="project_link" href="https://github.com/dfloren/CoinStash-public"
+                                    target="_blank" style="color: black;">
+                                    https://github.com/dfloren/CoinStash-public</a>
+                                <i class="fa-solid fa-arrow-up-right-from-square hide"></i>
+                            </em>
+                        </div>
+                        <ul>
+                            <li>
+                                <p class="m-0">
+                                    Created a <strong>database-driven</strong> autocomplete search
+                                    feature to find <strong>13,000+</strong> cryptocurrencies supported by the CoinGecko
+                                    API.
+                                </p>
+                            </li>
+                            <li>
+                                <p class="m-0">
+                                    Consistent, intuitive user experience across the
+                                    application using <strong>Bootstrap</strong> and <strong>Django templates</strong>
+                                    and
+                                    <strong>class-based views</strong>.
+                                </p>
+                            </li>
+                            <li>
+                                <p class="m-0">
+                                    Utilized the<strong> Model-View-Controller (MVC)</strong> paradigm to create a clear
+                                    separation between business logic and presentation logic.
+                                </p>
+                            </li>
+                            <li>
+                                <p class="m-0">
+                                    Created <strong>RESTful API</strong> endpoints for portfolio data, using
+                                    <strong>Django REST Framework (DRF)</strong> to serialize models.
+                                </p>
+                            </li>
+                            <li>
+                                <p class="m-0">
+                                    <strong>Python</strong>, PostgreSQL, Heroku, Javascript, HTML, CSS
+                                </p>
+                            </li>
+                        </ul>
                     </div>
+                    <div class="col align-self-center">
+                        <video id="coinstashdemo" width="100%" autoplay="autoplay" loop muted>
+                            <source id="coinstashdemo_source" src="videos/coinstashdemo.mp4" type="video/mp4" />
+                        </video>
+                    </div>
+                </div>
+                <div class="row p-0 mt-3">
+                    <div id="project2_col" class="col me-3 p-5 pt-3 align-self-start">
+                        <h1 class="display-6 mb-0" style="text-decoration: underline;">Crowder</h1>
+                        <div class="mb-2">
+                            <em>
+                                <a class="project_link" href="https://github.com/CMPUT301W21T04/Crowder" target="_blank"
+                                    style="color: black;">
+                                    https://github.com/CMPUT301W21T04/Crowder</a>
+                                <i class="fa-solid fa-arrow-up-right-from-square hide"></i>
+                            </em>
+                        </div>
+                        <ul>
+                            <li>
+                                <p class="m-0">
+                                    A crowd sourcing mobile application written in <strong>Java</strong>.
+                                </p>
+                            </li>
+                            <li>
+                                <p class="m-0">
+                                    Worked with a team of six to create an <strong>Android</strong> application that
+                                    collected mass data from
+                                    user-generated polls and uploaded it to a cloud database,
+                                    <strong>Cloud Firestore</strong>.
+                                </p>
+                            </li>
+                            <li>
+                                <p class="m-0">
+                                    Wrote <strong>unit tests</strong> and <strong>regression tests</strong>, using
+                                    <strong>mock objects</strong>, to preserve application stability during
+                                    development.
+                                </p>
+                            </li>
+                        </ul>
+                    </div>
+                    <div id="project3_col" class="col me-3 p-5 pt-3 align-self-start">
+                        <h1 class="display-6 mb-0" style="text-decoration: underline;">Resistive Circuit Builder</h1>
+                        <div class="mb-2">
+                            <em>
+                                <a class="project_link" href="https://github.com/dfloren/ResistiveCircuit"
+                                    target="_blank" style="color: black;">
+                                    https://github.com/dfloren/ResistiveCircuit</a>
+                                <i class="fa-solid fa-arrow-up-right-from-square hide"></i>
+                            </em>
+                        </div>
+                        <ul>
+                            <li>
+                                <p class="m-0">
+                                    Lets the user build a purely resistive circuit and
+                                    determines the magnitude of current flowing
+                                    through each node using <strong>LU decomposition</strong> and
+                                    Kirchhoff&#39;s circuit laws.
+                                </p>
+                            </li>
+                            <li>
+                                <p class="m-0">
+                                    Represents a circuit as multiple <strong>adjacency matrices</strong>.
+                                </p>
+                            </li>
+                            <li>
+                                <p class="m-0">
+                                    Written in <strong>C++</strong>.
+                                </p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row p-4 row-no-align" id="row_skills">
+                <div class="col align-self-center">
+                    <h1 class="display-6">Languages</h1>
                     <ul>
-                        <li>
-                            <p class="m-0">
-                                Created a <strong>database-driven</strong> autocomplete search
-                                feature to find <strong>13,000+</strong> cryptocurrencies supported by the CoinGecko
-                                API.
-                            </p>
-                        </li>
-                        <li>
-                            <p class="m-0">
-                                Consistent, intuitive user experience across the
-                                application using <strong>Bootstrap</strong> and <strong>Django templates</strong> and
-                                <strong>class-based views</strong>.
-                            </p>
-                        </li>
-                        <li>
-                            <p class="m-0">
-                                Utilized the<strong> Model-View-Controller (MVC)</strong> paradigm to create a clear
-                                separation between business logic and presentation logic.
-                            </p>
-                        </li>
-                        <li>
-                            <p class="m-0">
-                                Created <strong>RESTful API</strong> endpoints for portfolio data, using
-                                <strong>Django REST Framework (DRF)</strong> to serialize models.
-                            </p>
-                        </li>
-                        <li>
-                            <p class="m-0">
-                                <strong>Python</strong>, PostgreSQL, Heroku, Javascript, HTML, CSS
-                            </p>
-                        </li>
+                        <li>ActionScript</li>
+                        <li>C</li>
+                        <li>C++</li>
+                        <li>C#</li>
+                        <li>Java</li>
+                        <li>Matlab</li>
+                        <li>PHP</li>
+                        <li>Python</li>
+                        <li>PostgreSQL, SQLite</li>
+                        <li>HTML, CSS, JavaScript</li>
                     </ul>
                 </div>
                 <div class="col align-self-center">
-                    <video id="coinstashdemo" width="100%" autoplay="autoplay" loop muted>
-                        <source id="coinstashdemo_source" src="videos/coinstashdemo.mp4" type="video/mp4" />
-                    </video>
-                </div>
-            </div>
-            <div class="row p-0 mt-3">
-                <div id="project2_col" class="col me-3 p-5 pt-3 align-self-start">
-                    <h1 class="display-6 mb-0" style="text-decoration: underline;">Crowder</h1>
-                    <div class="mb-2">
-                        <em>
-                            <a class="project_link" href="https://github.com/CMPUT301W21T04/Crowder" target="_blank"
-                                style="color: black;">
-                                https://github.com/CMPUT301W21T04/Crowder</a>
-                            <i class="fa-solid fa-arrow-up-right-from-square hide"></i>
-                        </em>
-                    </div>
+                    <h1 class="display-6">Tools & Libraries</h1>
                     <ul>
-                        <li>
-                            <p class="m-0">
-                                A crowd sourcing mobile application written in <strong>Java</strong>.
-                            </p>
-                        </li>
-                        <li>
-                            <p class="m-0">
-                                Worked with a team of six to create an <strong>Android</strong> application that
-                                collected mass data from
-                                user-generated polls and uploaded it to a cloud database,
-                                <strong>Cloud Firestore</strong>.
-                            </p>
-                        </li>
-                        <li>
-                            <p class="m-0">
-                                Wrote <strong>unit tests</strong> and <strong>regression tests</strong>, using
-                                <strong>mock objects</strong>, to preserve application stability during
-                                development.
-                            </p>
-                        </li>
+                        <li>Git</li>
+                        <li>GitHub</li>
+                        <li>Perforce</li>
+                        <li>Redis</li>
+                        <li>jQuery</li>
+                        <li>Bootstrap</li>
+                        <li>OpenCV</li>
+                        <li>Docker</li>
+                        <li>Heroku</li>
+                        <li>Mockito</li>
+                        <li>Firebase</li>
+                        <li>Visual Studio</li>
                     </ul>
                 </div>
-                <div id="project3_col" class="col me-3 p-5 pt-3 align-self-start">
-                    <h1 class="display-6 mb-0" style="text-decoration: underline;">Resistive Circuit Builder</h1>
-                    <div class="mb-2">
-                        <em>
-                            <a class="project_link" href="https://github.com/dfloren/ResistiveCircuit" target="_blank"
-                                style="color: black;">
-                                https://github.com/dfloren/ResistiveCircuit</a>
-                            <i class="fa-solid fa-arrow-up-right-from-square hide"></i>
-                        </em>
-                    </div>
+                <div class="col align-self-center">
+                    <h1 class="display-6">System & Frameworks</h1>
                     <ul>
-                        <li>
-                            <p class="m-0">
-                                Lets the user build a purely resistive circuit and
-                                determines the magnitude of current flowing
-                                through each node using <strong>LU decomposition</strong> and
-                                Kirchhoff&#39;s circuit laws.
-                            </p>
-                        </li>
-                        <li>
-                            <p class="m-0">
-                                Represents a circuit as multiple <strong>adjacency matrices</strong>.
-                            </p>
-                        </li>
-                        <li>
-                            <p class="m-0">
-                                Written in <strong>C++</strong>.
-                            </p>
-                        </li>
+                        <li>Windows</li>
+                        <li>Linux</li>
+                        <li>Django</li>
+                        <li>.NET</li>
+                        <li>Android</li>
                     </ul>
                 </div>
-            </div>
-
-        </div>
-        <div class="row p-4 row-no-align" id="row_skills">
-            <div class="col align-self-center">
-                <h1 class="display-6">Languages</h1>
-                <ul>
-                    <li>ActionScript</li>
-                    <li>C</li>
-                    <li>C++</li>
-                    <li>C#</li>
-                    <li>Java</li>
-                    <li>Matlab</li>
-                    <li>PHP</li>
-                    <li>Python</li>
-                    <li>PostgreSQL, SQLite</li>
-                    <li>HTML, CSS, JavaScript</li>
-                </ul>
-            </div>
-            <div class="col align-self-center">
-                <h1 class="display-6">Tools & Libraries</h1>
-                <ul>
-                    <li>Git</li>
-                    <li>GitHub</li>
-                    <li>Perforce</li>
-                    <li>Redis</li>
-                    <li>jQuery</li>
-                    <li>Bootstrap</li>
-                    <li>OpenCV</li>
-                    <li>Docker</li>
-                    <li>Heroku</li>
-                    <li>Mockito</li>
-                    <li>Firebase</li>
-                    <li>Visual Studio</li>
-                </ul>
-            </div>
-            <div class="col align-self-center">
-                <h1 class="display-6">System & Frameworks</h1>
-                <ul>
-                    <li>Windows</li>
-                    <li>Linux</li>
-                    <li>Django</li>
-                    <li>.NET</li>
-                    <li>Android</li>
-                </ul>
             </div>
         </div>
     </div>
@@ -373,6 +383,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
         integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13"
         crossorigin="anonymous"></script>
+    <script src="index.js"></script>
 </body>
 
 </html>
