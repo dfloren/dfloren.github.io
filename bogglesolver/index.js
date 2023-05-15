@@ -67,18 +67,22 @@ function setPopoverContent(clickEvent) {
 
     let popoverInstance = bootstrap.Popover.getInstance(clickEvent.target);
 
+    let content = "";
     getDefinitionAsync(clickEvent.target.innerText)
-        .then((response) => {
-            popoverInstance.setContent({
-                '.popover-body': buildPopoverContent(response),
-            })
+        .then((response) => content = buildPopoverContent(response))
+        .catch((e) => content = DEFINITION_NOT_FOUND)
+        .then(() => {
+            // artificial loading time
+            return new Promise((resolve) => {
+                setTimeout(() => resolve(), 500);
+            });
         })
-        .catch((e) => {
-            console.log(e.message);
+        .finally(() => {
             popoverInstance.setContent({
-                '.popover-body': DEFINITION_NOT_FOUND,
+                '.popover-body': content,
             })
-        }).finally(() => clickEvent.target.setAttribute("definition-cached", true));
+            clickEvent.target.setAttribute("definition-cached", true)
+        });
 }
 
 function solve() {
