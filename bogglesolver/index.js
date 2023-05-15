@@ -54,7 +54,7 @@ function buildPopoverContent(dictApiResponse) {
     for (let meaning of dictApiResponse[0]["meanings"]) {
         definitionsArray.push(
             `<strong>${meaning["partOfSpeech"]}</strong>: ${meaning["definitions"][0]["definition"]}`
-            );
+        );
     }
 
     return definitionsArray.join("<br>");
@@ -71,7 +71,6 @@ function setPopoverContent(clickEvent) {
         .then((response) => {
             popoverInstance.setContent({
                 '.popover-body': buildPopoverContent(response),
-                '.popover-body-color': 'red',
             })
         })
         .catch((e) => {
@@ -81,11 +80,6 @@ function setPopoverContent(clickEvent) {
             })
         }).finally(() => clickEvent.target.setAttribute("definition-cached", true));
 }
-
-function generatePopoverContent(wordBtn) {
-    setPopoverContent(wordBtn, smallSpinner);
-
-};
 
 function solve() {
     let solveBtn = document.getElementById("solve-btn");
