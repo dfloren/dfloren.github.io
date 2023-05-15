@@ -27,6 +27,12 @@ body {
     font-weight: 500;
 }
 
+.boggle-definition {
+    font-size: 1em;
+    padding-left: 20%;
+    padding-right: 20%;
+}
+
 .header-instructions {
     text-align: center;
 }
@@ -76,7 +82,7 @@ body {
 
 @media all and (max-height: 720px) {
     .words-container {
-        height: 400px;
+        height: 350px;
     }
 }
 
