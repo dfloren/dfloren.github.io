@@ -1,11 +1,15 @@
 const DICT_API_BASE_URL = new URL("https://api.dictionaryapi.dev");
 const GRID_SIZE = 4;
+const smallSpinner = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>';
+const DEFINITION_NOT_FOUND = "".concat("Definition not found, try Google.", String.fromCodePoint(0x1F937));
 
 async function getDefinitionAsync(word) {
     let fetchPromise = await fetch(new URL(`/api/v2/entries/en/${word}`, DICT_API_BASE_URL));
-    let response = await fetchPromise.json();
+    if (fetchPromise.status === 404) {
+        throw new Error("Definition not found");
+    }
 
-    return response[0]["meanings"][0]["definitions"][0]["definition"];
+    return await fetchPromise.json();
 };
 
 function populateWords() {
@@ -16,42 +20,76 @@ function populateWords() {
 
     wordsContainer.innerHTML = "";
 
-    for (let i = 0; i < 500; i++) {
+    for (let i = 0; i < 200; i++) {
         let wordBtn = document.createElement("button");
         wordBtn.type = "button";
-        wordBtn.innerText = "lorem".repeat(Math.floor((Math.random() * (7)) + 1));
+
+        let wordKeys = [...wordMap.keys()];
+
+        wordBtn.innerText = wordKeys[wordKeys.length * Math.random() << 0];
 
         // popover config
         wordBtn.setAttribute("data-bs-toggle", "popover");
-        wordBtn.setAttribute("data-bs-content", generatePopoverContent(wordBtn));
+        wordBtn.setAttribute("data-bs-title", wordBtn.innerText);
+        wordBtn.setAttribute("data-bs-content", smallSpinner);
         wordBtn.setAttribute("data-bs-html", true);
         wordBtn.setAttribute("data-bs-trigger", "focus");
+
+        wordBtn.addEventListener('click', setPopoverContent);
 
         wordsContainer.append(wordBtn);
 
     }
 
-    getDefinitionAsync("test")
-        .then((response) => {
-            document.getElementById("solve-btn").innerHTML = "Solve";
-        })
-        .catch(e => alert(`Oops, errored out!. ${e}`));
+    document.getElementById("solve-btn").innerHTML = "Solve";
 
     popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]');
     popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl));
 }
 
-function generatePopoverContent(wordBtn) {
-    return `
-    <strong>noun</strong>: ${wordBtn.innerText}
-    <br> <strong>verb</strong>: ${wordBtn.innerText}
-    `;
+function buildPopoverContent(dictApiResponse) {
+
+    let definitionsArray = [];
+
+    for (let meaning of dictApiResponse[0]["meanings"]) {
+        definitionsArray.push(
+            `<strong>${meaning["partOfSpeech"]}</strong>: ${meaning["definitions"][0]["definition"]}`
+            );
+    }
+
+    return definitionsArray.join("<br>");
 }
 
+function setPopoverContent(clickEvent) {
+    if (clickEvent.target.getAttribute("definition-cached")) {
+        return;
+    }
+
+    let popoverInstance = bootstrap.Popover.getInstance(clickEvent.target);
+
+    getDefinitionAsync(clickEvent.target.innerText)
+        .then((response) => {
+            popoverInstance.setContent({
+                '.popover-body': buildPopoverContent(response),
+                '.popover-body-color': 'red',
+            })
+        })
+        .catch((e) => {
+            console.log(e.message);
+            popoverInstance.setContent({
+                '.popover-body': DEFINITION_NOT_FOUND,
+            })
+        }).finally(() => clickEvent.target.setAttribute("definition-cached", true));
+}
+
+function generatePopoverContent(wordBtn) {
+    setPopoverContent(wordBtn, smallSpinner);
+
+};
+
 function solve() {
-    let spinner = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>';
     let solveBtn = document.getElementById("solve-btn");
-    solveBtn.innerHTML = ''.concat(spinner, " ", "Solving...");
+    solveBtn.innerHTML = ''.concat(smallSpinner, " ", "Solving...");
 
     let inputArray = Array(GRID_SIZE).fill(null).map(() => Array(GRID_SIZE));
     document.querySelectorAll("input.tile-input").forEach((value, key) => {
@@ -65,7 +103,8 @@ function solve() {
      * 3. Pass words to populateWords()
      */
 
-    populateWords();
+    // artificial loading time
+    setTimeout(() => populateWords(), 1000);
 
     return false;
 
@@ -172,6 +211,6 @@ fetch("resources/words_dictionary.json")
         }
         return response.json()
     })
-    .then(response => wordMap = response)
+    .then(response => wordMap = new Map(Object.entries(response)))
     .then(() => loadApp())
     .catch(e => alert(`${e.message}`));
