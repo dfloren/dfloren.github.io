@@ -92,7 +92,6 @@ body {
     }
 }
 
-
 .words-container>button {
     padding: 5px;
     border-radius: 5px;
@@ -129,7 +128,6 @@ body {
 .tile-input:invalid {
     background-color: rgb(237, 255, 237);
 }
-
 
 .popover {
     --bs-popover-bg: #fff !important;

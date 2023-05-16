@@ -71,12 +71,6 @@ function setPopoverContent(clickEvent) {
     getDefinitionAsync(clickEvent.target.innerText)
         .then((response) => content = buildPopoverContent(response))
         .catch((e) => content = DEFINITION_NOT_FOUND)
-        .then(() => {
-            // artificial loading time
-            return new Promise((resolve) => {
-                setTimeout(() => resolve(), 500);
-            });
-        })
         .finally(() => {
             popoverInstance.setContent({
                 '.popover-body': content,
@@ -87,7 +81,12 @@ function setPopoverContent(clickEvent) {
 
 function solve() {
     let solveBtn = document.getElementById("solve-btn");
+    solveBtn.toggleAttribute("disabled", true);
     solveBtn.innerHTML = ''.concat(smallSpinner, " ", "Solving...");
+
+    document.querySelectorAll(".tile-input").forEach((tile) => {
+        tile.toggleAttribute("disabled", true);
+    });
 
     let inputArray = Array(GRID_SIZE).fill(null).map(() => Array(GRID_SIZE));
     document.querySelectorAll("input.tile-input").forEach((value, key) => {
@@ -100,9 +99,6 @@ function solve() {
      * 2. Filter for words
      * 3. Pass words to populateWords()
      */
-
-    // artificial loading time
-    setTimeout(() => populateWords(), 1000);
 
     return false;
 
@@ -127,9 +123,14 @@ function autotabTile(tile) {
 function clearGame() {
     let tileInputs = document.querySelectorAll("input.tile-input");
     tileInputs.forEach(t => t.value = "");
-    document.querySelector("input.tile-input").focus();
+
+    document.getElementById("solve-btn").toggleAttribute("disabled", false);
+    document.querySelectorAll(".tile-input").forEach((tile) => {
+        tile.toggleAttribute("disabled", false);
+    });
 
     clearWordList();
+    document.querySelector("input.tile-input").focus();
 }
 
 function clearWordList() {
@@ -188,7 +189,7 @@ function loadApp() {
     let clearBtn = document.createElement("button");
     clearBtn.classList.add("btn", "btn-secondary");
     clearBtn.innerText = "Clear";
-    clearBtn.addEventListener('click', () => clearGame());
+    clearBtn.addEventListener("click", () => clearGame());
     document.getElementById("game-btns-container").append(clearBtn);
 
     clearWordList();
