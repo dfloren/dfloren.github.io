@@ -100,6 +100,8 @@ function solve() {
      * 3. Pass words to populateWords()
      */
 
+    setTimeout(() => populateWords(), 100);
+
     return false;
 
 }
