@@ -72,12 +72,19 @@ body {
     height: 600px;
     overflow: auto;
     padding: 10px;
-    align-items: flex-start;
     margin-right: 5px;
+    background: rgba(76, 175, 80, 0.1);
+    border-radius: 10px;
 }
 
-.justify-content-center {
+.words-container-placeholder-content {
+    align-items: center;
     justify-content: center;
+}
+
+.words-container-word-content {
+    align-items: flex-start;
+    justify-content: left;
 }
 
 @media all and (max-height: 720px) {

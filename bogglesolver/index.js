@@ -1,53 +1,21 @@
-const DICT_API_BASE_URL = new URL("https://api.dictionaryapi.dev");
+import { getDefinitionAsync, getLetterCombinations } from "./service/wordservice.js";
+
+
 const GRID_SIZE = 4;
-const smallSpinner = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>';
-const DEFINITION_NOT_FOUND = "".concat("Definition not found, try Google.", String.fromCodePoint(0x1F937));
 
-async function getDefinitionAsync(word) {
-    let fetchPromise = await fetch(new URL(`/api/v2/entries/en/${word}`, DICT_API_BASE_URL));
-    if (fetchPromise.status === 404) {
-        throw new Error("Definition not found");
-    }
+// Popover placeholders
+const DEFINITION_NOT_FOUND_PLACEHOLDER = "".concat("Definition not found, try Google.", String.fromCodePoint(0x1F937));
 
-    return await fetchPromise.json();
-};
+// Word list placeholders
+const DEFAULT_WORD_LIST_PLACEHOLDER = "Words will appear here when the board is solved."
+const NO_WORDS_FOUND_PLACEHOLDER = "No words found!";
 
-function populateWords() {
-    let wordsContainer = document.getElementById("words-container");
 
-    // only justify if showing placeholder text (init or no words on board lol)
-    wordsContainer.classList.remove("justify-content-center");
-
-    wordsContainer.innerHTML = "";
-
-    for (let i = 0; i < 200; i++) {
-        let wordBtn = document.createElement("button");
-        wordBtn.type = "button";
-
-        let wordKeys = [...wordMap.keys()];
-
-        wordBtn.innerText = wordKeys[wordKeys.length * Math.random() << 0];
-
-        // popover config
-        wordBtn.setAttribute("data-bs-toggle", "popover");
-        wordBtn.setAttribute("data-bs-title", wordBtn.innerText);
-        wordBtn.setAttribute("data-bs-content", smallSpinner);
-        wordBtn.setAttribute("data-bs-html", true);
-        wordBtn.setAttribute("data-bs-trigger", "focus");
-
-        wordBtn.addEventListener('click', setPopoverContent);
-
-        wordsContainer.append(wordBtn);
-
-    }
-
-    document.getElementById("solve-btn").innerHTML = "Solve";
-
-    popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]');
-    popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl));
+function buildSmallSpinnerHTML() {
+    return '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>';
 }
 
-function buildPopoverContent(dictApiResponse) {
+function buildPopoverContentHTML(dictApiResponse) {
 
     let definitionsArray = [];
 
@@ -69,8 +37,8 @@ function setPopoverContent(clickEvent) {
 
     let content = "";
     getDefinitionAsync(clickEvent.target.innerText)
-        .then((response) => content = buildPopoverContent(response))
-        .catch((e) => content = DEFINITION_NOT_FOUND)
+        .then((response) => content = buildPopoverContentHTML(response))
+        .catch((e) => content = DEFINITION_NOT_FOUND_PLACEHOLDER)
         .finally(() => {
             popoverInstance.setContent({
                 '.popover-body': content,
@@ -79,31 +47,90 @@ function setPopoverContent(clickEvent) {
         });
 }
 
-function solve() {
-    let solveBtn = document.getElementById("solve-btn");
-    solveBtn.toggleAttribute("disabled", true);
-    solveBtn.innerHTML = ''.concat(smallSpinner, " ", "Solving...");
+function clearTiles() {
+    let tileInputs = document.querySelectorAll("input.tile-input");
+    tileInputs.forEach(t => t.value = "");
+}
 
+function disableGrid() {
     document.querySelectorAll(".tile-input").forEach((tile) => {
         tile.toggleAttribute("disabled", true);
     });
+}
 
-    let inputArray = Array(GRID_SIZE).fill(null).map(() => Array(GRID_SIZE));
+function enableGrid() {
+    document.getElementById("solve-btn").toggleAttribute("disabled", false);
+    document.querySelectorAll(".tile-input").forEach((tile) => {
+        tile.toggleAttribute("disabled", false);
+    });
+}
+
+function setWordListPlaceholder(placeholder) {
+    let wordsContainer = document.getElementById("words-container");
+    wordsContainer.classList.toggle("words-container-placeholder-content", true);
+    wordsContainer.classList.toggle("words-container-word-content", false);
+    wordsContainer.innerText = placeholder;
+}
+
+function clearWordList() {
+    let wordsContainer = document.getElementById("words-container");
+    wordsContainer.classList.toggle("words-container-placeholder-content", false);
+    wordsContainer.classList.toggle("words-container-word-content", true);
+    wordsContainer.innerText = "";
+}
+
+function populateWordList(words) {
+    let wordsContainer = document.getElementById("words-container");
+
+    clearWordList();
+
+    for (let word of words) {
+        let wordBtn = document.createElement("button");
+        wordBtn.type = "button";
+        wordBtn.innerText = word;
+
+        wordBtn.setAttribute("data-bs-toggle", "popover");
+        wordBtn.setAttribute("data-bs-title", word);
+        wordBtn.setAttribute("data-bs-content", buildSmallSpinnerHTML());
+        wordBtn.setAttribute("data-bs-html", true);
+        wordBtn.setAttribute("data-bs-trigger", "focus");
+
+        wordBtn.addEventListener('click', setPopoverContent);
+
+        wordsContainer.append(wordBtn);
+    }
+
+    // bootstrap popover
+    var popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]');
+    var popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl));
+}
+
+function solve() {
+    let solveBtn = document.getElementById("solve-btn");
+    solveBtn.toggleAttribute("disabled", true);
+    solveBtn.innerHTML = ''.concat(buildSmallSpinnerHTML(), " ", "Solving...");
+
+    disableGrid();
+
+    let letterGrid = Array(GRID_SIZE).fill(null).map(() => Array(GRID_SIZE));
     document.querySelectorAll("input.tile-input").forEach((value, key) => {
-        inputArray[Math.floor(key / GRID_SIZE)][key % GRID_SIZE] = value.value;
+        letterGrid[Math.floor(key / GRID_SIZE)][key % GRID_SIZE] = value.value;
     });
 
-    /**
-     * TODO:
-     * 1. generate letter combinations from inputArray (grid)
-     * 2. Filter for words
-     * 3. Pass words to populateWords()
-     */
+    // TODO: generate letter combinations + tile placement from grid
+    let combinations = getLetterCombinations(letterGrid, GRID_SIZE);
 
-    setTimeout(() => populateWords(), 100);
+    let words = combinations.filter(c => wordMap.has(c));
+
+    if (!words.length) {
+        setWordListPlaceholder(NO_WORDS_FOUND_PLACEHOLDER);
+    } else {
+        setTimeout(() => populateWordList(words), 100);
+    }
+
+    document.getElementById("solve-btn").innerHTML = "Solve";
 
     return false;
-
 }
 
 function autotabTile(tile) {
@@ -123,22 +150,11 @@ function autotabTile(tile) {
 }
 
 function clearGame() {
-    let tileInputs = document.querySelectorAll("input.tile-input");
-    tileInputs.forEach(t => t.value = "");
+    clearTiles();
+    enableGrid();
+    setWordListPlaceholder(DEFAULT_WORD_LIST_PLACEHOLDER);
 
-    document.getElementById("solve-btn").toggleAttribute("disabled", false);
-    document.querySelectorAll(".tile-input").forEach((tile) => {
-        tile.toggleAttribute("disabled", false);
-    });
-
-    clearWordList();
     document.querySelector("input.tile-input").focus();
-}
-
-function clearWordList() {
-    let wordsContainer = document.getElementById("words-container");
-    wordsContainer.classList.add("justify-content-center");
-    wordsContainer.innerText = "Words will appear here when the board is solved."
 }
 
 function loadApp() {
@@ -194,7 +210,7 @@ function loadApp() {
     clearBtn.addEventListener("click", () => clearGame());
     document.getElementById("game-btns-container").append(clearBtn);
 
-    clearWordList();
+    setWordListPlaceholder(DEFAULT_WORD_LIST_PLACEHOLDER);
 
     // artificial loading time
     setTimeout(() => {
