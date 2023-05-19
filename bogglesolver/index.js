@@ -28,6 +28,17 @@ function buildPopoverContentHTML(dictApiResponse) {
     return definitionsArray.join("<br>");
 }
 
+function buildNoDefinitionContentHTML(word) {
+    let content = DEFINITION_NOT_FOUND_PLACEHOLDER;
+    content += `<br>
+    Search link (<div class="fa fa-external-link" style="font-size: 16px;"></div>): 
+    <a href="https://google.com/search?q=${word}+definition" target="_blank">
+    ${word}
+    </a>
+    `
+    return content;
+}
+
 function setPopoverContent(clickEvent) {
     if (clickEvent.target.getAttribute("definition-cached")) {
         return;
@@ -38,7 +49,7 @@ function setPopoverContent(clickEvent) {
     let content = "";
     getDefinitionAsync(clickEvent.target.innerText)
         .then((response) => content = buildPopoverContentHTML(response))
-        .catch((e) => content = DEFINITION_NOT_FOUND_PLACEHOLDER)
+        .catch((e) => content = buildNoDefinitionContentHTML(clickEvent.target.innerText))
         .finally(() => {
             popoverInstance.setContent({
                 '.popover-body': content,

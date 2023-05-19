@@ -10,5 +10,5 @@ export async function getDefinitionAsync(word) {
 }
 
 export function getLetterCombinations(grid, size) {
-    return ["hello", "this", "is", "a", "word", "asdf"];
+    return ["hello", "this", "is", "a", "word", "asdf", "organoleptically"];
 }
