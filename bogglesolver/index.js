@@ -125,13 +125,13 @@ function solve() {
 
     let letterGrid = Array(GRID_SIZE).fill(null).map(() => Array(GRID_SIZE));
     document.querySelectorAll("input.tile-input").forEach((value, key) => {
-        letterGrid[Math.floor(key / GRID_SIZE)][key % GRID_SIZE] = value.value;
+        letterGrid[Math.floor(key / GRID_SIZE)][key % GRID_SIZE] = value.value.toLowerCase();
     });
 
     // TODO: generate letter combinations + tile placement from grid
     let combinations = getLetterCombinations(letterGrid, GRID_SIZE);
 
-    let words = combinations.filter(c => wordMap.has(c));
+    let words = combinations.filter(c => wordMap.has(c)).sort();
 
     if (!words.length) {
         setWordListPlaceholder(NO_WORDS_FOUND_PLACEHOLDER);
