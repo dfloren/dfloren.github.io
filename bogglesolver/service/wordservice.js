@@ -10,5 +10,69 @@ export async function getDefinitionAsync(word) {
 }
 
 export function getLetterCombinations(grid, size) {
-    return ["hello", "this", "is", "a", "word", "asdf", "organoleptically"];
+
+    let directions = [
+        [-1, 0],  // up
+        [1, 0],   // down
+        [0, -1],  // left
+        [0, 1],   // right
+        [-1, -1], // up-left
+        [-1, 1],  // up-right
+        [1, -1],  // down-left
+        [1, 1],   // down-right
+    ];  
+
+    let result = new Set();
+
+    function getNextLetter(visitedGrid, row, col, combination) {
+        /**
+         * Max combinations
+         * 2x2 - 60
+         * 3x3 - 10 296
+         * 4x4 - 12 029 624
+         * 5x5 - RangeError: Too many properties to enumerate (lol)
+         */
+
+        for (let [r, c] of directions) {
+            let nextRow = row + r;
+            let nextCol = col + c;
+            if (nextRow >= size || nextRow < 0 || nextCol >= size || nextCol < 0) {
+                continue;
+            }
+
+            if (visitedGrid[nextRow][nextCol]) {
+                continue;
+            }
+
+            let newCombination = Array.from(combination);
+            newCombination.push(grid[nextRow][nextCol]);
+
+            if (false /** TODO: check if new combination is a word/prefix from Trie */) {
+                continue;
+            }
+
+            result.add(newCombination.join(""));
+
+            let newVisitedGrid = JSON.parse(JSON.stringify(visitedGrid));
+            newVisitedGrid[nextRow][nextCol] = true;
+
+            getNextLetter(newVisitedGrid, nextRow, nextCol, newCombination);
+        }
+    }
+
+    for (let row = 0; row < size; row++) {
+        for (let col = 0; col < size; col++) {
+            let visitedGrid = [];
+            for (let row = 0; row < size; row++) {
+                let cols = Array.apply(null, Array(size)).map(a => false);
+                visitedGrid.push(cols);
+            }
+            visitedGrid[row][col] = true;
+            // using array instead of string for easier copying
+            let combination = [grid[row][col]];
+            getNextLetter(visitedGrid, row, col, combination);
+        }
+    }
+
+    return [...result];
 }

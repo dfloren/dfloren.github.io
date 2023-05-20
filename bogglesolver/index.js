@@ -125,13 +125,13 @@ function solve() {
 
     let letterGrid = Array(GRID_SIZE).fill(null).map(() => Array(GRID_SIZE));
     document.querySelectorAll("input.tile-input").forEach((value, key) => {
-        letterGrid[Math.floor(key / GRID_SIZE)][key % GRID_SIZE] = value.value.toLowerCase();
+        letterGrid[Math.floor(key / GRID_SIZE)][key % GRID_SIZE] = value.value.toUpperCase();
     });
 
     // TODO: generate letter combinations + tile placement from grid
     let combinations = getLetterCombinations(letterGrid, GRID_SIZE);
 
-    let words = combinations.filter(c => wordMap.has(c)).sort();
+    let words = combinations.filter(c => wordSet.has(c) && c.length >= 3).sort();
 
     if (!words.length) {
         setWordListPlaceholder(NO_WORDS_FOUND_PLACEHOLDER);
@@ -176,25 +176,23 @@ function loadApp() {
         let row = document.createElement("tr");
 
         for (let j = 0; j < GRID_SIZE; j++) {
+            let tile = document.createElement("input");
+            tile.setAttribute("autocomplete", "off");
+            tile.setAttribute("form", "tiles-form");
+            tile.setAttribute("id", `R${i}C${j}`);
+            tile.setAttribute("maxLength", "1");
+            tile.setAttribute("minLength", "1");
+            tile.setAttribute("name", `R${i}C${j}`);
+            tile.setAttribute("pattern", "[A-Za-z]");
+            tile.setAttribute("type", "text");
+            tile.toggleAttribute("required", true);
+            tile.addEventListener('click', () => tile.select());
+            tile.addEventListener('input', () => autotabTile(tile));
+            tile.classList.add("tile-input");
+
             let col = document.createElement("td");
             col.classList.add("col");
-
-            let tile = document.createElement("input");
-            tile.minLength = 1;
-            tile.maxLength = 1;
-            tile.id = `R${i}C${j}`;
-            tile.name = `R${i}C${j}`;
-            tile.pattern = "[A-Za-z]"
-            tile.type = "text";
-            tile.setAttribute("required", "");
-            tile.setAttribute("form", "tiles-form");
-            tile.setAttribute("autocomplete", "off");
-            tile.classList.add("tile-input");
-            tile.addEventListener('input', () => autotabTile(tile));
-            tile.addEventListener('click', () => tile.select());
-
             col.append(tile);
-
             row.append(col);
 
         }
@@ -231,14 +229,14 @@ function loadApp() {
     }, 1000);
 }
 
-let wordMap;
-fetch("resources/words_dictionary.json")
+let wordSet;
+fetch("resources/dictionary.txt")
     .then(response => {
         if (!response.ok) {
-            throw new Error(`Could not fetch dictionary map. HTTP Status: ${response.status}`);
+            throw new Error(`Failed to fetch dictionary. HTTP Status: ${response.status}`);
         }
-        return response.json()
+        return response.text();
     })
-    .then(response => wordMap = new Map(Object.entries(response)))
+    .then(response => wordSet = new Set(response.split("\n")))
     .then(() => loadApp())
     .catch(e => alert(`${e.message}`));

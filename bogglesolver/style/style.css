@@ -84,7 +84,7 @@ body {
 
 .words-container-word-content {
     align-items: flex-start;
-    justify-content: left;
+    align-content: flex-start;
 }
 
 @media all and (max-height: 720px) {
