@@ -10,6 +10,10 @@ const DEFINITION_NOT_FOUND_PLACEHOLDER = "".concat("Definition not found, try Go
 const DEFAULT_WORD_LIST_PLACEHOLDER = "Words will appear here when the board is solved."
 const NO_WORDS_FOUND_PLACEHOLDER = "No words found!";
 
+let currentPopoverElement;
+
+let wordSet;
+
 
 function buildSmallSpinnerHTML() {
     return '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>';
@@ -117,7 +121,12 @@ function populateWordList(words) {
 
     // bootstrap popover
     var popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]');
-    var popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl));
+    var popoverList = [...popoverTriggerList].map(popoverTriggerEl => {
+        popoverTriggerEl.addEventListener('click', () => {
+            currentPopoverElement = bootstrap.Popover.getInstance(popoverTriggerEl)
+        });
+        return new bootstrap.Popover(popoverTriggerEl);
+    });
 }
 
 function solve() {
@@ -228,6 +237,13 @@ function loadApp() {
 
     setWordListPlaceholder(DEFAULT_WORD_LIST_PLACEHOLDER);
 
+    document.getElementById("parent-container").addEventListener('scroll', () => {
+        currentPopoverElement?.hide();
+    });
+    document.getElementById("words-container").addEventListener('scroll', () => {
+        currentPopoverElement?.hide();
+    });
+
     // artificial loading time
     setTimeout(() => {
         document.querySelector("#parent-container").toggleAttribute("hidden");
@@ -236,7 +252,6 @@ function loadApp() {
     }, 1000);
 }
 
-let wordSet;
 fetch("resources/dictionary.txt")
     .then(response => {
         if (!response.ok) {
