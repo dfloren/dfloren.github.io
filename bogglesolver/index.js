@@ -19,13 +19,17 @@ function buildPopoverContentHTML(dictApiResponse) {
 
     let definitionsArray = [];
 
-    for (let meaning of dictApiResponse[0]["meanings"]) {
-        definitionsArray.push(
-            `<strong>${meaning["partOfSpeech"]}</strong>: ${meaning["definitions"][0]["definition"]}`
-        );
+    for (let item of dictApiResponse) {
+        for (let meaning of item["meanings"]) {
+            for (let definition of meaning["definitions"]) {
+                definitionsArray.push(
+                    `<strong>${meaning["partOfSpeech"]}</strong>: ${definition["definition"]}`
+                );
+            }
+        }
     }
 
-    return definitionsArray.join("<br>");
+    return definitionsArray.join("<br><br>");
 }
 
 function buildNoDefinitionContentHTML(word) {
