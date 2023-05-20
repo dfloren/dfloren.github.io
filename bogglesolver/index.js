@@ -127,23 +127,26 @@ function solve() {
 
     disableGrid();
 
-    let letterGrid = Array(GRID_SIZE).fill(null).map(() => Array(GRID_SIZE));
-    document.querySelectorAll("input.tile-input").forEach((value, key) => {
-        letterGrid[Math.floor(key / GRID_SIZE)][key % GRID_SIZE] = value.value.toUpperCase();
-    });
+    // 1 second to setup spinner properly
+    setTimeout(() => {
+        let letterGrid = Array(GRID_SIZE).fill(null).map(() => Array(GRID_SIZE));
+        document.querySelectorAll("input.tile-input").forEach((value, key) => {
+            letterGrid[Math.floor(key / GRID_SIZE)][key % GRID_SIZE] = value.value.toUpperCase();
+        });
 
-    // TODO: generate letter combinations + tile placement from grid
-    let combinations = getLetterCombinations(letterGrid, GRID_SIZE);
+        // TODO: generate letter combinations + tile placement from grid
+        let combinations = getLetterCombinations(letterGrid, GRID_SIZE);
 
-    let words = combinations.filter(c => wordSet.has(c) && c.length >= 3).sort();
+        let words = combinations.filter(c => wordSet.has(c) && c.length >= 3).sort();
 
-    if (!words.length) {
-        setWordListPlaceholder(NO_WORDS_FOUND_PLACEHOLDER);
-    } else {
-        setTimeout(() => populateWordList(words), 100);
-    }
+        if (!words.length) {
+            setWordListPlaceholder(NO_WORDS_FOUND_PLACEHOLDER);
+        } else {
+            populateWordList(words);
+        }
 
-    document.getElementById("solve-btn").innerHTML = "Solve";
+        document.getElementById("solve-btn").innerHTML = "Solve";
+    }, 1000);
 
     return false;
 }
