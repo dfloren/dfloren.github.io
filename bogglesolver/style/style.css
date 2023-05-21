@@ -64,9 +64,13 @@ body {
 
 .game-btns-container {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: left;
     text-align: center;
     padding: 5px;
+}
+
+.btn {
+    margin-right: 5px;
 }
 
 .results-container {
