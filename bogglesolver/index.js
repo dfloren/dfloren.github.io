@@ -12,7 +12,9 @@ let CURRENT_GRID_SIZE = DEFAULT_GRID_SIZE;
 const DEFINITION_NOT_FOUND_PLACEHOLDER = "".concat("Definition not found, try Google.", String.fromCodePoint(0x1F937));
 
 // Word list placeholders
-const DEFAULT_WORD_LIST_PLACEHOLDER = "Words will appear here when the board is solved."
+const DEFAULT_WORD_LIST_PLACEHOLDER = `Words will appear here when the board is solved.\n
+Click on a word to see its definition. Hover to reveal it on the board (touch on mobile).
+`
 const NO_WORDS_FOUND_PLACEHOLDER = "No words found!";
 
 let currentPopoverElement;
@@ -275,7 +277,7 @@ function createBoard(gridSize) {
     }
 
     enableGrid();
-    clearWordList();
+    setWordListPlaceholder(DEFAULT_WORD_LIST_PLACEHOLDER);
 }
 
 function updateGridSizeButtons() {
@@ -310,15 +312,6 @@ function loadApp() {
     randomizeBtn.addEventListener("click", () => randomizeGame());
     document.getElementById("game-btns-container").append(randomizeBtn);
 
-    setWordListPlaceholder(DEFAULT_WORD_LIST_PLACEHOLDER);
-
-    document.getElementById("parent-container").addEventListener('scroll', () => {
-        currentPopoverElement?.hide();
-    });
-    document.getElementById("words-container").addEventListener('scroll', () => {
-        currentPopoverElement?.hide();
-    });
-
     // grid size buttons
     let minusSizeBtn = document.createElement("button");
     minusSizeBtn.setAttribute("id", "minus-size-btn");
@@ -345,6 +338,14 @@ function loadApp() {
     let sizeHeaderContainer = document.getElementById("size-header-container")
     sizeHeaderContainer.insertAdjacentElement("afterbegin", minusSizeBtn);
     sizeHeaderContainer.insertAdjacentElement("beforeend", plusSizeBtn);
+    
+    // hide popovers on scroll
+    document.getElementById("parent-container").addEventListener('scroll', () => {
+        currentPopoverElement?.hide();
+    });
+    document.getElementById("words-container").addEventListener('scroll', () => {
+        currentPopoverElement?.hide();
+    });
 
     createBoard(DEFAULT_GRID_SIZE);
 

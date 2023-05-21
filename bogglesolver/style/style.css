@@ -76,7 +76,7 @@ body {
 .results-container {
     width: 50%;
     text-align: center;
-    padding-left: 50px;
+    padding: 20px;
 }
 
 .words-container {
