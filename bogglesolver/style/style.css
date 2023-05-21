@@ -64,12 +64,12 @@ body {
 
 .game-btns-container {
     display: flex;
-    justify-content: left;
+    justify-content: center;
     text-align: center;
     padding: 5px;
 }
 
-.btn {
+.game-btns-container>.btn {
     margin-right: 5px;
 }
 
@@ -115,6 +115,11 @@ body {
     color: white;
 }
 
+#tiles-table-container {
+    display: flex;
+    justify-content: center;
+}
+
 #tiles-table {
     background-color: green;
     border-radius: 15px;
@@ -151,6 +156,19 @@ body {
 .popover-body {
     height: 200px;
     overflow-y: auto;
+}
+
+#size-header-container>.btn {
+    border: none;
+}
+
+#size-header-container>.btn[disabled] {
+    opacity: 40%;
+}
+
+#size-header-container>.btn:hover {
+    background-color: transparent;
+    color: green;
 }
 
 @media all and (max-height: 720px) {

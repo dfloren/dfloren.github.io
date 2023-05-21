@@ -1,7 +1,8 @@
-export const bestFiveByFive = [
-    ["R", "S", "L", "C", "S"],
-    ["D", "E", "I", "A", "E"],
-    ["G", "N", "T", "R", "P"],
-    ["A", "T", "E", "S", "E"],
-    ["S", "M", "I", "D", "R"],
+export const exampleSixBySix =  [
+    ["R", "S", "L", "C", "S", "H"],
+    ["D", "E", "I", "A", "E", "E"],
+    ["G", "N", "T", "R", "P", "L"],
+    ["A", "T", "E", "S", "E", "L"],
+    ["S", "M", "I", "D", "R", "O"],
+    ["L", "E", "S", "E", "T", "A"],
 ]

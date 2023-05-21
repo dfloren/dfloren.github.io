@@ -28,8 +28,12 @@
             <form id="tiles-form" name="tiles-form"></form>
             <div class="tiles-and-btns-container">
                 <div class="header-instructions"><strong>Press <i>Solve</i> to find all possible words.</strong></div>
-                <header class="header results-header">Size: 5 x 5</header>
-                <table id="tiles-table" class="tiles-table"></table>
+                <header id="size-header-container" class="header results-header">
+                    <span id="grid-size-info-container"></span>
+                </header>
+                <div id="tiles-table-container">
+                    <table id="tiles-table" class="tiles-table"></table>
+                </div>
                 <div id="game-btns-container" class="game-btns-container"></div>
             </div>
             <div id="results-container" class=results-container>

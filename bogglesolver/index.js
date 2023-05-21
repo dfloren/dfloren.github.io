@@ -1,9 +1,12 @@
 import { getDefinitionAsync, getWords } from "./service/wordservice.js";
 import { Trie } from "./utility/trie.js";
-import { bestFiveByFive } from "./utility/board.js";
+import { exampleSixBySix } from "./utility/board.js";
 
 
-const GRID_SIZE = 5;
+const MIN_GRID_SIZE = 4;
+const DEFAULT_GRID_SIZE = 5;
+const MAX_GRID_SIZE = 6;
+let CURRENT_GRID_SIZE = DEFAULT_GRID_SIZE;
 
 // Popover placeholders
 const DEFINITION_NOT_FOUND_PLACEHOLDER = "".concat("Definition not found, try Google.", String.fromCodePoint(0x1F937));
@@ -111,8 +114,8 @@ function clearGame() {
 }
 
 function randomizeGame() {
-    for (let row = 0; row < GRID_SIZE; row++) {
-        for (let col = 0; col < GRID_SIZE; col++) {
+    for (let row = 0; row < CURRENT_GRID_SIZE; row++) {
+        for (let col = 0; col < CURRENT_GRID_SIZE; col++) {
             document.getElementById(`R${row}C${col}`)
             .setAttribute("value", String.fromCharCode(Math.floor(Math.random() * (90 - 65)) + 65));
         }
@@ -196,12 +199,12 @@ function solve() {
 
     // 100ms to setup spinner properly
     setTimeout(() => {
-        let letterGrid = Array(GRID_SIZE).fill(null).map(() => Array(GRID_SIZE));
+        let letterGrid = Array(CURRENT_GRID_SIZE).fill(null).map(() => Array(CURRENT_GRID_SIZE));
         document.querySelectorAll("input.tile-input").forEach((value, key) => {
-            letterGrid[Math.floor(key / GRID_SIZE)][key % GRID_SIZE] = value.value.toUpperCase();
+            letterGrid[Math.floor(key / CURRENT_GRID_SIZE)][key % CURRENT_GRID_SIZE] = value.value.toUpperCase();
         });
 
-        let combinationsMap = getWords(letterGrid, GRID_SIZE, trie);
+        let combinationsMap = getWords(letterGrid, CURRENT_GRID_SIZE, trie);
 
         let words = [...combinationsMap.keys()].filter(c => wordSet.has(c) && c.length >= 3).sort();
 
@@ -233,15 +236,19 @@ function autotabTile(tile) {
     nextTileInput.focus();
 }
 
-function loadApp() {
-    // create grid
+function createBoard(gridSize) {
+    CURRENT_GRID_SIZE = gridSize;
+
+    document.getElementById("grid-size-info-container").innerText = `${CURRENT_GRID_SIZE} x ${CURRENT_GRID_SIZE}`;
+
     let tilesTable = document.getElementById("tiles-table");
 
-    // TODO: support multiple grid sizes
-    for (let i = 0; i < GRID_SIZE; i++) {
+    tilesTable.textContent = "";
+
+    for (let i = 0; i < gridSize; i++) {
         let row = document.createElement("tr");
 
-        for (let j = 0; j < GRID_SIZE; j++) {
+        for (let j = 0; j < gridSize; j++) {
             let tile = document.createElement("input");
             tile.setAttribute("autocomplete", "off");
             tile.setAttribute("form", "tiles-form");
@@ -251,7 +258,7 @@ function loadApp() {
             tile.setAttribute("name", `R${i}C${j}`);
             tile.setAttribute("pattern", "[A-Za-z]");
             tile.setAttribute("type", "text");
-            tile.setAttribute("value", bestFiveByFive[i][j]);
+            tile.setAttribute("value", exampleSixBySix[i][j]);
             tile.toggleAttribute("required", true);
             tile.addEventListener('click', () => tile.select());
             tile.addEventListener('input', () => autotabTile(tile));
@@ -267,6 +274,16 @@ function loadApp() {
         tilesTable.append(row);
     }
 
+    enableGrid();
+    clearWordList();
+}
+
+function updateGridSizeButtons() {
+    document.getElementById("minus-size-btn").toggleAttribute("disabled", CURRENT_GRID_SIZE === MIN_GRID_SIZE ? true : false);
+    document.getElementById("plus-size-btn").toggleAttribute("disabled", CURRENT_GRID_SIZE === MAX_GRID_SIZE ? true : false);
+}
+
+function loadApp() {
     document.forms["tiles-form"].onsubmit = solve;
 
     // solve button
@@ -301,6 +318,35 @@ function loadApp() {
     document.getElementById("words-container").addEventListener('scroll', () => {
         currentPopoverElement?.hide();
     });
+
+    // grid size buttons
+    let minusSizeBtn = document.createElement("button");
+    minusSizeBtn.setAttribute("id", "minus-size-btn");
+    minusSizeBtn.classList.add("btn", "btn-outline-success", "rounded-circle");
+    minusSizeBtn.innerHTML = '<i class="fa fa-minus-circle" style="font-size: 22px;"></i>';
+    minusSizeBtn.addEventListener('click', () => {
+        if (CURRENT_GRID_SIZE > MIN_GRID_SIZE) {
+            createBoard(--CURRENT_GRID_SIZE);
+        }
+        updateGridSizeButtons();
+    });
+
+    let plusSizeBtn = document.createElement("button");
+    plusSizeBtn.setAttribute("id", "plus-size-btn");
+    plusSizeBtn.classList.add("btn", "btn-outline-success", "rounded-circle");
+    plusSizeBtn.innerHTML = '<i class="fa fa-plus-circle" style="font-size: 22px;"></i>';
+    plusSizeBtn.addEventListener('click', () => {
+        if (CURRENT_GRID_SIZE < MAX_GRID_SIZE) {
+            createBoard(++CURRENT_GRID_SIZE);
+        }
+        updateGridSizeButtons();
+    });
+
+    let sizeHeaderContainer = document.getElementById("size-header-container")
+    sizeHeaderContainer.insertAdjacentElement("afterbegin", minusSizeBtn);
+    sizeHeaderContainer.insertAdjacentElement("beforeend", plusSizeBtn);
+
+    createBoard(DEFAULT_GRID_SIZE);
 
     // artificial loading time
     setTimeout(() => {
