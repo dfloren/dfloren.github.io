@@ -102,7 +102,41 @@ function clearWordList() {
     wordsContainer.innerText = "";
 }
 
-function populateWordList(words) {
+function clearGame() {
+    clearTiles();
+    enableGrid();
+    setWordListPlaceholder(DEFAULT_WORD_LIST_PLACEHOLDER);
+
+    document.querySelector("input.tile-input").focus();
+}
+
+function displayPath(combinationPath) {
+    let size = combinationPath.length;
+
+    for (let row = 0; row < size; row++) {
+        for (let col = 0; col < size; col++)  {
+            if (combinationPath[row][col] === true) {
+                let tile = document.getElementById(`R${row}C${col}`);
+                tile.classList.toggle("highlighted-tile", true);
+            }
+        }
+    }
+}
+
+function removeDisplayedPath(combinationPath) {
+    let size = combinationPath.length;
+
+    for (let row = 0; row < size; row++) {
+        for (let col = 0; col < size; col++)  {
+            if (combinationPath[row][col] === true) {
+                let tile = document.getElementById(`R${row}C${col}`);
+                tile.classList.toggle("highlighted-tile", false);
+            }
+        }
+    }
+}
+
+function populateWordList(words, combinationMap) {
     let wordsContainer = document.getElementById("words-container");
 
     clearWordList();
@@ -119,6 +153,14 @@ function populateWordList(words) {
         wordBtn.setAttribute("data-bs-trigger", "focus");
 
         wordBtn.addEventListener('click', setPopoverContent);
+
+        // mouse highlight
+        wordBtn.addEventListener('mouseover', () => displayPath(combinationMap.get(word)));
+        wordBtn.addEventListener('mouseout', () => removeDisplayedPath(combinationMap.get(word)));
+
+        // touch highlight
+        wordBtn.addEventListener('focus', () => displayPath(combinationMap.get(word)));
+        wordBtn.addEventListener('blur', () => removeDisplayedPath(combinationMap.get(word)));
 
         wordsContainer.append(wordBtn);
     }
@@ -140,26 +182,25 @@ function solve() {
 
     disableGrid();
 
-    // 1 second to setup spinner properly
+    // 10ms to setup spinner properly
     setTimeout(() => {
         let letterGrid = Array(GRID_SIZE).fill(null).map(() => Array(GRID_SIZE));
         document.querySelectorAll("input.tile-input").forEach((value, key) => {
             letterGrid[Math.floor(key / GRID_SIZE)][key % GRID_SIZE] = value.value.toUpperCase();
         });
 
-        // TODO: generate letter combinations + tile placement from grid
-        let combinations = getWords(letterGrid, GRID_SIZE, trie);
+        let combinationsMap = getWords(letterGrid, GRID_SIZE, trie);
 
-        let words = combinations.filter(c => wordSet.has(c) && c.length >= 3).sort();
+        let words = [...combinationsMap.keys()].filter(c => wordSet.has(c) && c.length >= 3).sort();
 
         if (!words.length) {
             setWordListPlaceholder(NO_WORDS_FOUND_PLACEHOLDER);
         } else {
-            populateWordList(words);
+            populateWordList(words, combinationsMap);
         }
 
         document.getElementById("solve-btn").innerHTML = "Solve";
-    }, 1000);
+    }, 10);
 
     return false;
 }
@@ -178,14 +219,6 @@ function autotabTile(tile) {
         nextTileInput = tile.closest("body").querySelector("#solve-btn");
     }
     nextTileInput.focus();
-}
-
-function clearGame() {
-    clearTiles();
-    enableGrid();
-    setWordListPlaceholder(DEFAULT_WORD_LIST_PLACEHOLDER);
-
-    document.querySelector("input.tile-input").focus();
 }
 
 function loadApp() {
@@ -253,7 +286,6 @@ function loadApp() {
     setTimeout(() => {
         document.getElementById("parent-container").toggleAttribute("hidden");
         document.getElementById("loading-banner").remove();
-        document.getElementById("solve-btn").focus();
     }, 1000);
 }
 

@@ -133,6 +133,11 @@ body {
     background-color: rgb(237, 255, 237);
 }
 
+.highlighted-tile {
+    background-color: red;
+    color: white;
+}
+
 .popover {
     --bs-popover-bg: #fff !important;
     --bs-popover-header-bg:  rgb(196, 255, 196) !important;

@@ -9,6 +9,13 @@ export async function getDefinitionAsync(word) {
     return await fetchPromise.json();
 }
 
+/**
+ * 
+ * @param {*} grid - 2D array of letters
+ * @param {*} size - size of grid
+ * @param {*} trie - Trie representing the word bank
+ * @returns A map where key = word, value = 2D array representing traversal path
+ */
 export function getWords(grid, size, trie) {
 
     let directions = [
@@ -22,7 +29,7 @@ export function getWords(grid, size, trie) {
         [1, 1],   // down-right
     ];  
 
-    let result = new Set();
+    let result = new Map();
 
     function getNextLetter(visitedGrid, row, col, combination) {
         /**
@@ -53,10 +60,10 @@ export function getWords(grid, size, trie) {
                 continue;
             }
 
-            result.add(newCombination.join(""));
-
             let newVisitedGrid = JSON.parse(JSON.stringify(visitedGrid));
             newVisitedGrid[nextRow][nextCol] = true;
+
+            result.set(newCombination.join(""), newVisitedGrid);
 
             getNextLetter(newVisitedGrid, nextRow, nextCol, newCombination);
         }
@@ -76,5 +83,5 @@ export function getWords(grid, size, trie) {
         }
     }
 
-    return [...result];
+    return result;
 }
