@@ -77,7 +77,7 @@ function setPopoverContent(clickEvent) {
 
 function clearTiles() {
     let tileInputs = document.querySelectorAll("input.tile-input");
-    tileInputs.forEach(t => t.setAttribute("value", ""));
+    tileInputs.forEach(t => t.value = "");
 }
 
 function disableGrid() {
@@ -118,8 +118,8 @@ function clearGame() {
 function randomizeGame() {
     for (let row = 0; row < CURRENT_GRID_SIZE; row++) {
         for (let col = 0; col < CURRENT_GRID_SIZE; col++) {
-            document.getElementById(`R${row}C${col}`)
-            .setAttribute("value", String.fromCharCode(Math.floor(Math.random() * (90 - 65)) + 65));
+            document.getElementById(`R${row}C${col}`).value = 
+            String.fromCharCode(Math.floor(Math.random() * (90 - 65)) + 65);
         }
     }
 
