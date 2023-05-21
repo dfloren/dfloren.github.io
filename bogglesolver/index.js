@@ -72,7 +72,7 @@ function setPopoverContent(clickEvent) {
 
 function clearTiles() {
     let tileInputs = document.querySelectorAll("input.tile-input");
-    tileInputs.forEach(t => t.value = "");
+    tileInputs.forEach(t => t.setAttribute("value", ""));
 }
 
 function disableGrid() {
@@ -108,6 +108,18 @@ function clearGame() {
     setWordListPlaceholder(DEFAULT_WORD_LIST_PLACEHOLDER);
 
     document.querySelector("input.tile-input").focus();
+}
+
+function randomizeGame() {
+    for (let row = 0; row < GRID_SIZE; row++) {
+        for (let col = 0; col < GRID_SIZE; col++) {
+            document.getElementById(`R${row}C${col}`)
+            .setAttribute("value", String.fromCharCode(Math.floor(Math.random() * (90 - 65)) + 65));
+        }
+    }
+
+    enableGrid();
+    solve();
 }
 
 function displayPath(combinationPath) {
@@ -182,7 +194,7 @@ function solve() {
 
     disableGrid();
 
-    // 10ms to setup spinner properly
+    // 100ms to setup spinner properly
     setTimeout(() => {
         let letterGrid = Array(GRID_SIZE).fill(null).map(() => Array(GRID_SIZE));
         document.querySelectorAll("input.tile-input").forEach((value, key) => {
@@ -200,7 +212,7 @@ function solve() {
         }
 
         document.getElementById("solve-btn").innerHTML = "Solve";
-    }, 10);
+    }, 100);
 
     return false;
 }
@@ -225,6 +237,7 @@ function loadApp() {
     // create grid
     let tilesTable = document.getElementById("tiles-table");
 
+    // TODO: support multiple grid sizes
     for (let i = 0; i < GRID_SIZE; i++) {
         let row = document.createElement("tr");
 
@@ -272,6 +285,13 @@ function loadApp() {
     clearBtn.innerText = "Clear";
     clearBtn.addEventListener("click", () => clearGame());
     document.getElementById("game-btns-container").append(clearBtn);
+
+    // randomize button
+    let randomizeBtn = document.createElement("button");
+    randomizeBtn.classList.add("btn", "btn-secondary");
+    randomizeBtn.innerHTML = '<i class="fa fa-random" style="font-size: 16px;"></i>';
+    randomizeBtn.addEventListener("click", () => randomizeGame());
+    document.getElementById("game-btns-container").append(randomizeBtn);
 
     setWordListPlaceholder(DEFAULT_WORD_LIST_PLACEHOLDER);
 
