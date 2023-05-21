@@ -1,7 +1,9 @@
-import { getDefinitionAsync, getLetterCombinations } from "./service/wordservice.js";
+import { getDefinitionAsync, getWords } from "./service/wordservice.js";
+import { Trie } from "./utility/trie.js";
+import { bestFiveByFive } from "./utility/board.js";
 
 
-const GRID_SIZE = 4;
+const GRID_SIZE = 5;
 
 // Popover placeholders
 const DEFINITION_NOT_FOUND_PLACEHOLDER = "".concat("Definition not found, try Google.", String.fromCodePoint(0x1F937));
@@ -13,6 +15,8 @@ const NO_WORDS_FOUND_PLACEHOLDER = "No words found!";
 let currentPopoverElement;
 
 let wordSet;
+
+let trie;
 
 
 function buildSmallSpinnerHTML() {
@@ -144,7 +148,7 @@ function solve() {
         });
 
         // TODO: generate letter combinations + tile placement from grid
-        let combinations = getLetterCombinations(letterGrid, GRID_SIZE);
+        let combinations = getWords(letterGrid, GRID_SIZE, trie);
 
         let words = combinations.filter(c => wordSet.has(c) && c.length >= 3).sort();
 
@@ -201,6 +205,7 @@ function loadApp() {
             tile.setAttribute("name", `R${i}C${j}`);
             tile.setAttribute("pattern", "[A-Za-z]");
             tile.setAttribute("type", "text");
+            tile.setAttribute("value", bestFiveByFive[i][j]);
             tile.toggleAttribute("required", true);
             tile.addEventListener('click', () => tile.select());
             tile.addEventListener('input', () => autotabTile(tile));
@@ -246,9 +251,9 @@ function loadApp() {
 
     // artificial loading time
     setTimeout(() => {
-        document.querySelector("#parent-container").toggleAttribute("hidden");
-        document.querySelector("#loading-banner").remove();
-        document.querySelector(".tile-input").focus();
+        document.getElementById("parent-container").toggleAttribute("hidden");
+        document.getElementById("loading-banner").remove();
+        document.getElementById("solve-btn").focus();
     }, 1000);
 }
 
@@ -259,6 +264,9 @@ fetch("resources/dictionary.txt")
         }
         return response.text();
     })
-    .then(response => wordSet = new Set(response.split("\n")))
+    .then(response => {
+        wordSet = new Set(response.split("\n"))
+        trie = Trie.trieFromWordList(wordSet);
+    })
     .then(() => loadApp())
     .catch(e => alert(`${e.message}`));

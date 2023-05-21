@@ -9,7 +9,7 @@ export async function getDefinitionAsync(word) {
     return await fetchPromise.json();
 }
 
-export function getLetterCombinations(grid, size) {
+export function getWords(grid, size, trie) {
 
     let directions = [
         [-1, 0],  // up
@@ -29,8 +29,10 @@ export function getLetterCombinations(grid, size) {
          * Max combinations
          * 2x2 - 60
          * 3x3 - 10 296
-         * 4x4 - 12 029 624
+         * 4x4 - 12 029 624 (~40 secs without Trie, ~3 seconds with)
          * 5x5 - RangeError: Too many properties to enumerate (lol)
+         * 
+         * Not all combinations will be words. Use a Trie to avoid unnecessary traversals.
          */
 
         for (let [r, c] of directions) {
@@ -47,7 +49,7 @@ export function getLetterCombinations(grid, size) {
             let newCombination = Array.from(combination);
             newCombination.push(grid[nextRow][nextCol]);
 
-            if (false /** TODO: check if new combination is a word/prefix from Trie */) {
+            if (!trie.isPrefix(newCombination.join(''))) {
                 continue;
             }
 
