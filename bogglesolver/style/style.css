@@ -194,3 +194,15 @@ body {
         width: 200px;
     }
 }
+
+@media all and (max-width: 365px) {
+    .tile-input {
+        font-size: 1.20em;
+    }
+}
+
+@media all and (max-width: 340px) {
+    .tile-input {
+        font-size: 1.10em;
+    }
+}
