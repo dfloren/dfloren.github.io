@@ -1,1 +1,1 @@
-window.location.href="bogglesolver/index.html";
+// window.location.href="bogglesolver/src/index.html";

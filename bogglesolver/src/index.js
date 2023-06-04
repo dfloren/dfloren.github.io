@@ -1,7 +1,9 @@
-import { getDefinitionAsync, getWords } from "./service/wordservice.js";
-import { Trie } from "./utility/trie.js";
-import { exampleSixBySix } from "./utility/board.js";
+import { getDefinitionAsync, getWords } from "./scripts/service/wordservice.js";
+import { Trie } from "./scripts/utility/trie.js";
+import { exampleSixBySix } from "./scripts/utility/board.js";
 
+
+const DICT_LOCAL_URL = "../resources/dictionary.txt";
 
 const MIN_GRID_SIZE = 4;
 const DEFAULT_GRID_SIZE = 5;
@@ -356,7 +358,7 @@ function loadApp() {
     }, 1000);
 }
 
-fetch("resources/dictionary.txt")
+fetch(DICT_LOCAL_URL)
     .then(response => {
         if (!response.ok) {
             throw new Error(`Failed to fetch dictionary. HTTP Status: ${response.status}`);
