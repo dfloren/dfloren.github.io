@@ -51,10 +51,6 @@ body {
     padding-right: 20%;
 }
 
-.header-instructions {
-    text-align: center;
-}
-
 .results-header {
     font-size: 1.5em;
     font-weight: 400;
@@ -199,6 +195,22 @@ body {
 
 .btn-outline-primary:hover {
     color:  rgb(0, 105, 161) !important;
+}
+
+@keyframes tilt-shaking {
+  0% { transform: rotate(0deg); }
+  25% { transform: rotate(5deg); }
+  50% { transform: rotate(0eg); }
+  75% { transform: rotate(-5deg); }
+  100% { transform: rotate(0deg); }
+}
+
+#solve-btn:enabled {
+    animation: tilt-shaking 0.5s infinite; 
+}
+
+#solve-btn:hover {
+    animation: none; 
 }
 
 @media all and (max-height: 720px) {
