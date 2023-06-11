@@ -351,11 +351,8 @@ function loadApp() {
 
     createBoard(DEFAULT_GRID_SIZE);
 
-    // artificial loading time
-    setTimeout(() => {
-        document.getElementById("parent-container").toggleAttribute("hidden");
-        document.getElementById("loading-banner").remove();
-    }, 1000);
+    document.getElementById("parent-container").toggleAttribute("hidden");
+    document.getElementById("loading-banner").remove();
 }
 
 fetch(DICT_LOCAL_URL)
