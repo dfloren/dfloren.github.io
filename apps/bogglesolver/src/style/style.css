@@ -1,3 +1,5 @@
+@import url("/apps/common/style/style.css");
+
 html,
 body {
     width: 100%;
@@ -20,8 +22,17 @@ body {
     height: 100%;
 }
 
-.flex-row {
+#boggle-img-container {
     display: flex;
+    justify-content: center;
+}
+
+#boggle-img {
+    height: auto;
+    width: 200px;
+}
+
+.flex-row {
     flex-flow: row wrap;
     align-items: stretch;
 }
@@ -30,11 +41,11 @@ body {
     text-align: center;
     width: 100%;
     padding: 5px;
-    font-size: 2em;
-    font-weight: 500;
+    font-size: 3em;
+    font-weight: 1000;
 }
 
-.boggle-definition {
+#boggle-definition {
     font-size: 1em;
     padding-left: 20%;
     padding-right: 20%;
@@ -56,6 +67,7 @@ body {
     flex-grow: 1;
     justify-content: center;
     padding: 10px;
+    margin-bottom: 10px;
 }
 
 .tiles-and-btns-container {
@@ -76,7 +88,8 @@ body {
 .results-container {
     width: 50%;
     text-align: center;
-    padding: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
 }
 
 .words-container {
@@ -85,8 +98,8 @@ body {
     height: 600px;
     overflow: auto;
     padding: 10px;
-    margin-right: 5px;
-    background: rgba(76, 175, 80, 0.1);
+    background-color: rgb(0, 119, 182);
+    color: white;
     border-radius: 10px;
 }
 
@@ -106,13 +119,12 @@ body {
     margin-top: 5px;
     margin-left: 5px;
     text-align: left;
-    background-color: rgb(196, 255, 196);
+    background-color: rgb(255, 247, 217); 
     border: none;
 }
 
 .words-container>button:hover {
-    background-color: green;
-    color: white;
+    font-weight: bolder;
 }
 
 #tiles-table-container {
@@ -121,25 +133,27 @@ body {
 }
 
 #tiles-table {
-    background-color: green;
+    background-color: rgb(0, 119, 190);
     border-radius: 15px;
 }
 
 .tile-input {
     font-size: 1.5em;
+    font-weight: bolder;
     width: 1.75em;
     margin: 7px;
-    background-color: rgb(196, 255, 196);
+    color: rgb(0, 119, 190);
+    background-color: rgb(255, 247, 217);
     text-align: center;
     border: none;
     border-radius: 5px;
     text-transform: uppercase;
     outline: none;
-    box-shadow: 2px 2px 2px 2px rgb(0, 56, 0);
+    box-shadow: 2px 2px 2px 2px rgb(0, 0, 0);
 }
 
 .tile-input:invalid {
-    background-color: rgb(237, 255, 237);
+    background-color: white;
 }
 
 .highlighted-tile {
@@ -149,8 +163,8 @@ body {
 
 .popover {
     --bs-popover-bg: #fff !important;
-    --bs-popover-header-bg:  rgb(196, 255, 196) !important;
-    --bs-popover-header-color: black !important;
+    --bs-popover-header-bg:  rgb(0, 119, 182) !important;
+    --bs-popover-header-color: white !important;
 }
 
 .popover-body {
@@ -168,7 +182,23 @@ body {
 
 #size-header-container>.btn:hover {
     background-color: transparent;
-    color: green;
+    color: rgb(0, 119, 182);
+}
+
+.btn-primary {
+    background-color:  rgb(0, 119, 182) !important;
+}
+
+.btn-primary:hover {
+    background-color:  rgb(0, 105, 161) !important;
+}
+
+.btn-outline-primary {
+    color:  rgb(0, 119, 182) !important;
+}
+
+.btn-outline-primary:hover {
+    color:  rgb(0, 105, 161) !important;
 }
 
 @media all and (max-height: 720px) {

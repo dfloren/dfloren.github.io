@@ -293,7 +293,7 @@ function loadApp() {
     // solve button
     let solveBtn = document.createElement("button");
     solveBtn.setAttribute("form", "tiles-form");
-    solveBtn.classList.add("btn", "btn-success");
+    solveBtn.classList.add("btn", "btn-primary");
     solveBtn.id = "solve-btn"
     solveBtn.type = "submit";
     solveBtn.value = "Solve";
@@ -317,7 +317,7 @@ function loadApp() {
     // grid size buttons
     let minusSizeBtn = document.createElement("button");
     minusSizeBtn.setAttribute("id", "minus-size-btn");
-    minusSizeBtn.classList.add("btn", "btn-outline-success", "rounded-circle");
+    minusSizeBtn.classList.add("btn", "btn-outline-primary", "rounded-circle");
     minusSizeBtn.innerHTML = '<i class="fa fa-minus-circle" style="font-size: 22px;"></i>';
     minusSizeBtn.addEventListener('click', () => {
         if (CURRENT_GRID_SIZE > MIN_GRID_SIZE) {
@@ -328,7 +328,7 @@ function loadApp() {
 
     let plusSizeBtn = document.createElement("button");
     plusSizeBtn.setAttribute("id", "plus-size-btn");
-    plusSizeBtn.classList.add("btn", "btn-outline-success", "rounded-circle");
+    plusSizeBtn.classList.add("btn", "btn-outline-primary", "rounded-circle");
     plusSizeBtn.innerHTML = '<i class="fa fa-plus-circle" style="font-size: 22px;"></i>';
     plusSizeBtn.addEventListener('click', () => {
         if (CURRENT_GRID_SIZE < MAX_GRID_SIZE) {

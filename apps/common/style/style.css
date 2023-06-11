@@ -1,0 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Moirai+One&family=Noto+Sans+JP&display=swap');
+
+.font-noto-sans-japanese {
+    font-family: 'Noto Sans JP', sans-serif
+}
+
+.font-moiraione {
+    font-family: 'Moirai One', cursive;
+}

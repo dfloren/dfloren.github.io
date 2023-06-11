@@ -18,9 +18,9 @@
 </head>
 
 <body>
-    <div id="parent-container" class="flex-row" hidden>
-        <header class="header">Boggle Solver</header>
-        <div class="boggle-definition">
+    <div id="parent-container" class="flex-row font-noto-sans-japanese" hidden>
+        <header class="header"><span class="font-moiraione">Boggle</span> Solver</header>
+        <div id="boggle-definition">
             From Wikipedia:
             <i>
                 "Boggle is a word game in which players try to find as many words as they can from a grid of lettered
@@ -28,6 +28,9 @@
                 Brothers. The game is played using a plastic grid of lettered dice, in which players look for words
                 in sequences of adjacent letters."
             </i>
+        </div>
+        <div id="boggle-img-container">
+            <img id="boggle-img" src="../resources/images/boggle.jpg" loading="eager">
         </div>
         <div id="game-container" class="game-container">
             <form id="tiles-form" name="tiles-form"></form>
