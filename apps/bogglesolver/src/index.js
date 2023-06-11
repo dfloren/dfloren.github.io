@@ -260,6 +260,7 @@ function createBoard(gridSize) {
             tile.setAttribute("maxLength", "1");
             tile.setAttribute("minLength", "1");
             tile.setAttribute("name", `R${i}C${j}`);
+            tile.setAttribute("aria-label", `R${i}C${j}`)
             tile.setAttribute("pattern", "[A-Za-z]");
             tile.setAttribute("type", "text");
             tile.setAttribute("value", exampleSixBySix[i][j]);
@@ -310,6 +311,7 @@ function loadApp() {
     // randomize button
     let randomizeBtn = document.createElement("button");
     randomizeBtn.classList.add("btn", "btn-secondary");
+    randomizeBtn.setAttribute("aria-label", "shuffle-button")
     randomizeBtn.innerHTML = '<i class="fa fa-random" style="font-size: 16px;"></i>';
     randomizeBtn.addEventListener("click", () => randomizeGame());
     document.getElementById("game-btns-container").append(randomizeBtn);
@@ -317,6 +319,7 @@ function loadApp() {
     // grid size buttons
     let minusSizeBtn = document.createElement("button");
     minusSizeBtn.setAttribute("id", "minus-size-btn");
+    minusSizeBtn.setAttribute("aria-label", "minus-size-btn");
     minusSizeBtn.classList.add("btn", "btn-outline-primary", "rounded-circle");
     minusSizeBtn.innerHTML = '<i class="fa fa-minus-circle" style="font-size: 22px;"></i>';
     minusSizeBtn.addEventListener('click', () => {
@@ -328,6 +331,7 @@ function loadApp() {
 
     let plusSizeBtn = document.createElement("button");
     plusSizeBtn.setAttribute("id", "plus-size-btn");
+    plusSizeBtn.setAttribute("aria-label", "plus-size-btn");
     plusSizeBtn.classList.add("btn", "btn-outline-primary", "rounded-circle");
     plusSizeBtn.innerHTML = '<i class="fa fa-plus-circle" style="font-size: 22px;"></i>';
     plusSizeBtn.addEventListener('click', () => {
