@@ -205,6 +205,15 @@ body {
   100% { transform: rotate(0deg); }
 }
 
+#boggle-word-header {
+    display: inline-block;
+    animation: tilt-shaking 0.3s 3; 
+}
+
+#boggle-word-header:hover {
+    animation: tilt-shaking 0.3s infinite; 
+}
+
 #solve-btn:enabled {
     animation: tilt-shaking 0.5s infinite; 
 }

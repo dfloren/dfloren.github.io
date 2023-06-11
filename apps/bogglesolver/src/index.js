@@ -197,7 +197,7 @@ function populateWordList(words, combinationMap) {
 function solve() {
     let solveBtn = document.getElementById("solve-btn");
     solveBtn.toggleAttribute("disabled", true);
-    solveBtn.innerHTML = ''.concat(buildSmallSpinnerHTML(), " ", "Solving...");
+    solveBtn.innerHTML = ''.concat(buildSmallSpinnerHTML(), " ", "Boggling...");
 
     disableGrid();
 
