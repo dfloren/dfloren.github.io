@@ -1,3 +1,5 @@
+import * as content from "./scripts/utilities/content.js";
+
 const LOCAL_GALLERY_URL = "/apps/home/resources/images/gallery";
 const GALLERY_EXT = ".jpg";
 
@@ -17,12 +19,41 @@ for (let i = 1; i < 16; i++) {
 }
 
 (function initIntro() {
-    let introHeader = document.createElement("h1");
-    introHeader.innerText = "Daniel Florendo";
+    let boldedName = document.createElement("strong");
+    boldedName.classList.add("bio-heading-1");
+    boldedName.textContent = content.CONTENT_INTRO_NAME;
+
+    let introDescription = document.createElement("span");
+    introDescription.classList.add('bio-heading-2');
+    introDescription.innerText = content.CONTENT_INTRO_DESC;
+
+    let introHeader = document.createElement("div");
+    introHeader.append(boldedName);
+    introHeader.append(introDescription);
+
+    let introShortDescription = document.createElement("div");
+    introShortDescription.classList.add("bio-heading-3", "italic");
+    introShortDescription.innerText = content.CONTENT_INTRO_SHORT_DESC;
+
+    let introEmploymentCompany = document.createElement("a");
+    introEmploymentCompany.classList.add("bio-heading-2", "font-ubuntu");
+    introEmploymentCompany.href = "https://www.capgemini.com/";
+    introEmploymentCompany.target ="_blank";
+    introEmploymentCompany.innerText = content.CONTENT_INTRO_EMPLOYMENT_COMPANY;
+
+    let introEmploymentDescription = document.createElement("span");
+    introEmploymentDescription.classList.add("bio-heading-3");
+    introEmploymentDescription.innerText = content.CONTENT_INTRO_EMPLOYMENT_DESC;
+
+    let introEmployment = document.createElement("div");
+    introEmployment.append(introEmploymentDescription);
+    introEmployment.append(introEmploymentCompany);
 
     let intro = document.getElementById("intro-container");
     intro.classList.add("section-container");
     intro.append(introHeader);
+    intro.append(introShortDescription);
+    intro.append(introEmployment);
 })();
 
 (function initProjects() {
