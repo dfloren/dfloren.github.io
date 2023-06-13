@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Moirai+One&family=Noto+Sans+JP&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Moirai+One&family=Noto+Sans+JP:wght@300;400&family=Ubuntu&display=swap');
 
 .font-noto-sans-japanese {
     font-family: 'Noto Sans JP', sans-serif
@@ -6,4 +6,8 @@
 
 .font-moiraione {
     font-family: 'Moirai One', cursive;
+}
+
+.font-ubuntu {
+    font-family: 'Ubuntu', sans-serif;
 }
