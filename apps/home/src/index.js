@@ -99,19 +99,18 @@ function createSlidingPointerImg() {
     boggleHeaderDescDiv.classList.add("font-weight-300", "section-desc");
     boggleHeaderDescDiv.innerText = "A solver for the super noisy word game Boggle.";
 
-    let boggleSolverVideo = document.createElement("video");
-    boggleSolverVideo.classList.add("padding-20px");
-    boggleSolverVideo.toggleAttribute("muted", true);
-    boggleSolverVideo.toggleAttribute("playsinline", true);
-    boggleSolverVideo.toggleAttribute("controls", true);
-    boggleSolverVideo.toggleAttribute("loop", true);
-    boggleSolverVideo.toggleAttribute("autoplay", true);
-
     let boggleSolverVideoSource = document.createElement("source");
     boggleSolverVideoSource.src = "../resources/videos/bogglesolverdemo.mp4";
     boggleSolverVideoSource.type = "video/mp4";
 
-    boggleSolverVideo.append(boggleSolverVideoSource);
+    let boggleSolverVideo = document.createElement("video");
+    boggleSolverVideo.classList.add("padding-20px");
+    boggleSolverVideo.playsInline = true;
+    boggleSolverVideo.loop = true;
+    boggleSolverVideo.autoplay = true;
+    boggleSolverVideo.muted = true;
+
+   boggleSolverVideo.append(boggleSolverVideoSource);
 
     let boggleSolverVideoDiv = document.createElement("div");
     boggleSolverVideoDiv.append(boggleSolverVideo);
@@ -132,17 +131,16 @@ function createSlidingPointerImg() {
     coinStashHeaderDescDiv.classList.add("font-weight-300", "section-desc");
     coinStashHeaderDescDiv.innerText = "A cryptocurrency portfolio management system built with Django.";
 
-    let coinStashVideo = document.createElement("video");
-    coinStashVideo.classList.add("padding-20px");
-    coinStashVideo.toggleAttribute("muted", true);
-    coinStashVideo.toggleAttribute("playsinline", true);
-    coinStashVideo.toggleAttribute("controls", true);
-    coinStashVideo.toggleAttribute("loop", true);
-    coinStashVideo.toggleAttribute("autoplay", true);
-
     let coinStashVideoSource = document.createElement("source");
     coinStashVideoSource.src = "../resources/videos/coinstashdemo.mp4";
     coinStashVideoSource.type = "video/mp4";
+
+    let coinStashVideo = document.createElement("video");
+    coinStashVideo.classList.add("padding-20px");
+    coinStashVideo.playsInline = true;
+    coinStashVideo.loop = true;
+    coinStashVideo.autoplay = true;
+    coinStashVideo.muted = true;
 
     coinStashVideo.append(coinStashVideoSource);
 
