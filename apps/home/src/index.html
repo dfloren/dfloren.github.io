@@ -2,43 +2,159 @@
 <html lang="en">
 
 <head>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-QEZPS71XJ0"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-QEZPS71XJ0"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
 
-      gtag('config', 'G-QEZPS71XJ0');
-    </script>
+    gtag('config', 'G-QEZPS71XJ0');
+  </script>
 
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
-    <meta name="description" content="Daniel F">
-    <meta name="author" content="Daniel F">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Daniel F">
+  <meta name="author" content="Daniel F">
+  <title>Home - Dfloren</title>
 
-    <title>Home - Dfloren</title>
 
-    <link rel="icon" type="image/x-icon" href="/apps/common/images/logo.png">
-    <link rel="stylesheet" href="style/style.css">
+  <link rel="icon" type="image/x-icon" href="/apps/common/images/logo.png">
+
+  <!-- Inter font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+  <!-- External style sheet -->
+  <link rel="stylesheet" href="style/style.css">
 </head>
 
 <body>
-    <div id="root-container">
-
-        <div id="intro-container"></div>
-
-        <div id="projects-container"></div>
-
-        <div id="gallery-container">
-            <div id="gallery-header"></div>
-            <div id="masonry-container"></div>
-        </div>
-
+  <nav>
+    <div class="nav-group">
+      <h1>Daniel Florendo</h1>
+      <p>Software Engineer</p>
+      <div class="nav-links">
+        <a href="#about">About</a>
+        <a href="#experience">Experience</a>
+        <a href="#projects">Projects</a>
+      </div>
     </div>
+  </nav>
 
-    <script type="module" src="index.js"></script>
+  <main id="content">
+    <!-- About -->
+    <section id="about">
+      <h1>About</h1>
+      <p>
+        I'm Daniel Florendo, a software engineer with experience developing scalable applications across
+        <span class="highlight">aviation</span>,
+        <span class="highlight">finance</span>, and
+        <span class="highlight">embedded systems</span>.
+        My work spans building full-stack platforms, optimizing data pipelines, and engineering software that improves
+        efficiency, compliance, and user experience.
+        I specialize in <span class="highlight">Python</span>, <span class="highlight">Java</span>, and <span
+          class="highlight">C</span>,
+        and I'm passionate about designing reliable, high-impact solutions that solve <span class="highlight">real-world
+          problems</span>.
+      </p>
+    </section>
+
+    <!-- Experience -->
+    <section id="experience">
+      <h1>Experience</h1>
+
+      <div class="experience-entry">
+        <div class="date">Oct 2023 — Present</div>
+        <div>
+          <div class="job-title">Software Application Developer</div>
+          <div class="company">Jeppesen, a Boeing Company</div>
+          <div class="mobile-date">Oct 2023 — Present</div>
+          <p>At Jeppesen, I build and optimize flight awarding and trading systems used by Air Canada's 10,000+ pilots
+            and flight attendants, significantly reducing the manual workload of planners. I design rules in Python and
+            Rave to enforce Canadian Aviation Regulations and union agreements, author test scenarios with Behave to
+            achieve high code coverage, and manage releases in an Agile environment to ensure continuous delivery. I
+            also work closely with stakeholders to refine requirements, improving clarity and reducing rework.</p>
+          <div class="badges">
+            <span>Bash</span><span>Behave</span><span>Git</span><span>Linux</span><span>Python</span><span>Rave</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="experience-entry">
+        <div class="date">Jul 2022 — Oct 2023</div>
+        <div>
+          <div class="job-title">Software Engineer</div>
+          <div class="company">Capgemini</div>
+          <div class="mobile-date">Jul 2022 — Oct 2023</div>
+          <p>At Capgemini, I developed distributed, full-stack applications for RBC, including a task-tracking platform
+            supporting 50,000+ clients. I modeled business entities with design patterns, built resilient RESTful
+            microservices with MongoDB and Spring Boot, and achieved strong unit test coverage. I optimized data
+            processing pipelines by migrating from Java/MSSQL to PySpark and AWS S3, cutting ETL costs by 30%, and
+            orchestrated batch jobs across diverse data sources.</p>
+          <div class="badges">
+            <span>Docker</span><span>Git</span><span>Java</span><span>MongoDB</span><span>PySpark</span><span>Python</span><span>Spring
+              Boot</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="experience-entry">
+        <div class="date">May — Dec 2021</div>
+        <div>
+          <div class="job-title">Embedded Software Developer (Co-op)</div>
+          <div class="company">Xanantec</div>
+          <div class="mobile-date">May — Dec 2021</div>
+          <p>At Xanantec, I engineered embedded software for industrial systems, programming motor controllers,
+            communication protocols, and custom hardware integrations. I improved motor durability with PID control,
+            boosted Modbus/RS232 communication throughput, and built tools for testing and calibration. I also
+            customized a TI Linux kernel with a new device tree to support proprietary hardware, and integrated sensors
+            with microcontrollers for real-time data processing.</p>
+          <div class="badges">
+            <span>Bash</span><span>C</span><span>C++</span><span>Git</span><span>Linux</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="experience-entry">
+        <div class="date">Jan — Aug 2020</div>
+        <div>
+          <div class="job-title">Software Engineer (Co-op)</div>
+          <div class="company">Electronic Arts</div>
+          <div class="mobile-date">Jan — Aug 2020</div>
+          <p>At EA, I contributed to FIFA Ultimate Team 21 by developing features that enhanced gameplay and UI. I built
+            a widget manager for managing screen components, redesigned input mappings to improve player experience, and
+            modified C++ API calls to support new screens. My work supported smoother game development workflows and
+            improved in-game usability.</p>
+          <div class="badges">
+            <span>ActionScript</span><span>C++</span><span>Flash</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects -->
+    <section id="projects">
+      <h1>Projects</h1>
+
+      <div class="project-entry">
+        <div class="job-title">Boggle Solver</div>
+        <p>A tool that quickly finds valid words on a Boggle board using trie-based search. Built to practice algorithm
+          design and provide a fast, interactive puzzle-solving experience.</p>
+        <p><a href="https://dfloren.com/apps/bogglesolver/src/index.html"
+            target="_blank">https://dfloren.com/apps/bogglesolver/src/index.html</a></p>
+      </div>
+
+      <div class="project-entry">
+        <div class="job-title">Cryptocurrency Portfolio</div>
+        <p>A portfolio tracker that connects to live market data and displays performance with clear charts. Built to
+          make it easier to manage and review cryptocurrency investments across multiple assets.</p>
+        <p><a href="https://github.com/dfloren/CoinStash-public"
+            target="_blank">https://github.com/dfloren/CoinStash-public</a></p>
+      </div>
+    </section>
+  </main>
+
+  <script type=module src="index.js"></script>
 </body>
 
 </html>
