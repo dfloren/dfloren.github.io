@@ -367,7 +367,7 @@ fetch(DICT_LOCAL_URL)
         return response.text();
     })
     .then(response => {
-        wordSet = new Set(response.split("\n"))
+        wordSet = new Set(response.split(/\r?\n/))
         trie = Trie.trieFromWordList(wordSet);
     })
     .then(() => loadApp())
