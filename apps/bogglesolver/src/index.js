@@ -161,8 +161,7 @@ function populateWordList(words, combinationMap) {
     clearWordList();
 
     for (let word of words) {
-        let wordBtn = document.createElement("button");
-        wordBtn.type = "button";
+        let wordBtn = document.createElement("a"); /* using <a> instead of <button> to fix bootstrap popover compatibility issues */
         wordBtn.innerText = word;
 
         wordBtn.setAttribute("data-bs-toggle", "popover");
@@ -170,6 +169,7 @@ function populateWordList(words, combinationMap) {
         wordBtn.setAttribute("data-bs-content", buildSmallSpinnerHTML());
         wordBtn.setAttribute("data-bs-html", true);
         wordBtn.setAttribute("data-bs-trigger", "focus");
+        wordBtn.setAttribute("tabindex", "0"); /* for popover compatibility */
 
         wordBtn.addEventListener('click', setPopoverContent);
 

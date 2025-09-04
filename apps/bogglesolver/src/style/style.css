@@ -109,7 +109,11 @@ body {
     align-content: flex-start;
 }
 
-.words-container>button {
+#words-container > a {
+    color: black; /* color for .words-container > a does not work for some reason */
+}
+
+.words-container > a {
     padding: 5px;
     border-radius: 5px;
     margin-top: 5px;
