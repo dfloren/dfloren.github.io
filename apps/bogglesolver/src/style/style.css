@@ -121,6 +121,7 @@ body {
     text-align: left;
     background-color: rgb(255, 247, 217); 
     border: none;
+    text-decoration: none;
 }
 
 .words-container>button:hover {

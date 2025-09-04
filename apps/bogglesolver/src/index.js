@@ -164,6 +164,8 @@ function populateWordList(words, combinationMap) {
         let wordBtn = document.createElement("a"); /* using <a> instead of <button> to fix bootstrap popover compatibility issues */
         wordBtn.innerText = word;
 
+        wordBtn.setAttribute("href", "#");
+
         wordBtn.setAttribute("data-bs-toggle", "popover");
         wordBtn.setAttribute("data-bs-title", word);
         wordBtn.setAttribute("data-bs-content", buildSmallSpinnerHTML());
