@@ -123,11 +123,14 @@ body {
     border: none;
     text-decoration: none;
     box-shadow: 3px 3px 6px rgba(0,0,0,1.0);
+
+    transform: translateY(0);
+    transition: transform 0.1s ease-in-out;
 }
 
 .words-container>a:hover {
-    font-weight: bolder;
     background-color: rgb(253, 231, 152); 
+    transform: translateY(-1px);
 }
 
 #tiles-table-container {
