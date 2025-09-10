@@ -122,10 +122,12 @@ body {
     background-color: rgb(255, 247, 217); 
     border: none;
     text-decoration: none;
+    box-shadow: 3px 3px 6px rgba(0,0,0,1.0);
 }
 
-.words-container>button:hover {
+.words-container>a:hover {
     font-weight: bolder;
+    background-color: rgb(253, 231, 152); 
 }
 
 #tiles-table-container {
@@ -143,18 +145,19 @@ body {
     font-weight: bolder;
     width: 1.75em;
     margin: 7px;
-    color: rgb(0, 119, 190);
+    color: black;
     background-color: rgb(255, 247, 217);
     text-align: center;
     border: none;
     border-radius: 5px;
     text-transform: uppercase;
     outline: none;
-    box-shadow: 2px 2px 2px 2px rgb(0, 0, 0);
+    box-shadow: 2px 2px 2px rgb(0, 0, 0);
 }
 
-.tile-input:invalid {
-    background-color: white;
+.tile-input:disabled {
+    background-color: none;
+    box-shadow: 0.75px 0.75px 0.75px rgb(0, 0, 0);
 }
 
 .highlighted-tile {
