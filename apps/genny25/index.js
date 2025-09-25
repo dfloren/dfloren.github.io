@@ -32,7 +32,6 @@
   window.addEventListener('resize', resize);
   resize();
 
-  // Change input type to password
   const input = document.getElementById('passwordInput');
   input.type = 'password';
 
@@ -48,7 +47,7 @@
       if (input.value === '25') {
         input.disabled = true;
         button.disabled = true;
-        button.style.backgroundColor = '#999'; // gray out button
+        button.style.backgroundColor = '#999';
         button.style.cursor = 'not-allowed';
       }
       handlePassword(bypass);
@@ -102,6 +101,32 @@
     setTimeout(() => {
       output.innerHTML = '<div class="birthday-message">Happy 25th Birthday!!!</div>';
       output.style.opacity = 1;
+
+      // Add mute/unmute button for music (unmuted by default with flatter icon at bottom-right)
+      const audio = document.createElement('audio');
+      audio.src = 'resources/music/birthday_song.mp3';
+      audio.loop = true;
+      audio.autoplay = true;
+      audio.muted = false;
+
+      const muteBtn = document.createElement('button');
+      muteBtn.textContent = '🔊'; // flatter icon
+      muteBtn.style.position = 'fixed';
+      muteBtn.style.bottom = '10px';
+      muteBtn.style.right = '10px';
+      muteBtn.style.zIndex = 20;
+      muteBtn.style.fontSize = '1.5rem';
+      muteBtn.style.background = 'transparent';
+      muteBtn.style.border = 'none';
+      muteBtn.style.cursor = 'pointer';
+
+      muteBtn.addEventListener('click', () => {
+        audio.muted = !audio.muted;
+        muteBtn.textContent = audio.muted ? '🔈' : '🔊';
+      });
+
+      document.body.appendChild(audio);
+      document.body.appendChild(muteBtn);
     }, 1000);
   }
 })();
