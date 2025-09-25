@@ -93,16 +93,47 @@
   }
 
   function fadeOutAndCelebrate() {
-    mainImage.style.opacity = 0;
-    mainMessage.style.opacity = 0;
-    inputContainer.style.opacity = 0;
-    output.style.opacity = 0;
+    // Hide Pochacco image, input field, and submit button
+    mainImage.style.display = 'none';
+    mainMessage.style.display = 'none';
+    inputContainer.style.display = 'none';
 
     setTimeout(() => {
-      output.innerHTML = '<div class="birthday-message">Happy 25th Birthday!!!</div>';
+      // Center container for image and message
+      const container = document.createElement('div');
+      container.style.display = 'flex';
+      container.style.flexDirection = 'column';
+      container.style.alignItems = 'center';
+      container.style.justifyContent = 'center';
+      container.style.height = '100vh';
+
+      // Add Genny image above birthday message (max width 200px, maintain aspect ratio, no bottom margin)
+      const gennyImages = ['resources/images/genny1.png', 'resources/images/genny2.png', 'resources/images/genny3.png'];
+      const gennyImg = document.createElement('img');
+      gennyImg.src = gennyImages[0];
+      gennyImg.style.width = '200px';
+      gennyImg.style.height = 'auto';
+      gennyImg.style.borderRadius = '10px';
+      gennyImg.style.marginBottom = '0';
+      container.appendChild(gennyImg);
+
+      // Alternate images every 0.3 seconds
+      let currentIndex = 0;
+      setInterval(() => {
+        currentIndex = (currentIndex + 1) % gennyImages.length;
+        gennyImg.src = gennyImages[currentIndex];
+      }, 300);
+
+      const birthdayMessage = document.createElement('div');
+      birthdayMessage.className = 'birthday-message';
+      birthdayMessage.textContent = 'Happy 25th Birthday!!!';
+      container.appendChild(birthdayMessage);
+
+      output.innerHTML = '';
+      output.appendChild(container);
       output.style.opacity = 1;
 
-      // Add mute/unmute button for music (unmuted by default with flatter icon at bottom-right)
+      // Add mute/unmute button for music (bottom-right)
       const audio = document.createElement('audio');
       audio.src = 'resources/music/birthday_song.mp3';
       audio.loop = true;
@@ -110,7 +141,7 @@
       audio.muted = false;
 
       const muteBtn = document.createElement('button');
-      muteBtn.textContent = '🔊'; // flatter icon
+      muteBtn.textContent = '🔊';
       muteBtn.style.position = 'fixed';
       muteBtn.style.bottom = '10px';
       muteBtn.style.right = '10px';
