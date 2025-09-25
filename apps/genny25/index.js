@@ -2,6 +2,13 @@
 (function() {
   const colors = ['#E76F51','#2A9D8F','#F4A261','#264653','#E9C46A','#F7B2B7'];
   const stage = document.querySelector('.stage');
+  stage.style.position = 'fixed';
+  stage.style.top = '0';
+  stage.style.left = '0';
+  stage.style.width = '100%';
+  stage.style.height = '100%';
+  stage.style.zIndex = '0'; // Confetti z-index
+
   const pieces = 70;
 
   function createConfetti() {
@@ -104,11 +111,13 @@
       container.style.alignItems = 'center';
       container.style.justifyContent = 'center';
       container.style.height = '100vh';
+      container.style.zIndex = '10'; // Genny content above confetti
 
       const gennyImages = ['resources/images/genny1.png', 'resources/images/genny2.png', 'resources/images/genny3.png'];
       const gennyImg = document.createElement('img');
       gennyImg.src = gennyImages[0];
       gennyImg.style.marginBottom = '0';
+      gennyImg.style.zIndex = '10';
       container.appendChild(gennyImg);
 
       let currentIndex = 0;
@@ -120,6 +129,7 @@
       const birthdayMessage = document.createElement('div');
       birthdayMessage.className = 'birthday-message';
       birthdayMessage.textContent = 'Happy 25th Birthday!!!';
+      birthdayMessage.style.zIndex = '10';
       container.appendChild(birthdayMessage);
 
       output.innerHTML = '';
