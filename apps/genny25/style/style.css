@@ -257,15 +257,14 @@ html, body {
   100% { transform: translateX(-6px) translateY(-3px) rotate(-3deg); }
 }
 
-/* Floating Letter Modal */
 .letter-modal {
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 90%;
-  max-width: 600px;
-  height: 70%;
+  width: 600px;        /* desktop width */
+  max-width: 80%;      /* reduced for smaller screens */
+  height: 70%;         /* default height */
   background-color: #fff9f0;
   border: 3px solid #E63946;
   border-radius: 10px;
@@ -281,9 +280,19 @@ html, body {
   transition: opacity 0.3s ease;
 }
 
+/* Show modal */
 .letter-modal.show {
   opacity: 1;
-  pointer-events: all;
+  pointer-events: auto;
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 480px) {
+  .letter-modal {
+    max-width: 80%;    /* smaller width */
+    height: 60%;       /* slightly reduced height */
+    padding: 15px;     /* reduce padding */
+  }
 }
 
 /* Close button inside modal */
