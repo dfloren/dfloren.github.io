@@ -8,7 +8,6 @@
         window.dataLayer = window.dataLayer || [];
         function gtag() { dataLayer.push(arguments); }
         gtag('js', new Date());
-
         gtag('config', 'G-QEZPS71XJ0');
     </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -22,6 +21,7 @@
             text-align: center;
             color: #333;
             position: relative;
+            padding-top: 100px;
             background-image:
                 radial-gradient(circle, #ff5f5f 2px, transparent 3px),
                 radial-gradient(circle, #5fafff 2px, transparent 3px),
@@ -31,6 +31,7 @@
             background-position: 0 0, 30px 30px, 15px 45px, 45px 15px;
         }
 
+        /* Cursor */
         .cursor {
             position: fixed;
             width: 20px;
@@ -39,18 +40,19 @@
             border-radius: 50%;
             pointer-events: none;
             transform: translate(-50%, -50%);
-            transition: transform 0.08s ease;
             background: rgba(255, 255, 255, 0.6);
             z-index: 1000;
         }
 
+        /* Gift box */
         .box {
             position: absolute;
-            top: 40%;
+            top: 35%;
             left: 50%;
             transform: translateX(-50%);
             transition: opacity 0.5s ease;
             display: block;
+            z-index: 1;
         }
 
         .box-body {
@@ -102,7 +104,7 @@
             bottom: 0;
             left: 50%;
             transform: translateX(-50%);
-            width: 50px;
+            width: 30px;
             background: black;
         }
 
@@ -126,7 +128,7 @@
             bottom: 0;
             left: 50%;
             transform: translateX(-50%);
-            width: 50px;
+            width: 30px;
             background: black;
         }
 
@@ -158,149 +160,70 @@
         }
 
         @keyframes box-lid {
-
-            0%,
-            42% {
-                transform: translate3d(-50%, 0, 0) rotate(0deg);
-            }
-
-            60% {
-                transform: translate3d(-85%, -230%, 0) rotate(-25deg);
-            }
-
-            90%,
-            100% {
-                transform: translate3d(-119%, 225%, 0) rotate(-70deg);
-            }
+            0%, 42% { transform: translate3d(-50%, 0, 0) rotate(0deg); }
+            60% { transform: translate3d(-85%, -230%, 0) rotate(-25deg); }
+            90%, 100% { transform: translate3d(-119%, 225%, 0) rotate(-70deg); }
         }
 
         @keyframes box-body {
-            0% {
-                transform: translate3d(0, 0, 0) rotate(0deg);
-            }
-
-            25% {
-                transform: translate3d(0, 25%, 0) rotate(20deg);
-            }
-
-            50% {
-                transform: translate3d(0, -15%, 0) rotate(0deg);
-            }
-
-            70% {
-                transform: translate3d(0, 0, 0) rotate(0deg);
-            }
+            0% { transform: translate3d(0, 0, 0) rotate(0deg); }
+            25% { transform: translate3d(0, 25%, 0) rotate(20deg); }
+            50% { transform: translate3d(0, -15%, 0) rotate(0deg); }
+            70% { transform: translate3d(0, 0, 0) rotate(0deg); }
         }
 
         @keyframes box-bowtie-right {
-
-            0%,
-            50%,
-            75% {
-                transform: translateX(0%) rotate(90deg) skew(10deg, 10deg);
-            }
-
-            90%,
-            100% {
-                transform: translate(-50%, -15%) rotate(45deg) skew(10deg, 10deg);
-            }
+            0%,50%,75% { transform: translateX(0%) rotate(90deg) skew(10deg, 10deg); }
+            90%,100% { transform: translate(-50%, -15%) rotate(45deg) skew(10deg, 10deg); }
         }
 
         @keyframes box-bowtie-left {
-            0% {
-                transform: translateX(-100%) rotate(0deg) skew(10deg, 10deg);
-            }
-
-            50%,
-            75% {
-                transform: translate(-50%, -15%) rotate(45deg) skew(10deg, 10deg);
-            }
-
-            90%,
-            100% {
-                transform: translateX(-100%) rotate(0deg) skew(10deg, 10deg);
-            }
+            0% { transform: translateX(-100%) rotate(0deg) skew(10deg, 10deg); }
+            50%,75% { transform: translate(-50%, -15%) rotate(45deg) skew(10deg, 10deg); }
+            90%,100% { transform: translateX(-100%) rotate(0deg) skew(10deg, 10deg); }
         }
 
-        /* Message */
+        /* Messages */
         .message {
-            color: #ff5f5f;
-            font-size: 3em;
+            font-weight: bold;
+            position: absolute;
+            top: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 2.5em;
+            color: white;
+            -webkit-text-stroke: 2px black;
+            text-align: center;
             opacity: 0;
             transition: opacity 0.5s ease;
-            text-align: center;
-            margin-top: 20px;
+            z-index: 2;
         }
 
-        .message.show {
-            opacity: 1;
-        }
+        .message.show { opacity: 1; }
 
         /* Shake animation */
         @keyframes shake {
-            0% {
-                transform: translate(-50%, -50%) translateX(0);
-            }
-
-            10% {
-                transform: translate(-50%, -50%) translateX(-8px);
-            }
-
-            20% {
-                transform: translate(-50%, -50%) translateX(8px);
-            }
-
-            30% {
-                transform: translate(-50%, -50%) translateX(-8px);
-            }
-
-            40% {
-                transform: translate(-50%, -50%) translateX(8px);
-            }
-
-            50% {
-                transform: translate(-50%, -50%) translateX(-8px);
-            }
-
-            60% {
-                transform: translate(-50%, -50%) translateX(8px);
-            }
-
-            70% {
-                transform: translate(-50%, -50%) translateX(-8px);
-            }
-
-            80% {
-                transform: translate(-50%, -50%) translateX(8px);
-            }
-
-            90% {
-                transform: translate(-50%, -50%) translateX(-8px);
-            }
-
-            100% {
-                transform: translate(-50%, -50%) translateX(0);
-            }
+            0% { transform: translate(-50%, -50%) translateX(0); }
+            10% { transform: translate(-50%, -50%) translateX(-12px); }
+            20% { transform: translate(-50%, -50%) translateX(12px); }
+            30% { transform: translate(-50%, -50%) translateX(-12px); }
+            40% { transform: translate(-50%, -50%) translateX(12px); }
+            50% { transform: translate(-50%, -50%) translateX(-12px); }
+            60% { transform: translate(-50%, -50%) translateX(12px); }
+            70% { transform: translate(-50%, -50%) translateX(-12px); }
+            80% { transform: translate(-50%, -50%) translateX(12px); }
+            90% { transform: translate(-50%, -50%) translateX(-12px); }
+            100% { transform: translate(-50%, -50%) translateX(0); }
         }
+        .shake { animation: shake 1s; }
 
-        .shake {
-            animation: shake 1s;
-        }
-
-        /* Confetti fall animation */
+        /* Confetti */
         @keyframes fall {
-            0% {
-                transform: translateY(0) rotate(0deg);
-                opacity: 1;
-            }
-
-            100% {
-                transform: translateY(100vh) rotate(360deg);
-                opacity: 0;
-            }
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
         }
 
-        /* Polaroid prompt */
+        /* Polaroid password prompt */
         .password-overlay {
             position: absolute;
             top: 50%;
@@ -314,9 +237,9 @@
             align-items: center;
             text-align: center;
             background-color: #fefcf6;
-            background-image: repeating-linear-gradient(45deg, rgba(0, 0, 0, 0.02) 0, rgba(0, 0, 0, 0.02) 1px, transparent 1px, transparent 4px);
+            background-image: repeating-linear-gradient(45deg, rgba(0,0,0,0.02) 0, rgba(0,0,0,0.02) 1px, transparent 1px, transparent 4px);
             border-radius: 5px;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.35);
             z-index: 10;
             color: #333;
             font-size: 0.9em;
@@ -351,9 +274,7 @@
             box-sizing: border-box;
         }
 
-        .password-overlay input:focus {
-            border-color: #3eb94c;
-        }
+        .password-overlay input:focus { border-color: #3eb94c; }
 
         .password-overlay button {
             padding: 8px 12px;
@@ -367,38 +288,19 @@
             width: 100%;
         }
 
-        .password-overlay button:hover {
-            background: #3eb94c;
-        }
+        .password-overlay button:hover { background: #3eb94c; }
 
         @media (max-width: 600px) {
-            .password-overlay {
-                width: 260px;
-                height: 360px;
-                font-size: 1.2em;
-                border-radius: 8px;
-            }
-
-            .password-overlay input,
-            .password-overlay button {
-                font-size: 1.15em;
-                padding: 10px 14px;
-            }
-
-            .box-body {
-                width: 220px;
-                height: 220px;
-            }
-
-            .box-lid {
-                width: 240px;
-                height: 45px;
-            }
+            .password-overlay { width: 260px; height: 360px; font-size: 1.2em; border-radius: 8px; }
+            .password-overlay input, .password-overlay button { font-size: 1.15em; padding: 10px 14px; }
+            .box-body { width: 220px; height: 220px; }
+            .box-lid { width: 240px; height: 45px; }
         }
     </style>
 </head>
 
 <body>
+    <div class="message" id="message"></div>
 
     <div class="box" id="giftBox">
         <div class="box-body">
@@ -419,8 +321,6 @@
         </div>
     </div>
 
-    <div class="message" id="message"></div>
-
     <script>
         const overlay = document.getElementById('passwordOverlay');
         const input = document.getElementById('passwordInput');
@@ -439,10 +339,10 @@
             confetti.style.left = Math.random() * 100 + 'vw';
             confetti.style.width = '6px';
             confetti.style.height = '12px';
-            confetti.style.backgroundColor = ['#ff5f5f', '#5fafff', '#ffd95f', '#6fff7f'][Math.floor(Math.random() * 4)];
+            confetti.style.backgroundColor = ['#ff5f5f','#5fafff','#ffd95f','#6fff7f'][Math.floor(Math.random()*4)];
             confetti.style.opacity = '1';
-            confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
-            confetti.style.animation = `fall ${Math.random() * 3 + 2}s linear forwards`;
+            confetti.style.transform = `rotate(${Math.random()*360}deg)`;
+            confetti.style.animation = `fall ${Math.random()*3+2}s linear forwards`;
             document.body.appendChild(confetti);
             setTimeout(() => confetti.remove(), 5000);
         }
@@ -460,8 +360,8 @@
                     message.textContent = "🎉 Happy 25th Birthday! 🎉";
                     message.classList.add('show');
                     startConfetti();
-                }, 500);
-            }, 1000);
+                },500);
+            },1000);
         }
 
         function showWaitMessage() {
@@ -470,10 +370,10 @@
             function updateCountdown() {
                 const now = new Date();
                 const diff = birthdayET - now;
-                if (diff <= 0) { clearInterval(countdownInterval); openGift(); return; }
-                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-                const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-                const minutes = Math.floor((diff / (1000 * 60)) % 60);
+                if(diff <= 0){ clearInterval(countdownInterval); openGift(); return; }
+                const days = Math.floor(diff / (1000*60*60*24));
+                const hours = Math.floor((diff / (1000*60*60)) % 24);
+                const minutes = Math.floor((diff / (1000*60)) % 60);
                 const seconds = Math.floor((diff / 1000) % 60);
                 message.textContent = `⏳ You have to wait for your birthday! ${days}d ${hours}h ${minutes}m ${seconds}s`;
                 message.classList.add('show');
@@ -491,24 +391,23 @@
         submitBtn.addEventListener('click', () => {
             const password = input.value;
             const birthdayET = new Date("2025-09-26T00:00:00-04:00");
-            if (password === correctPassword) {
-                if (new Date() >= birthdayET) { openGift(); } else { showWaitMessage(); }
-            } else if (password === bypassPassword) { openGift(); } else { shakeOverlay(); }
+            if(password === correctPassword){
+                if(new Date() >= birthdayET){ openGift(); } else { showWaitMessage(); }
+            } else if(password === bypassPassword){ openGift(); } else { shakeOverlay(); }
         });
 
-        input.addEventListener('keypress', e => { if (e.key === 'Enter') submitBtn.click(); });
+        input.addEventListener('keypress', e => { if(e.key==='Enter') submitBtn.click(); });
 
-        // Cursor tracker only for desktop
-        if (window.innerWidth > 600) {
+        // Cursor tracker only on desktop
+        if(window.innerWidth > 600){
             const cursor = document.createElement('div');
             cursor.classList.add('cursor');
             document.body.appendChild(cursor);
             document.addEventListener('mousemove', e => {
-                cursor.style.left = e.pageX + 'px';
-                cursor.style.top = e.pageY + 'px';
+                cursor.style.left = e.clientX + 'px';
+                cursor.style.top = e.clientY + 'px';
             });
         }
     </script>
 </body>
-
 </html>
