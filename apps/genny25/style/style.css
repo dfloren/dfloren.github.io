@@ -1,3 +1,4 @@
+/* Base Styles */
 html, body {
   height: 100%;
   width: 100%;
@@ -25,6 +26,7 @@ html, body {
   justify-content: center;
 }
 
+/* Confetti */
 .confetti {
   position: absolute;
   width: 3px;
@@ -51,6 +53,7 @@ html, body {
   mix-blend-mode: multiply;
 }
 
+/* Center Image */
 .center-image {
   position: relative;
   z-index: 10;
@@ -60,6 +63,7 @@ html, body {
   transition: opacity 1s;
 }
 
+/* Messages */
 .message {
   margin-top: 16px;
   font-size: 1.2rem;
@@ -69,6 +73,16 @@ html, body {
   transition: opacity 1s;
 }
 
+.countdown, .coming-soon, .birthday-message {
+  margin-top: 16px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #E76F51;
+  z-index: 10;
+  transition: opacity 1s;
+}
+
+/* Input */
 .input-container {
   margin-top: 12px;
   display: flex;
@@ -100,6 +114,7 @@ html, body {
   background-color: #21867a;
 }
 
+/* Shake Animation */
 @keyframes shake {
   0% { transform: translateX(0); }
   20% { transform: translateX(-6px); }
@@ -113,26 +128,17 @@ html, body {
   animation: shake 1s;
 }
 
-.countdown, .coming-soon, .birthday-message {
-  margin-top: 16px;
-  font-size: 1.2rem;
-  font-weight: 600;
-  color: #E76F51;
-  z-index: 10;
-  transition: opacity 1s;
-}
-
-/* Polaroid container */
+/* Polaroid */
 .polaroid-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   height: 100vh;
-  z-index: 10;
+  z-index: 20; /* above balloons/confetti */
+  position: relative;
 }
 
-/* Polaroid card */
 .polaroid {
   width: 215px;
   height: 375px;
@@ -155,30 +161,10 @@ html, body {
     #e0f7ff 40px
   );
   position: relative;
+  z-index: 21;
 }
 
-/* Birthday message */
-.birthday-message {
-  color: black;
-  font-weight: bold;
-  padding: 2px;
-  border-radius: 3px;
-  transform-origin: center;
-}
-
-/* Audio mute button */
-.mute-btn {
-  position: fixed;
-  bottom: 10px;
-  right: 10px;
-  z-index: 20;
-  font-size: 1.5rem;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-}
-
-/* Notification badge */
+/* Notification Badge */
 .notification-badge {
   position: absolute;
   top: 8px;
@@ -193,21 +179,85 @@ html, body {
   font-size: 1rem;
   color: white;
   box-shadow: 0 2px 5px rgba(0,0,0,0.3);
-  z-index: 15;
-  transform-origin: center;
-  animation: pulse-rotate 1.5s infinite;
-  cursor: pointer; /* Make cursor a hand on hover */
+  cursor: pointer;
+  z-index: 22;
 }
 
-@keyframes pulse-rotate {
-  0%   { transform: scale(1) rotate(0deg); }
-  25%  { transform: scale(1.1) rotate(-5deg); }
-  50%  { transform: scale(1.2) rotate(3deg); }
-  75%  { transform: scale(1.1) rotate(-2deg); }
-  100% { transform: scale(1) rotate(0deg); }
+/* Birthday message inside polaroid */
+.birthday-message {
+  z-index: 22;
 }
 
-/* Letter modal */
+/* Mute button */
+.mute-btn {
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  z-index: 25;
+  font-size: 1.5rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+/* Balloon */
+.balloon {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 0.9;
+}
+
+/* Triangle knot under the balloon */
+.balloon::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;       /* slightly below the balloon */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-bottom: 6px solid currentColor; /* points upward */
+  color: inherit; /* matches balloon's background color */
+}
+
+/* String extending from tip of triangle */
+.balloon::before {
+  content: '';
+  position: absolute;
+  bottom: -45px;       /* 6px triangle + 40px string length */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 2px;
+  height: 40px;        /* length of string */
+  background-color: black; /* same color as balloon */
+}
+
+
+/* Sway Animations for balloons */
+@keyframes sway1 {
+  0% { transform: translateX(0px) translateY(0px) rotate(0deg); }
+  50% { transform: translateX(8px) translateY(-4px) rotate(4deg); }
+  100% { transform: translateX(-8px) translateY(4px) rotate(-4deg); }
+}
+
+@keyframes sway2 {
+  0% { transform: translateX(0px) translateY(0px) rotate(0deg); }
+  50% { transform: translateX(10px) translateY(5px) rotate(5deg); }
+  100% { transform: translateX(-10px) translateY(-5px) rotate(-5deg); }
+}
+
+@keyframes sway3 {
+  0% { transform: translateX(0px) translateY(0px) rotate(0deg); }
+  50% { transform: translateX(6px) translateY(3px) rotate(3deg); }
+  100% { transform: translateX(-6px) translateY(-3px) rotate(-3deg); }
+}
+
+/* Floating Letter Modal */
 .letter-modal {
   position: fixed;
   top: 50%;
@@ -236,10 +286,9 @@ html, body {
   pointer-events: all;
 }
 
+/* Close button inside modal */
 .letter-modal .close-btn {
-  position: absolute;
-  top: 10px;
-  right: 12px;
+  align-self: flex-end;
   font-size: 1.5rem;
   background: transparent;
   border: none;
