@@ -248,19 +248,6 @@
         });
     }
 
-    // Mobile keyboard handling
-    if(window.innerWidth <= 600){
-        let initialHeight = window.innerHeight;
-        window.addEventListener('resize', () => {
-            const currentHeight = window.innerHeight;
-            const diff = initialHeight - currentHeight;
-            if(diff > 150){ // keyboard open
-                overlay.style.transform = `translate(-50%, calc(-50% - ${diff/2}px))`;
-            } else { // keyboard closed
-                overlay.style.transform = 'translate(-50%, -50%)';
-            }
-        });
-    }
 </script>
 </body>
 </html>
