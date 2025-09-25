@@ -21,34 +21,31 @@
 
     const pastelColors = ['#FFB3BA', '#FFDFBA', '#FFFFBA', '#BAFFC9', '#BAE1FF'];
 
+    // Balloons
     function createBalloons(count = 30) {
-        const swayAnimations = ['sway1 4s ease-in-out infinite alternate',
+        const swayAnimations = [
+            'sway1 4s ease-in-out infinite alternate',
             'sway2 5s ease-in-out infinite alternate',
-            'sway3 6s ease-in-out infinite alternate'];
+            'sway3 6s ease-in-out infinite alternate'
+        ];
 
         for (let i = 0; i < count; i++) {
             const balloon = document.createElement('div');
             balloon.className = 'balloon';
-            balloon.style.backgroundColor = pastelColors[Math.floor(Math.random() * pastelColors.length)];
-
-            // Random position across the full page
-            balloon.style.left = Math.random() * 90 + 'vw';
-            balloon.style.top = Math.random() * 90 + 'vh';
             const color = pastelColors[Math.floor(Math.random() * pastelColors.length)];
             balloon.style.backgroundColor = color;
-            balloon.style.color = color; // so the triangle inherits the same color
-
+            balloon.style.color = color; // triangle inherits balloon color
+            balloon.style.left = Math.random() * 90 + 'vw';
+            balloon.style.top = Math.random() * 90 + 'vh';
             balloon.style.animation = swayAnimations[Math.floor(Math.random() * swayAnimations.length)];
             stage.appendChild(balloon);
         }
     }
-
-    // Call the function
     createBalloons(30);
 
     // Disable scroll keys
     window.addEventListener('keydown', e => {
-        const keys = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'PageUp', 'PageDown', 'Home', 'End', ' '];
+        const keys = ['ArrowUp','ArrowDown','ArrowLeft','ArrowRight','PageUp','PageDown','Home','End',' '];
         if (keys.includes(e.key)) e.preventDefault();
     }, { passive: false });
 
@@ -60,8 +57,7 @@
     const mainImage = document.getElementById('mainImage');
     const mainMessage = document.getElementById('mainMessage');
     const inputContainer = document.getElementById('inputContainer');
-
-    const PASSWORDS = ['25', 'test'];
+    const PASSWORDS = ['25','test'];
 
     // Shake animation reset
     input.addEventListener('animationend', () => input.classList.remove('shake'));
@@ -96,18 +92,18 @@
 
     function showCountdown(target) {
         output.innerHTML = `
-      <div class="coming-soon">Coming Soon!</div>
-      <div class="countdown" id="countdown"></div>
-    `;
+            <div class="coming-soon">Coming Soon!</div>
+            <div class="countdown" id="countdown"></div>
+        `;
         const countdownEl = document.getElementById('countdown');
 
         function updateCountdown() {
             const now = new Date();
             const diff = target - now;
             if (diff <= 0) { clearInterval(timer); fadeOutAndCelebrate(); return; }
-            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-            const minutes = Math.floor((diff / (1000 * 60)) % 60);
+            const days = Math.floor(diff / (1000*60*60*24));
+            const hours = Math.floor((diff / (1000*60*60)) % 24);
+            const minutes = Math.floor((diff / (1000*60)) % 60);
             const seconds = Math.floor((diff / 1000) % 60);
             countdownEl.textContent = `${days}d ${hours}h ${minutes}m ${seconds}s`;
         }
@@ -198,20 +194,31 @@
             document.body.appendChild(audio);
             document.body.appendChild(muteBtn);
 
-            // Floating letter modal
+            // Letter modal
             const letterModal = document.createElement('div');
             letterModal.className = 'letter-modal';
             letterModal.innerHTML = `
-        <button class="close-btn">&times;</button>
-        <div class="letter-content">
-          <p>🎉 Happy 25th Birthday! 🎂</p>
-          <p>May your day be filled with joy, laughter, and wonderful surprises!</p>
-          <p>Here’s to an amazing year ahead! 🥳</p>
-          <p>💌 Wishing you endless happiness and fun!</p>
-          <p>💫 Cheers to new adventures and memories!</p>
-          <p>🎁 Have a fantastic birthday celebration!</p>
-        </div>
-      `;
+                <button class="close-btn">&times;</button>
+                <div class="letter-image">
+                  <img src="resources/images/danielgenny2.png" alt="Daniel & Genny" />
+                </div>
+                <div class="letter-content">
+                  <p>🎉🎉 Happy 25th Birthday, my Love! 💖🎉🎉</p>
+                  <p>Mahal na mahal kita! ❤️</p>
+                  <p>Words cannot fully express how grateful I am to have you as my partner in life.</p>
+                  <p>Your smile fills my heart with warmth and makes me feel completely at home.</p>
+                  <p>You inspire me to grow, laugh, and become a better person every single day.</p>
+                  <p>I want to remind you how deeply I love you and how excited I am for all the memories we will create together in the years to come.</p>
+                  <p>Time flies whenever I'm with you, every moment feels like a beautiful dream.</p>
+                  <p>I can't wait to spend forever with you, sharing adventures, laughter, and love along the way.</p>
+                  <p>Life is brighter, happier, and more meaningful with you by my side.</p>
+                  <p>I love you more than words can say, Genny.</p>
+                  <p>Happy Birthday again, my love! 🎂🎈💖</p>
+                  <div class="letter-bottom-image">
+                    <img src="resources/images/danielgenny3.png" alt="Daniel & Genny" />
+                  </div>
+                </div>
+            `;
             document.body.appendChild(letterModal);
 
             // Open modal on badge click
@@ -219,9 +226,16 @@
                 letterModal.classList.add('show');
             });
 
-            // Close modal
+            // Close modal on close button
             letterModal.querySelector('.close-btn').addEventListener('click', () => {
                 letterModal.classList.remove('show');
+            });
+
+            // Close modal when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!letterModal.contains(e.target) && !badge.contains(e.target)) {
+                    letterModal.classList.remove('show');
+                }
             });
 
         }, 1000);

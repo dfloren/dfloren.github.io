@@ -279,18 +279,25 @@ html, body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 600px;        /* desktop width */
-  max-width: 80%;      /* reduced for smaller screens */
-  height: 70%;         /* default height */
-  background-color: #fff9f0;
-  border: 3px solid #E63946;
-  border-radius: 10px;
-  box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+  width: 600px;
+  max-width: 80%;    /* responsive */
+  height: 70%;
+  background: #fffdf5; /* off-white paper color */
+  background-image: repeating-linear-gradient(
+    0deg,
+    rgba(0,0,0,0.01) 0px,
+    rgba(0,0,0,0.01) 1px,
+    transparent 1px,
+    transparent 4px
+  ); /* subtle lined texture */
+  border: 2px solid #f0e6d2; /* light beige border */
+  border-radius: 8px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.25);
   overflow-y: auto;
   overflow-x: hidden;
   display: flex;
   flex-direction: column;
-  padding: 20px;
+  padding: 20px 25px;
   z-index: 100;
   opacity: 0;
   pointer-events: none;
@@ -303,6 +310,7 @@ html, body {
   pointer-events: auto;
 }
 
+
 /* Responsive adjustments for smaller screens */
 @media (max-width: 480px) {
   .letter-modal {
@@ -310,6 +318,22 @@ html, body {
     height: 60%;       /* slightly reduced height */
     padding: 15px;     /* reduce padding */
   }
+}
+
+.letter-modal .letter-image img {
+  width: 200px;      /* fixed width */
+  height: auto;      /* maintain aspect ratio */
+  display: block;
+  margin: 0 auto 15px; /* center and add spacing below */
+  border-radius: 5px;  /* optional rounded corners */
+}
+
+.letter-modal .letter-bottom-image img {
+  width: 200px;       /* adjust as needed */
+  height: auto;       /* maintain aspect ratio */
+  display: block;
+  margin: 20px auto 0; /* space above, center horizontally */
+  border-radius: 5px;  /* optional rounded corners */
 }
 
 /* Close button inside modal */
