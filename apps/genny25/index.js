@@ -100,7 +100,15 @@
 
       const polaroid = document.createElement('div');
       polaroid.className = 'polaroid';
+      polaroid.style.position = 'relative';
 
+      // Notification badge
+      const badge = document.createElement('div');
+      badge.className = 'notification-badge';
+      badge.textContent = '📧';
+      polaroid.appendChild(badge);
+
+      // Genny image carousel
       const gennyImages = [
         'resources/images/genny1.png',
         'resources/images/genny2.png',
@@ -116,6 +124,7 @@
         gennyImg.src = gennyImages[currentIndex];
       }, 300);
 
+      // Birthday message
       const birthdayMessage = document.createElement('div');
       birthdayMessage.className = 'birthday-message';
       birthdayMessage.textContent = 'Happy 25th Birthday!!!';
@@ -161,6 +170,33 @@
 
       document.body.appendChild(audio);
       document.body.appendChild(muteBtn);
+
+      // Floating letter modal
+      const letterModal = document.createElement('div');
+      letterModal.className = 'letter-modal';
+      letterModal.innerHTML = `
+        <button class="close-btn">&times;</button>
+        <div class="letter-content">
+          <p>🎉 Happy 25th Birthday! 🎂</p>
+          <p>May your day be filled with joy, laughter, and wonderful surprises!</p>
+          <p>Here’s to an amazing year ahead! 🥳</p>
+          <p>💌 Wishing you endless happiness and fun!</p>
+          <p>💫 Cheers to new adventures and memories!</p>
+          <p>🎁 Have a fantastic birthday celebration!</p>
+        </div>
+      `;
+      document.body.appendChild(letterModal);
+
+      // Open modal on badge click
+      badge.addEventListener('click', () => {
+        letterModal.classList.add('show');
+      });
+
+      // Close modal
+      letterModal.querySelector('.close-btn').addEventListener('click', () => {
+        letterModal.classList.remove('show');
+      });
+
     }, 1000);
   }
 })();
