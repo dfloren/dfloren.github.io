@@ -1,22 +1,35 @@
 <!-- index.html -->
 <!doctype html>
 <html lang="en">
+
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Genny25</title>
-  <link rel="stylesheet" href="style/style.css" />
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-QEZPS71XJ0"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-QEZPS71XJ0');
+    </script>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Genny25</title>
+    <link rel="stylesheet" href="style/style.css" />
 </head>
+
 <body>
-  <main class="stage" aria-hidden="false" title="Blank cream page with confetti background, center image, and message">
-    <img src="resources/images/pochacco_balloon.png" alt="Pochacco Balloon" class="center-image" id="mainImage" />
-    <div class="message" id="mainMessage">What's the password?</div>
-    <div class="input-container" id="inputContainer">
-      <input type="text" id="passwordInput" />
-      <button id="submitBtn">Submit</button>
-    </div>
-    <div id="output"></div>
-  </main>
-  <script src="index.js"></script>
+    <main class="stage" aria-hidden="false"
+        title="Blank cream page with confetti background, center image, and message">
+        <img src="resources/images/pochacco_balloon.png" alt="Pochacco Balloon" class="center-image" id="mainImage" />
+        <div class="message" id="mainMessage">What's the password?</div>
+        <div class="input-container" id="inputContainer">
+            <input type="text" id="passwordInput" />
+            <button id="submitBtn">Submit</button>
+        </div>
+        <div id="output"></div>
+    </main>
+    <script src="index.js"></script>
 </body>
+
 </html>
