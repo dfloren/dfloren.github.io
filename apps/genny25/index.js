@@ -45,7 +45,7 @@
 
     // Disable scroll keys
     window.addEventListener('keydown', e => {
-        const keys = ['ArrowUp','ArrowDown','ArrowLeft','ArrowRight','PageUp','PageDown','Home','End',' '];
+        const keys = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'PageUp', 'PageDown', 'Home', 'End', ' '];
         if (keys.includes(e.key)) e.preventDefault();
     }, { passive: false });
 
@@ -57,7 +57,7 @@
     const mainImage = document.getElementById('mainImage');
     const mainMessage = document.getElementById('mainMessage');
     const inputContainer = document.getElementById('inputContainer');
-    const PASSWORDS = ['25','test'];
+    const PASSWORDS = ['25', 'test'];
 
     // Shake animation reset
     input.addEventListener('animationend', () => input.classList.remove('shake'));
@@ -92,18 +92,26 @@
 
     function showCountdown(target) {
         output.innerHTML = `
+        <div class="countdown-container">
             <div class="coming-soon">Coming Soon!</div>
             <div class="countdown" id="countdown"></div>
-        `;
+        </div>
+    `;
+
+        // Ensure container has high z-index via CSS
+        const countdownContainer = document.querySelector('.countdown-container');
+        countdownContainer.style.position = 'relative';
+        countdownContainer.style.zIndex = '10'; // above balloons and confetti
+
         const countdownEl = document.getElementById('countdown');
 
         function updateCountdown() {
             const now = new Date();
             const diff = target - now;
             if (diff <= 0) { clearInterval(timer); fadeOutAndCelebrate(); return; }
-            const days = Math.floor(diff / (1000*60*60*24));
-            const hours = Math.floor((diff / (1000*60*60)) % 24);
-            const minutes = Math.floor((diff / (1000*60)) % 60);
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+            const minutes = Math.floor((diff / (1000 * 60)) % 60);
             const seconds = Math.floor((diff / 1000) % 60);
             countdownEl.textContent = `${days}d ${hours}h ${minutes}m ${seconds}s`;
         }
@@ -111,6 +119,7 @@
         updateCountdown();
         const timer = setInterval(updateCountdown, 1000);
     }
+
 
     function fadeOutAndCelebrate() {
         mainImage.style.display = 'none';
