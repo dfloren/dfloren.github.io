@@ -1,373 +1,514 @@
 <!doctype html>
 <html lang="en">
+
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<style>
-body {
-  margin: 0;
-  height: 100vh;
-  background: #f5e6c8;
-  overflow: hidden;
-  font-family: Arial, sans-serif;
-  text-align: center;
-  color: #333;
-  position: relative;
-  background-image:
-    radial-gradient(circle, #ff5f5f 2px, transparent 3px),
-    radial-gradient(circle, #5fafff 2px, transparent 3px),
-    radial-gradient(circle, #ffd95f 2px, transparent 3px),
-    radial-gradient(circle, #6fff7f 2px, transparent 3px);
-  background-size: 60px 60px;
-  background-position: 0 0, 30px 30px, 15px 45px, 45px 15px;
-}
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-QEZPS71XJ0"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
 
-.cursor {
-  position: fixed;
-  width: 20px;
-  height: 20px;
-  border: 2px solid #222;
-  border-radius: 50%;
-  pointer-events: none;
-  transform: translate(-50%, -50%);
-  transition: transform 0.08s ease;
-  background: rgba(255,255,255,0.6);
-  z-index: 1000;
-}
+        gtag('config', 'G-QEZPS71XJ0');
+    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            background: #f5e6c8;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            color: #333;
+            position: relative;
+            background-image:
+                radial-gradient(circle, #ff5f5f 2px, transparent 3px),
+                radial-gradient(circle, #5fafff 2px, transparent 3px),
+                radial-gradient(circle, #ffd95f 2px, transparent 3px),
+                radial-gradient(circle, #6fff7f 2px, transparent 3px);
+            background-size: 60px 60px;
+            background-position: 0 0, 30px 30px, 15px 45px, 45px 15px;
+        }
 
-.box {
-  position: absolute;
-  top: 40%;
-  left: 50%;
-  transform: translateX(-50%);
-  transition: opacity 0.5s ease;
-  display: block;
-}
+        .cursor {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #222;
+            border-radius: 50%;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            transition: transform 0.08s ease;
+            background: rgba(255, 255, 255, 0.6);
+            z-index: 1000;
+        }
 
-.box-body {
-  position: relative;
-  height: 200px;
-  width: 200px;
-  background: linear-gradient(#145a32, #1e8449);
-  border-bottom-left-radius: 5%;
-  border-bottom-right-radius: 5%;
-  box-shadow: 0px 4px 8px rgba(0,0,0,0.3);
-}
+        .box {
+            position: absolute;
+            top: 40%;
+            left: 50%;
+            transform: translateX(-50%);
+            transition: opacity 0.5s ease;
+            display: block;
+        }
 
-.box-body .img {
-  opacity: 0;
-  transform: translateY(0%);
-  transition: all 0.5s ease;
-  margin: 0 auto;
-  display: block;
-}
+        .box-body {
+            position: relative;
+            height: 200px;
+            width: 200px;
+            background: linear-gradient(#145a32, #1e8449);
+            border-bottom-left-radius: 5%;
+            border-bottom-right-radius: 5%;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+        }
 
-.box-body.open { animation: box-body 1s forwards ease-in-out; }
-.box-body.open .img { opacity: 1; transform: translateY(-157px); }
-.box-body.open .box-lid { animation: box-lid 1s forwards ease-in-out; animation-fill-mode: forwards; }
-.box-body.open .box-bowtie::before { animation: box-bowtie-left 1.05s forwards ease-in-out; animation-fill-mode: forwards; }
-.box-body.open .box-bowtie::after { animation: box-bowtie-right 1.05s forwards ease-in-out; animation-fill-mode: forwards; }
+        .box-body .img {
+            opacity: 0;
+            transform: translateY(0%);
+            transition: all 0.5s ease;
+            margin: 0 auto;
+            display: block;
+        }
 
-.box-body::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 50px;
-  background: black;
-}
+        .box-body.open {
+            animation: box-body 1s forwards ease-in-out;
+        }
 
-.box-lid {
-  position: absolute;
-  z-index: 1;
-  left: 50%;
-  transform: translateX(-50%);
-  bottom: 90%;
-  height: 40px;
-  width: 220px;
-  background: linear-gradient(#145a32, #1e8449);
-  border-radius: 5%;
-  box-shadow: 0 8px 4px -4px rgba(0,0,0,0.3);
-}
+        .box-body.open .img {
+            opacity: 1;
+            transform: translateY(-157px);
+        }
 
-.box-lid::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 50px;
-  background: black;
-}
+        .box-body.open .box-lid {
+            animation: box-lid 1s forwards ease-in-out;
+            animation-fill-mode: forwards;
+        }
 
-.box-bowtie {
-  z-index: 1;
-  height: 100%;
-}
+        .box-body.open .box-bowtie::before {
+            animation: box-bowtie-left 1.05s forwards ease-in-out;
+            animation-fill-mode: forwards;
+        }
 
-.box-bowtie::before,
-.box-bowtie::after {
-  content: "";
-  width: 50px;
-  height: 50px;
-  border: 10px solid black;
-  border-radius: 50% 50% 0 50%;
-  position: absolute;
-  bottom: 99%;
-  z-index: -1;
-}
+        .box-body.open .box-bowtie::after {
+            animation: box-bowtie-right 1.05s forwards ease-in-out;
+            animation-fill-mode: forwards;
+        }
 
-.box-bowtie::before { left: 50%; transform: translateX(-100%) skew(10deg, 10deg); }
-.box-bowtie::after { left: 50%; transform: translateX(0%) rotate(90deg) skew(10deg, 10deg); }
+        .box-body::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            background: black;
+        }
 
-@keyframes box-lid {
-  0%,42% { transform: translate3d(-50%,0,0) rotate(0deg); }
-  60% { transform: translate3d(-85%,-230%,0) rotate(-25deg); }
-  90%,100% { transform: translate3d(-119%,225%,0) rotate(-70deg); }
-}
-@keyframes box-body {
-  0% { transform: translate3d(0,0,0) rotate(0deg); }
-  25% { transform: translate3d(0,25%,0) rotate(20deg); }
-  50% { transform: translate3d(0,-15%,0) rotate(0deg); }
-  70% { transform: translate3d(0,0,0) rotate(0deg); }
-}
-@keyframes box-bowtie-right {
-  0%,50%,75% { transform: translateX(0%) rotate(90deg) skew(10deg,10deg); }
-  90%,100% { transform: translate(-50%,-15%) rotate(45deg) skew(10deg,10deg); }
-}
-@keyframes box-bowtie-left {
-  0% { transform: translateX(-100%) rotate(0deg) skew(10deg,10deg); }
-  50%,75% { transform: translate(-50%,-15%) rotate(45deg) skew(10deg,10deg); }
-  90%,100% { transform: translateX(-100%) rotate(0deg) skew(10deg,10deg); }
-}
+        .box-lid {
+            position: absolute;
+            z-index: 1;
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: 90%;
+            height: 40px;
+            width: 220px;
+            background: linear-gradient(#145a32, #1e8449);
+            border-radius: 5%;
+            box-shadow: 0 8px 4px -4px rgba(0, 0, 0, 0.3);
+        }
 
-/* Message */
-.message {
-  color: #ff5f5f;
-  font-size: 3em;
-  opacity: 0;
-  transition: opacity 0.5s ease;
-  text-align: center;
-  margin-top: 20px;
-}
-.message.show { opacity: 1; }
+        .box-lid::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            background: black;
+        }
 
-/* Shake animation */
-@keyframes shake {
-  0% { transform: translate(-50%, -50%) translateX(0); }
-  10% { transform: translate(-50%, -50%) translateX(-8px); }
-  20% { transform: translate(-50%, -50%) translateX(8px); }
-  30% { transform: translate(-50%, -50%) translateX(-8px); }
-  40% { transform: translate(-50%, -50%) translateX(8px); }
-  50% { transform: translate(-50%, -50%) translateX(-8px); }
-  60% { transform: translate(-50%, -50%) translateX(8px); }
-  70% { transform: translate(-50%, -50%) translateX(-8px); }
-  80% { transform: translate(-50%, -50%) translateX(8px); }
-  90% { transform: translate(-50%, -50%) translateX(-8px); }
-  100% { transform: translate(-50%, -50%) translateX(0); }
-}
-.shake { animation: shake 1s; }
+        .box-bowtie {
+            z-index: 1;
+            height: 100%;
+        }
 
-/* Confetti fall animation */
-@keyframes fall {
-  0% { transform: translateY(0) rotate(0deg); opacity: 1; }
-  100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
-}
+        .box-bowtie::before,
+        .box-bowtie::after {
+            content: "";
+            width: 50px;
+            height: 50px;
+            border: 10px solid black;
+            border-radius: 50% 50% 0 50%;
+            position: absolute;
+            bottom: 99%;
+            z-index: -1;
+        }
 
-/* Polaroid prompt */
-.password-overlay {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 200px;
-  height: 320px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  text-align: center;
-  background-color: #fefcf6;
-  background-image: repeating-linear-gradient(
-    45deg, rgba(0,0,0,0.02) 0, rgba(0,0,0,0.02) 1px, transparent 1px, transparent 4px
-  );
-  border-radius: 5px;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.35);
-  z-index: 10;
-  color: #333;
-  font-size: 0.9em;
-  padding: 10px;
-}
+        .box-bowtie::before {
+            left: 50%;
+            transform: translateX(-100%) skew(10deg, 10deg);
+        }
 
-.password-overlay img {
-  max-width: 80%;
-  max-height: 50%;
-  margin-top: auto;
-  margin-bottom: auto;
-}
+        .box-bowtie::after {
+            left: 50%;
+            transform: translateX(0%) rotate(90deg) skew(10deg, 10deg);
+        }
 
-.password-overlay .bottom-inputs {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin-bottom: 10px;
-  width: 90%;
-}
+        @keyframes box-lid {
 
-.password-overlay input {
-  padding: 8px 12px;
-  font-size: 0.9em;
-  border: 2px solid #2e8b57;
-  border-radius: 4px;
-  background: #fefcf6;
-  color: #333;
-  outline: none;
-  transition: border 0.2s ease;
-  width: 100%;
-  box-sizing: border-box;
-}
-.password-overlay input:focus { border-color: #3eb94c; }
+            0%,
+            42% {
+                transform: translate3d(-50%, 0, 0) rotate(0deg);
+            }
 
-.password-overlay button {
-  padding: 8px 12px;
-  font-size: 0.9em;
-  border: none;
-  border-radius: 4px;
-  background: #2e8b57;
-  color: white;
-  cursor: pointer;
-  transition: background 0.2s ease;
-  width: 100%;
-}
-.password-overlay button:hover { background: #3eb94c; }
+            60% {
+                transform: translate3d(-85%, -230%, 0) rotate(-25deg);
+            }
 
-@media (max-width: 600px) {
-  .password-overlay {
-    width: 260px;
-    height: 360px;
-    font-size: 1.2em;
-    border-radius: 8px;
-  }
-  .password-overlay input,
-  .password-overlay button {
-    font-size: 1.15em;
-    padding: 10px 14px;
-  }
-  .box-body { width: 220px; height: 220px; }
-  .box-lid { width: 240px; height: 45px; }
-}
-</style>
+            90%,
+            100% {
+                transform: translate3d(-119%, 225%, 0) rotate(-70deg);
+            }
+        }
+
+        @keyframes box-body {
+            0% {
+                transform: translate3d(0, 0, 0) rotate(0deg);
+            }
+
+            25% {
+                transform: translate3d(0, 25%, 0) rotate(20deg);
+            }
+
+            50% {
+                transform: translate3d(0, -15%, 0) rotate(0deg);
+            }
+
+            70% {
+                transform: translate3d(0, 0, 0) rotate(0deg);
+            }
+        }
+
+        @keyframes box-bowtie-right {
+
+            0%,
+            50%,
+            75% {
+                transform: translateX(0%) rotate(90deg) skew(10deg, 10deg);
+            }
+
+            90%,
+            100% {
+                transform: translate(-50%, -15%) rotate(45deg) skew(10deg, 10deg);
+            }
+        }
+
+        @keyframes box-bowtie-left {
+            0% {
+                transform: translateX(-100%) rotate(0deg) skew(10deg, 10deg);
+            }
+
+            50%,
+            75% {
+                transform: translate(-50%, -15%) rotate(45deg) skew(10deg, 10deg);
+            }
+
+            90%,
+            100% {
+                transform: translateX(-100%) rotate(0deg) skew(10deg, 10deg);
+            }
+        }
+
+        /* Message */
+        .message {
+            color: #ff5f5f;
+            font-size: 3em;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .message.show {
+            opacity: 1;
+        }
+
+        /* Shake animation */
+        @keyframes shake {
+            0% {
+                transform: translate(-50%, -50%) translateX(0);
+            }
+
+            10% {
+                transform: translate(-50%, -50%) translateX(-8px);
+            }
+
+            20% {
+                transform: translate(-50%, -50%) translateX(8px);
+            }
+
+            30% {
+                transform: translate(-50%, -50%) translateX(-8px);
+            }
+
+            40% {
+                transform: translate(-50%, -50%) translateX(8px);
+            }
+
+            50% {
+                transform: translate(-50%, -50%) translateX(-8px);
+            }
+
+            60% {
+                transform: translate(-50%, -50%) translateX(8px);
+            }
+
+            70% {
+                transform: translate(-50%, -50%) translateX(-8px);
+            }
+
+            80% {
+                transform: translate(-50%, -50%) translateX(8px);
+            }
+
+            90% {
+                transform: translate(-50%, -50%) translateX(-8px);
+            }
+
+            100% {
+                transform: translate(-50%, -50%) translateX(0);
+            }
+        }
+
+        .shake {
+            animation: shake 1s;
+        }
+
+        /* Confetti fall animation */
+        @keyframes fall {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Polaroid prompt */
+        .password-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 200px;
+            height: 320px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            text-align: center;
+            background-color: #fefcf6;
+            background-image: repeating-linear-gradient(45deg, rgba(0, 0, 0, 0.02) 0, rgba(0, 0, 0, 0.02) 1px, transparent 1px, transparent 4px);
+            border-radius: 5px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+            z-index: 10;
+            color: #333;
+            font-size: 0.9em;
+            padding: 10px;
+        }
+
+        .password-overlay img {
+            max-width: 80%;
+            max-height: 50%;
+            margin-top: auto;
+            margin-bottom: auto;
+        }
+
+        .password-overlay .bottom-inputs {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 10px;
+            width: 90%;
+        }
+
+        .password-overlay input {
+            padding: 8px 12px;
+            font-size: 0.9em;
+            border: 2px solid #2e8b57;
+            border-radius: 4px;
+            background: #fefcf6;
+            color: #333;
+            outline: none;
+            transition: border 0.2s ease;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .password-overlay input:focus {
+            border-color: #3eb94c;
+        }
+
+        .password-overlay button {
+            padding: 8px 12px;
+            font-size: 0.9em;
+            border: none;
+            border-radius: 4px;
+            background: #2e8b57;
+            color: white;
+            cursor: pointer;
+            transition: background 0.2s ease;
+            width: 100%;
+        }
+
+        .password-overlay button:hover {
+            background: #3eb94c;
+        }
+
+        @media (max-width: 600px) {
+            .password-overlay {
+                width: 260px;
+                height: 360px;
+                font-size: 1.2em;
+                border-radius: 8px;
+            }
+
+            .password-overlay input,
+            .password-overlay button {
+                font-size: 1.15em;
+                padding: 10px 14px;
+            }
+
+            .box-body {
+                width: 220px;
+                height: 220px;
+            }
+
+            .box-lid {
+                width: 240px;
+                height: 45px;
+            }
+        }
+    </style>
 </head>
+
 <body>
 
-<div class="box" id="giftBox">
-  <div class="box-body">
-    <img class="img" src="https://placehold.co/50">
-    <div class="box-lid"><div class="box-bowtie"></div></div>
-  </div>
-</div>
+    <div class="box" id="giftBox">
+        <div class="box-body">
+            <img class="img" src="https://placehold.co/50">
+            <div class="box-lid">
+                <div class="box-bowtie"></div>
+            </div>
+        </div>
+    </div>
 
-<div class="password-overlay" id="passwordOverlay">
-  <img src="resources/images/pochacco_balloon.png" alt="Center image">
-  <div class="bottom-inputs">
-    <div>Enter the password:</div>
-    <div style="font-size:0.8em;">Hint: Solve x/5 + 50/2 = 30</div>
-    <input type="password" id="passwordInput" placeholder="Password">
-    <button id="submitPassword">Submit</button>
-  </div>
-</div>
+    <div class="password-overlay" id="passwordOverlay">
+        <img src="resources/images/pochacco_balloon.png" alt="Center image">
+        <div class="bottom-inputs">
+            <div>Enter the password:</div>
+            <div style="font-size:0.8em;">Hint: Solve x/5 + 50/2 = 30</div>
+            <input type="password" id="passwordInput" placeholder="Password">
+            <button id="submitPassword">Submit</button>
+        </div>
+    </div>
 
-<div class="message" id="message"></div>
+    <div class="message" id="message"></div>
 
-<script>
-const overlay = document.getElementById('passwordOverlay');
-const input = document.getElementById('passwordInput');
-const submitBtn = document.getElementById('submitPassword');
-const giftBox = document.getElementById('giftBox');
-const message = document.getElementById('message');
+    <script>
+        const overlay = document.getElementById('passwordOverlay');
+        const input = document.getElementById('passwordInput');
+        const submitBtn = document.getElementById('submitPassword');
+        const giftBox = document.getElementById('giftBox');
+        const message = document.getElementById('message');
 
-const correctPassword = "25";
-const bypassPassword = "test";
-let countdownInterval;
+        const correctPassword = "25";
+        const bypassPassword = "test";
+        let countdownInterval;
 
-function createConfetti() {
-  const confetti = document.createElement('div');
-  confetti.style.position = 'absolute';
-  confetti.style.top = '-20px';
-  confetti.style.left = Math.random() * 100 + 'vw';
-  confetti.style.width = '6px';
-  confetti.style.height = '12px';
-  confetti.style.backgroundColor = ['#ff5f5f','#5fafff','#ffd95f','#6fff7f'][Math.floor(Math.random()*4)];
-  confetti.style.opacity = '1';
-  confetti.style.transform = `rotate(${Math.random()*360}deg)`;
-  confetti.style.animation = `fall ${Math.random()*3 + 2}s linear forwards`;
-  document.body.appendChild(confetti);
-  setTimeout(() => confetti.remove(), 5000);
-}
-function startConfetti(){ setInterval(createConfetti, 200); }
+        function createConfetti() {
+            const confetti = document.createElement('div');
+            confetti.style.position = 'absolute';
+            confetti.style.top = '-20px';
+            confetti.style.left = Math.random() * 100 + 'vw';
+            confetti.style.width = '6px';
+            confetti.style.height = '12px';
+            confetti.style.backgroundColor = ['#ff5f5f', '#5fafff', '#ffd95f', '#6fff7f'][Math.floor(Math.random() * 4)];
+            confetti.style.opacity = '1';
+            confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
+            confetti.style.animation = `fall ${Math.random() * 3 + 2}s linear forwards`;
+            document.body.appendChild(confetti);
+            setTimeout(() => confetti.remove(), 5000);
+        }
+        function startConfetti() { setInterval(createConfetti, 200); }
 
-function openGift() {
-  overlay.style.display = 'none';
-  clearInterval(countdownInterval);
-  const boxBody = giftBox.querySelector('.box-body');
-  boxBody.classList.add('open');
-  setTimeout(() => {
-    giftBox.style.opacity = '0';
-    setTimeout(() => {
-      giftBox.style.display = 'none';
-      message.textContent = "🎉 Happy 25th Birthday! 🎉";
-      message.classList.add('show');
-      startConfetti();
-    }, 500);
-  }, 1000);
-}
+        function openGift() {
+            overlay.style.display = 'none';
+            clearInterval(countdownInterval);
+            const boxBody = giftBox.querySelector('.box-body');
+            boxBody.classList.add('open');
+            setTimeout(() => {
+                giftBox.style.opacity = '0';
+                setTimeout(() => {
+                    giftBox.style.display = 'none';
+                    message.textContent = "🎉 Happy 25th Birthday! 🎉";
+                    message.classList.add('show');
+                    startConfetti();
+                }, 500);
+            }, 1000);
+        }
 
-function showWaitMessage() {
-  overlay.style.display = 'none';
-  const birthdayET = new Date("2025-09-26T00:00:00-04:00");
-  function updateCountdown() {
-    const now = new Date();
-    const diff = birthdayET - now;
-    if(diff <= 0){ clearInterval(countdownInterval); openGift(); return; }
-    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-    const minutes = Math.floor((diff / (1000 * 60)) % 60);
-    const seconds = Math.floor((diff / 1000) % 60);
-    message.textContent = `⏳ You have to wait for your birthday! ${days}d ${hours}h ${minutes}m ${seconds}s`;
-    message.classList.add('show');
-  }
-  updateCountdown();
-  countdownInterval = setInterval(updateCountdown, 1000);
-}
+        function showWaitMessage() {
+            overlay.style.display = 'none';
+            const birthdayET = new Date("2025-09-26T00:00:00-04:00");
+            function updateCountdown() {
+                const now = new Date();
+                const diff = birthdayET - now;
+                if (diff <= 0) { clearInterval(countdownInterval); openGift(); return; }
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+                const minutes = Math.floor((diff / (1000 * 60)) % 60);
+                const seconds = Math.floor((diff / 1000) % 60);
+                message.textContent = `⏳ You have to wait for your birthday! ${days}d ${hours}h ${minutes}m ${seconds}s`;
+                message.classList.add('show');
+            }
+            updateCountdown();
+            countdownInterval = setInterval(updateCountdown, 1000);
+        }
 
-function shakeOverlay() {
-  overlay.classList.add('shake');
-  setTimeout(() => overlay.classList.remove('shake'), 1000);
-  input.value = '';
-}
+        function shakeOverlay() {
+            overlay.classList.add('shake');
+            setTimeout(() => overlay.classList.remove('shake'), 1000);
+            input.value = '';
+        }
 
-submitBtn.addEventListener('click', () => {
-  const password = input.value;
-  const birthdayET = new Date("2025-09-26T00:00:00-04:00");
-  if(password === correctPassword){
-    if(new Date() >= birthdayET){ openGift(); } else { showWaitMessage(); }
-  } else if(password === bypassPassword){ openGift(); } else { shakeOverlay(); }
-});
+        submitBtn.addEventListener('click', () => {
+            const password = input.value;
+            const birthdayET = new Date("2025-09-26T00:00:00-04:00");
+            if (password === correctPassword) {
+                if (new Date() >= birthdayET) { openGift(); } else { showWaitMessage(); }
+            } else if (password === bypassPassword) { openGift(); } else { shakeOverlay(); }
+        });
 
-input.addEventListener('keypress', e => { if(e.key === 'Enter') submitBtn.click(); });
+        input.addEventListener('keypress', e => { if (e.key === 'Enter') submitBtn.click(); });
 
-// Cursor tracker only for desktop
-if(window.innerWidth > 600) {
-  const cursor = document.createElement('div');
-  cursor.classList.add('cursor');
-  document.body.appendChild(cursor);
-  document.addEventListener('mousemove', e => {
-    cursor.style.left = e.pageX + 'px';
-    cursor.style.top = e.pageY + 'px';
-  });
-}
-</script>
+        // Cursor tracker only for desktop
+        if (window.innerWidth > 600) {
+            const cursor = document.createElement('div');
+            cursor.classList.add('cursor');
+            document.body.appendChild(cursor);
+            document.addEventListener('mousemove', e => {
+                cursor.style.left = e.pageX + 'px';
+                cursor.style.top = e.pageY + 'px';
+            });
+        }
+    </script>
 </body>
+
 </html>
