@@ -93,13 +93,11 @@
   }
 
   function fadeOutAndCelebrate() {
-    // Hide Pochacco image, input field, and submit button
     mainImage.style.display = 'none';
     mainMessage.style.display = 'none';
     inputContainer.style.display = 'none';
 
     setTimeout(() => {
-      // Center container for image and message
       const container = document.createElement('div');
       container.style.display = 'flex';
       container.style.flexDirection = 'column';
@@ -107,17 +105,12 @@
       container.style.justifyContent = 'center';
       container.style.height = '100vh';
 
-      // Add Genny image above birthday message (max width 200px, maintain aspect ratio, no bottom margin)
       const gennyImages = ['resources/images/genny1.png', 'resources/images/genny2.png', 'resources/images/genny3.png'];
       const gennyImg = document.createElement('img');
       gennyImg.src = gennyImages[0];
-      gennyImg.style.width = '200px';
-      gennyImg.style.height = 'auto';
-      gennyImg.style.borderRadius = '10px';
       gennyImg.style.marginBottom = '0';
       container.appendChild(gennyImg);
 
-      // Alternate images every 0.3 seconds
       let currentIndex = 0;
       setInterval(() => {
         currentIndex = (currentIndex + 1) % gennyImages.length;
@@ -133,7 +126,24 @@
       output.appendChild(container);
       output.style.opacity = 1;
 
-      // Add mute/unmute button for music (bottom-right)
+      function startShake() {
+        let start = Date.now();
+        function shake() {
+          let elapsed = Date.now() - start;
+          if (elapsed > 1000) {
+            birthdayMessage.style.transform = 'rotate(0deg) translateX(0px)';
+            return;
+          }
+          let angle = 20 * Math.sin((elapsed / 1000) * Math.PI * 6);
+          let translateX = 10 * Math.sin((elapsed / 1000) * Math.PI * 12);
+          birthdayMessage.style.transform = `rotate(${angle}deg) translateX(${translateX}px)`;
+          requestAnimationFrame(shake);
+        }
+        shake();
+      }
+      startShake();
+      setInterval(startShake, 5000);
+
       const audio = document.createElement('audio');
       audio.src = 'resources/music/birthday_song.mp3';
       audio.loop = true;
