@@ -164,24 +164,41 @@ html, body {
   z-index: 21;
 }
 
-/* Notification Badge */
 .notification-badge {
   position: absolute;
-  top: 8px;
-  right: 8px;
-  width: 28px;
-  height: 28px;
-  background-color: #E63946;
+  top: 10px;
+  right: 10px;
+  width: 40px;
+  height: 40px;
+  background-color: #E63946; /* red circle */
+  color: white;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1rem;
-  color: white;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+  font-size: 1.75rem;
   cursor: pointer;
-  z-index: 22;
+  z-index: 20;
+  animation: badge-pulse 1.5s infinite;
 }
+
+/* Pulse / bounce animation */
+@keyframes badge-pulse {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+  }
+  25% {
+    transform: translateY(-5px) scale(1.1);
+  }
+  50% {
+    transform: translateY(0) scale(1);
+  }
+  75% {
+    transform: translateY(-2px) scale(1.05);
+  }
+}
+
+
 
 /* Birthday message inside polaroid */
 .birthday-message {
