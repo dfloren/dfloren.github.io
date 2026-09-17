@@ -300,7 +300,7 @@ function showSetupStep() {
       ['3', 'Best of 3'],
       ['5', 'Best of 5'],
       ['7', 'Best of 7']
-    ], setup.bestOf);
+    ], setup.bestOf || 3);
   } else {
     elements.setupOptions.replaceChildren();
   }
@@ -371,11 +371,14 @@ function completeOrientationStep() {
 }
 
 function handleOrientationChange() {
-  const isLandscape = window.innerWidth > window.innerHeight ||
-    window.matchMedia('(orientation: landscape)').matches;
-  if (isMobileDevice() && isLandscape) {
+  if (isMobileDevice() && isLandscapeOrientation()) {
     completeOrientationStep();
   }
+}
+
+function isLandscapeOrientation() {
+  return window.innerWidth > window.innerHeight ||
+    window.matchMedia('(orientation: landscape)').matches;
 }
 
 function startMatch(firstServer) {
@@ -424,7 +427,11 @@ function startNewMatch() {
   setup.pointsToWin = 21;
   setup.bestOf = 3;
   history.length = 0;
-  showSetupStep();
+  if (isMobileDevice() && isLandscapeOrientation()) {
+    completeOrientationStep();
+  } else {
+    showSetupStep();
+  }
 }
 
 function undoLastPoint() {
@@ -491,12 +498,13 @@ elements.setupOptions.addEventListener('click', (event) => {
     return;
   }
 
+  const configStep = isMobileDevice() ? setup.step - 1 : setup.step;
   elements.setupOptions.querySelectorAll('.setup-option').forEach((button) => {
     button.setAttribute('aria-pressed', String(button === option));
   });
-  if (setup.step === 3) {
+  if (configStep === 3) {
     setup.pointsToWin = Number(option.dataset.value);
-  } else if (setup.step === 4) {
+  } else if (configStep === 4) {
     setup.bestOf = Number(option.dataset.value);
   }
   elements.setupNext.disabled = false;

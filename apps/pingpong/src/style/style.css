@@ -223,11 +223,17 @@ button:focus-visible {
 
 .side-switch-button {
   background: #f8d477;
-  font-size: 1.5rem;
+  align-items: center;
+  display: inline-flex;
+  justify-content: center;
   justify-self: center;
-  line-height: 1;
   min-width: 3rem;
   padding: 0.7rem 0.85rem;
+}
+
+.side-switch-button img {
+  height: 1.5rem;
+  width: 1.5rem;
 }
 
 .setup-form fieldset {
@@ -645,18 +651,30 @@ h1 {
 
 .back-button {
   background: #f8d477;
-  font-size: 1.5rem;
-  line-height: 1;
+  align-items: center;
+  display: inline-flex;
+  justify-content: center;
   min-width: 3rem;
   padding: 0.7rem 0.85rem;
 }
 
+.back-button img {
+  height: 1.5rem;
+  width: 1.5rem;
+}
+
 .serve-switch-button {
   background: #7ee7d2;
-  font-size: 1.5rem;
-  line-height: 1;
+  align-items: center;
+  display: inline-flex;
+  justify-content: center;
   min-width: 3rem;
   padding: 0.7rem 0.85rem;
+}
+
+.serve-switch-button img {
+  height: 1.5rem;
+  width: 1.5rem;
 }
 
 button:disabled {
