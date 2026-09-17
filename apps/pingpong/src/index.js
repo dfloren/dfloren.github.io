@@ -371,7 +371,9 @@ function completeOrientationStep() {
 }
 
 function handleOrientationChange() {
-  if (isMobileDevice() && window.matchMedia('(orientation: landscape)').matches) {
+  const isLandscape = window.innerWidth > window.innerHeight ||
+    window.matchMedia('(orientation: landscape)').matches;
+  if (isMobileDevice() && isLandscape) {
     completeOrientationStep();
   }
 }
@@ -501,6 +503,8 @@ elements.setupOptions.addEventListener('click', (event) => {
 });
 elements.sideSwitchButton.addEventListener('click', switchSetupSides);
 window.addEventListener('orientationchange', handleOrientationChange);
+window.addEventListener('resize', handleOrientationChange);
+screen.orientation?.addEventListener('change', handleOrientationChange);
 elements.resetButton.addEventListener('click', resetMatch);
 elements.newMatchButton.addEventListener('click', startNewMatch);
 elements.backButton.addEventListener('click', undoLastPoint);
