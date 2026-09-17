@@ -406,6 +406,7 @@ h1 {
   overflow: hidden;
   padding: 0;
   perspective: 30rem;
+  touch-action: manipulation;
   transition: none;
   width: min(5.4ch, 52%);
 }

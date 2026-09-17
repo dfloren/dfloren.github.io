@@ -446,6 +446,7 @@ function undoLastPoint() {
 
 elements.scores.forEach((score, index) => {
   score.addEventListener('click', () => awardPoint(index));
+  score.addEventListener('dblclick', (event) => event.preventDefault());
 });
 elements.setupNext.addEventListener('click', () => {
   if (isMobileDevice() && setup.step === 0) {
