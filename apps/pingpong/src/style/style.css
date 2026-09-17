@@ -86,6 +86,35 @@ button:focus-visible {
   display: none;
 }
 
+.setup-skip-button {
+  background: transparent;
+  border: 1px solid #59658c;
+  color: #e7ecff;
+  margin-left: auto;
+}
+
+.setup-skip-button[hidden] {
+  display: none;
+}
+
+.orientation-prompt {
+  align-items: center;
+  color: #e7ecff;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  text-align: center;
+}
+
+.orientation-prompt p {
+  margin: 0;
+}
+
+.orientation-icon {
+  color: #7ee7d2;
+  font-size: 3rem;
+}
+
 .name-fields,
 .setup-options {
   display: grid;

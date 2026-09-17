@@ -19,6 +19,10 @@
         <label id="setup-input-label" for="setup-input"></label>
         <input id="setup-input" type="text" maxlength="30">
         <div id="setup-options" class="setup-options" role="group"></div>
+        <div id="orientation-prompt" class="orientation-prompt" hidden>
+          <span class="orientation-icon" aria-hidden="true">&#8635;</span>
+          <p>Turn your device horizontal for the best scoreboard view.</p>
+        </div>
         <div id="side-diagram" class="side-diagram" hidden>
           <div class="side-player side-player-one" id="side-player-one"></div>
           <div class="table-top-view" aria-label="Top view of a ping pong table">
@@ -32,6 +36,7 @@
         <div id="serve-choice" class="serve-choice"></div>
         <div class="setup-navigation">
           <button class="setup-back-button" id="setup-back" type="button" hidden>Back</button>
+          <button class="setup-skip-button" id="setup-skip" type="button" hidden>Skip</button>
           <button class="start-button" id="setup-next" type="button">Continue</button>
         </div>
       </section>
