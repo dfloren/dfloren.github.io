@@ -1,0 +1,471 @@
+const state = {
+  players: ['Player 1', 'Player 2'],
+  pointsToWin: 21,
+  bestOf: 3,
+  scores: [0, 0],
+  sets: [0, 0],
+  gameNumber: 1,
+  firstServer: 0,
+  sides: [0, 1],
+  matchOver: false,
+  summaries: []
+};
+const history = [];
+
+const setup = {
+  step: 0,
+  players: ['Bob', 'Alice'],
+  visitedPlayers: [false, false],
+  playerOneSide: 0,
+  pointsToWin: 21,
+  bestOf: 3
+};
+
+const renderedScores = [null, null];
+const renderedSets = [null, null];
+
+const elements = {
+  setupPage: document.querySelector('#setup-page'),
+  setupStepLabel: document.querySelector('#setup-step-label'),
+  setupInputLabel: document.querySelector('#setup-input-label'),
+  setupInput: document.querySelector('#setup-input'),
+  setupOptions: document.querySelector('#setup-options'),
+  sideDiagram: document.querySelector('#side-diagram'),
+  sidePlayerOne: document.querySelector('#side-player-one'),
+  sidePlayerTwo: document.querySelector('#side-player-two'),
+  sideSwitchButton: document.querySelector('#side-switch-button'),
+  serveChoice: document.querySelector('#serve-choice'),
+  setupBack: document.querySelector('#setup-back'),
+  setupNext: document.querySelector('#setup-next'),
+  scoreboard: document.querySelector('#scoreboard'),
+  playersContainer: document.querySelector('#players'),
+  serveSelection: document.querySelector('#serve-selection'),
+  serveSelectionButtons: document.querySelector('#serve-selection-buttons'),
+  matchFormat: document.querySelector('#match-format'),
+  scores: [
+    document.querySelector('#player-one-score'),
+    document.querySelector('#player-two-score')
+  ],
+  sets: [
+    document.querySelector('#player-one-sets'),
+    document.querySelector('#player-two-sets')
+  ],
+  cards: [
+    document.querySelector('#player-one-card'),
+    document.querySelector('#player-two-card')
+  ],
+  labels: Array.from(document.querySelectorAll('.player-label-text')),
+  serveDots: Array.from(document.querySelectorAll('.serve-dot')),
+  matchStatus: document.querySelector('#match-status'),
+  gameStatus: document.querySelector('#game-status'),
+  matchControls: document.querySelector('.match-controls'),
+  resetButton: document.querySelector('#reset-button'),
+  newMatchButton: document.querySelector('#new-match-button'),
+  backButton: document.querySelector('#back-button'),
+  serveSwitchButton: document.querySelector('#serve-switch-button'),
+  controlTooltips: Array.from(document.querySelectorAll('.control-with-tooltip')),
+  summaryList: document.querySelector('#set-summary-list')
+};
+
+function getServingPlayer() {
+  const totalPoints = state.scores[0] + state.scores[1];
+  const isDeuce = state.scores[0] >= state.pointsToWin - 1 &&
+    state.scores[1] >= state.pointsToWin - 1;
+  const serveInterval = state.pointsToWin === 11 ? 2 : 5;
+
+  if (isDeuce) {
+    return (state.firstServer + totalPoints) % 2;
+  }
+
+  return (state.firstServer + Math.floor(totalPoints / serveInterval)) % 2;
+}
+
+function getGameWinner() {
+  const scoreDifference = Math.abs(state.scores[0] - state.scores[1]);
+
+  if (Math.max(...state.scores) >= state.pointsToWin && scoreDifference >= 2) {
+    return state.scores[0] > state.scores[1] ? 0 : 1;
+  }
+
+  return null;
+}
+
+function renderSummary() {
+  elements.summaryList.replaceChildren();
+
+  if (state.summaries.length === 0) {
+    const emptySummary = document.createElement('p');
+    emptySummary.className = 'empty-summary';
+    emptySummary.textContent = 'Completed sets will appear here.';
+    elements.summaryList.append(emptySummary);
+    return;
+  }
+
+  state.summaries.forEach((summary) => {
+    const summaryElement = document.createElement('p');
+    summaryElement.className = 'set-summary';
+    summaryElement.textContent =
+      `Game ${summary.number}: ${state.players[summary.winner]} won ` +
+      `${summary.scores[0]}–${summary.scores[1]}`;
+    elements.summaryList.append(summaryElement);
+  });
+}
+
+function render() {
+  const servingPlayer = getServingPlayer();
+  const winner = getGameWinner();
+  const isDeuce = state.scores[0] >= state.pointsToWin - 1 &&
+    state.scores[1] >= state.pointsToWin - 1 && !winner;
+
+  elements.matchFormat.textContent = `Best of ${state.bestOf}`;
+  elements.labels.forEach((element, index) => {
+    element.textContent = state.players[index];
+  });
+  elements.scores.forEach((element, index) => {
+    const value = state.scores[index];
+    const formattedValue = String(value).padStart(2, '0');
+    const previousValue = renderedScores[index] === null
+      ? null
+      : String(renderedScores[index]).padStart(2, '0');
+    element.setAttribute('aria-label', formattedValue);
+    element.querySelectorAll('.score-tile').forEach((tile, digitIndex) => {
+      if (previousValue !== null && previousValue[digitIndex] !== formattedValue[digitIndex]) {
+        tile.classList.remove('score-flip');
+        void tile.offsetWidth;
+        tile.classList.add('score-flip');
+        window.setTimeout(() => {
+          tile.classList.remove('score-flip');
+        }, 500);
+      }
+      tile.querySelectorAll('.score-digit').forEach((digit) => {
+        digit.textContent = formattedValue[digitIndex];
+      });
+    });
+    renderedScores[index] = state.scores[index];
+  });
+  elements.sets.forEach((element, index) => {
+    const value = state.sets[index];
+    if (renderedSets[index] !== null && renderedSets[index] !== value) {
+      element.classList.remove('score-flip');
+      void element.offsetWidth;
+      element.classList.add('score-flip');
+      window.setTimeout(() => element.classList.remove('score-flip'), 500);
+    }
+    element.setAttribute('aria-label', `${state.players[index]} sets won ${value}`);
+    element.querySelectorAll('.set-digit').forEach((digit) => {
+      digit.textContent = value;
+    });
+    renderedSets[index] = value;
+  });
+  elements.cards.forEach((element, index) => {
+    element.style.order = state.sides[index];
+    element.classList.toggle('side-left', state.sides[index] === 0);
+    element.classList.toggle('side-right', state.sides[index] === 1);
+    element.setAttribute('aria-label', `${state.players[index]} score ${String(state.scores[index]).padStart(2, '0')}`);
+    elements.scores[index].disabled = state.matchOver || winner !== null;
+  });
+  elements.serveDots.forEach((element, index) => {
+    element.classList.toggle('active', index === servingPlayer && !state.matchOver);
+    element.setAttribute('aria-hidden', index !== servingPlayer || state.matchOver);
+  });
+  elements.backButton.disabled = history.length === 0;
+  elements.serveSwitchButton.disabled = state.matchOver;
+  renderSummary();
+
+  if (state.matchOver) {
+    const winnerIndex = state.sets[0] > state.sets[1] ? 0 : 1;
+    elements.matchStatus.textContent = `${state.players[winnerIndex]} wins the match`;
+    elements.gameStatus.textContent = 'Start a new match to play again';
+  } else if (winner !== null) {
+    elements.matchStatus.textContent = `Game ${state.gameNumber}`;
+    elements.gameStatus.textContent = `${state.players[winner]} wins the game`;
+  } else {
+    elements.matchStatus.textContent = `Game ${state.gameNumber}`;
+    elements.gameStatus.textContent = isDeuce
+      ? 'Deuce: serve alternates every point, win by 2'
+      : `First to ${state.pointsToWin} points, win by 2`;
+  }
+}
+
+function saveState() {
+  history.push({
+    players: [...state.players],
+    pointsToWin: state.pointsToWin,
+    bestOf: state.bestOf,
+    scores: [...state.scores],
+    sets: [...state.sets],
+    gameNumber: state.gameNumber,
+    firstServer: state.firstServer,
+    sides: [...state.sides],
+    matchOver: state.matchOver,
+    summaries: state.summaries.map((summary) => ({
+      number: summary.number,
+      scores: [...summary.scores],
+      winner: summary.winner
+    }))
+  });
+}
+
+function awardPoint(playerIndex) {
+  if (state.matchOver || getGameWinner() !== null) {
+    return;
+  }
+
+  saveState();
+  state.scores[playerIndex] += 1;
+  const winner = getGameWinner();
+
+  if (winner !== null) {
+    state.summaries.push({
+      number: state.gameNumber,
+      scores: [...state.scores],
+      winner
+    });
+    state.sets[winner] += 1;
+    if (state.sets[winner] >= Math.ceil(state.bestOf / 2)) {
+      state.matchOver = true;
+    } else {
+      state.scores = [0, 0];
+      state.gameNumber += 1;
+      state.firstServer = state.firstServer === 0 ? 1 : 0;
+      state.sides.reverse();
+    }
+  }
+
+  render();
+}
+
+function switchFirstServer() {
+  state.firstServer = state.firstServer === 0 ? 1 : 0;
+  history.forEach((entry) => {
+    if (!entry.type && entry.gameNumber === state.gameNumber) {
+      entry.firstServer = state.firstServer;
+    }
+  });
+  render();
+}
+
+function showSetupStep() {
+  const labels = [
+    "Player 1's name",
+    "Player 2's name",
+    `${setup.players[0] || 'Player 1'}'s side`,
+    'Game points',
+    'Match format'
+  ];
+  elements.setupStepLabel.textContent = `Step ${setup.step + 1} of ${labels.length}`;
+  elements.setupInputLabel.textContent = labels[setup.step];
+  elements.setupInput.setAttribute('aria-label', labels[setup.step]);
+  elements.setupInput.placeholder = setup.step === 0 ? 'Bob' : 'Alice';
+  elements.setupInput.value = setup.step < 2 && setup.visitedPlayers[setup.step]
+    ? setup.players[setup.step]
+    : '';
+  elements.setupInput.hidden = setup.step > 1;
+  elements.setupInputLabel.hidden = false;
+  elements.setupOptions.hidden = setup.step < 3 || setup.step > 4;
+  elements.sideDiagram.hidden = setup.step !== 2;
+  elements.sideSwitchButton.hidden = setup.step !== 2;
+  elements.serveChoice.hidden = true;
+  elements.setupNext.hidden = false;
+  elements.setupBack.hidden = setup.step === 0;
+
+  if (setup.step === 2) {
+    elements.setupInputLabel.textContent = 'Choose player sides';
+    elements.sidePlayerOne.textContent = setup.players[0];
+    elements.sidePlayerTwo.textContent = setup.players[1];
+    elements.sidePlayerOne.style.gridColumn = setup.playerOneSide === 0 ? '1 / 2' : '3 / 4';
+    elements.sidePlayerTwo.style.gridColumn = setup.playerOneSide === 0 ? '3 / 4' : '1 / 2';
+  } else if (setup.step === 3) {
+    renderSetupOptions([
+      ['11', '11 points'],
+      ['21', '21 points']
+    ], setup.pointsToWin);
+  } else if (setup.step === 4) {
+    renderSetupOptions([
+      ['3', 'Best of 3'],
+      ['5', 'Best of 5'],
+      ['7', 'Best of 7']
+    ], setup.bestOf);
+  } else {
+    elements.setupOptions.replaceChildren();
+  }
+
+  elements.setupNext.disabled = setup.step > 1
+    ? (setup.step === 2 ? false : !elements.setupOptions.querySelector('[aria-pressed="true"]'))
+    : false;
+}
+
+function renderSetupOptions(options, selectedValue) {
+  elements.setupOptions.replaceChildren(...options.map(([value, label]) => {
+    const button = document.createElement('button');
+    button.className = 'setup-option';
+    button.type = 'button';
+    button.textContent = label;
+    button.dataset.value = value;
+    button.setAttribute('aria-pressed', String(String(selectedValue) === value));
+    return button;
+  }));
+}
+
+function switchSetupSides() {
+  setup.playerOneSide = setup.playerOneSide === 0 ? 1 : 0;
+  showSetupStep();
+}
+
+function goToPreviousSetupStep() {
+  if (setup.step === 0) {
+    return;
+  }
+
+  setup.step -= 1;
+  showSetupStep();
+}
+
+function showServeSelection() {
+  elements.setupPage.hidden = true;
+  elements.scoreboard.hidden = false;
+  elements.playersContainer.hidden = true;
+  elements.serveSelection.hidden = false;
+  elements.gameStatus.hidden = true;
+  elements.backButton.hidden = true;
+  elements.serveSwitchButton.hidden = true;
+  elements.controlTooltips.forEach((tooltip) => {
+    tooltip.setAttribute('hidden', '');
+  });
+  elements.matchControls.hidden = true;
+  elements.matchFormat.textContent = `Best of ${setup.bestOf}`;
+  elements.matchStatus.textContent = 'Choose the first server';
+  elements.serveSelectionButtons.replaceChildren();
+
+  setup.players.forEach((player, index) => {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.textContent = `${player} serves first`;
+    button.addEventListener('click', () => startMatch(index));
+    elements.serveSelectionButtons.append(button);
+  });
+}
+
+function startMatch(firstServer) {
+  state.players = [...setup.players];
+  state.pointsToWin = setup.pointsToWin;
+  state.bestOf = setup.bestOf;
+  state.scores = [0, 0];
+  state.sets = [0, 0];
+  state.gameNumber = 1;
+  state.firstServer = firstServer;
+  state.sides = [setup.playerOneSide, setup.playerOneSide === 0 ? 1 : 0];
+  state.matchOver = false;
+  state.summaries = [];
+  elements.playersContainer.hidden = false;
+  elements.serveSelection.hidden = true;
+  elements.gameStatus.hidden = false;
+  elements.backButton.hidden = false;
+  elements.serveSwitchButton.hidden = false;
+  elements.controlTooltips.forEach((tooltip) => {
+    tooltip.removeAttribute('hidden');
+  });
+  elements.matchControls.hidden = false;
+  render();
+}
+
+function resetMatch() {
+  state.scores = [0, 0];
+  state.sets = [0, 0];
+  state.gameNumber = 1;
+  state.firstServer = 0;
+  state.sides = [setup.playerOneSide, setup.playerOneSide === 0 ? 1 : 0];
+  state.matchOver = false;
+  state.summaries = [];
+  history.length = 0;
+  renderSummary();
+  showServeSelection();
+}
+
+function startNewMatch() {
+  elements.scoreboard.hidden = true;
+  elements.setupPage.hidden = false;
+  setup.step = 0;
+  setup.players = ['Bob', 'Alice'];
+  setup.visitedPlayers = [false, false];
+  setup.playerOneSide = 0;
+  setup.pointsToWin = 21;
+  setup.bestOf = 3;
+  history.length = 0;
+  showSetupStep();
+}
+
+function undoLastPoint() {
+  const previousState = history.pop();
+  if (!previousState) {
+    return;
+  }
+
+  Object.assign(state, previousState);
+  render();
+}
+
+elements.scores.forEach((score, index) => {
+  score.addEventListener('click', () => awardPoint(index));
+});
+elements.setupNext.addEventListener('click', () => {
+  const selectedOption = elements.setupOptions.querySelector('[aria-pressed="true"]');
+  const value = setup.step === 2
+    ? 'side-selected'
+    : elements.setupOptions.hidden
+    ? elements.setupInput.value.trim()
+    : selectedOption && selectedOption.dataset.value;
+  if (!value && setup.step > 1) {
+    elements.setupInput.focus();
+    return;
+  }
+
+  if (setup.step < 2) {
+    setup.players[setup.step] = value || (setup.step === 0 ? 'Bob' : 'Alice');
+    setup.visitedPlayers[setup.step] = true;
+  } else if (setup.step === 3) {
+    setup.pointsToWin = Number(value);
+  } else if (setup.step === 4) {
+    setup.bestOf = Number(value);
+  }
+  setup.step += 1;
+  elements.setupInput.value = '';
+  if (setup.step === 5) {
+    showServeSelection();
+  } else {
+    showSetupStep();
+  }
+});
+elements.setupBack.addEventListener('click', goToPreviousSetupStep);
+elements.setupInput.addEventListener('input', () => {
+  elements.setupNext.disabled = false;
+});
+elements.setupInput.addEventListener('keydown', (event) => {
+  if (event.key === 'Enter' && !elements.setupNext.disabled) {
+    event.preventDefault();
+    elements.setupNext.click();
+  }
+});
+elements.setupOptions.addEventListener('click', (event) => {
+  const option = event.target.closest('.setup-option');
+  if (!option) {
+    return;
+  }
+
+  elements.setupOptions.querySelectorAll('.setup-option').forEach((button) => {
+    button.setAttribute('aria-pressed', String(button === option));
+  });
+  if (setup.step === 3) {
+    setup.pointsToWin = Number(option.dataset.value);
+  } else if (setup.step === 4) {
+    setup.bestOf = Number(option.dataset.value);
+  }
+  elements.setupNext.disabled = false;
+});
+elements.sideSwitchButton.addEventListener('click', switchSetupSides);
+elements.resetButton.addEventListener('click', resetMatch);
+elements.newMatchButton.addEventListener('click', startNewMatch);
+elements.backButton.addEventListener('click', undoLastPoint);
+elements.serveSwitchButton.addEventListener('click', switchFirstServer);
+
+showSetupStep();
