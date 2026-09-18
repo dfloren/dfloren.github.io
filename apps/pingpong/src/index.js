@@ -79,6 +79,7 @@ const elements = {
   gameSummaryTitle: document.querySelector('#game-summary-title'),
   gameSummaryHeadline: document.querySelector('#game-summary-headline'),
   gameSummaryList: document.querySelector('#game-summary-list'),
+  gameSummaryClose: document.querySelector('#game-summary-close'),
   gameSummaryContinue: document.querySelector('#game-summary-continue'),
   gameSummaryReset: document.querySelector('#game-summary-reset'),
   gameSummaryNewMatch: document.querySelector('#game-summary-new-match')
@@ -137,10 +138,19 @@ function showGameSummary() {
       `${summary.scores[0]}–${summary.scores[1]}`;
     return summaryElement;
   }));
+  elements.gameSummaryClose.hidden = !state.matchOver;
   elements.gameSummaryContinue.hidden = state.matchOver;
   elements.gameSummaryReset.hidden = !state.matchOver;
   elements.gameSummaryNewMatch.hidden = !state.matchOver;
   elements.gameSummaryOverlay.hidden = false;
+}
+
+function closeGameSummary() {
+  if (!state.matchOver) {
+    return;
+  }
+
+  hideGameSummary();
 }
 
 function continueToNextGame() {
@@ -220,7 +230,7 @@ function render() {
 
   if (winner !== null || state.matchOver) {
     showGameSummary();
-    elements.matchResetControls.hidden = true;
+    elements.matchResetControls.hidden = winner !== null && !state.matchOver;
   } else {
     hideGameSummary();
     elements.matchResetControls.hidden = false;
@@ -572,6 +582,7 @@ elements.resetButton.addEventListener('click', resetMatch);
 elements.newMatchButton.addEventListener('click', startNewMatch);
 elements.gameSummaryReset.addEventListener('click', resetMatch);
 elements.gameSummaryNewMatch.addEventListener('click', startNewMatch);
+elements.gameSummaryClose.addEventListener('click', closeGameSummary);
 elements.gameSummaryContinue.addEventListener('click', continueToNextGame);
 elements.backButton.addEventListener('click', undoLastPoint);
 elements.serveSwitchButton.addEventListener('click', switchFirstServer);

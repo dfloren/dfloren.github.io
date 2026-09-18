@@ -702,8 +702,20 @@ h1 {
   gap: 1rem;
   max-width: 28rem;
   padding: 2rem;
+  position: relative;
   text-align: left;
   width: min(100%, 28rem);
+}
+
+.game-summary-close {
+  background: transparent;
+  color: #e7ecff;
+  font-size: 1.25rem;
+  line-height: 1;
+  padding: 0.35rem 0.5rem;
+  position: absolute;
+  right: 0.75rem;
+  top: 0.75rem;
 }
 
 .game-summary-dialog h2 {
@@ -784,9 +796,37 @@ button:disabled {
   .setup-options {
     grid-template-columns: 1fr;
   }
+}
 
-  .players {
-    grid-template-columns: 1fr;
+@media (max-width: 600px) and (orientation: portrait) {
+  .scoreboard {
+    padding: 1.5rem 0.5rem;
   }
 
+  .scoreboard h1 {
+    font-size: clamp(2rem, 10vw, 3rem);
+  }
+
+  .players {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .player-label {
+    font-size: 0.75rem;
+    letter-spacing: 0.06em;
+  }
+
+  .player-score-line .score {
+    width: 100%;
+  }
+
+  .score {
+    font-size: clamp(3rem, 16vw, 5rem);
+    height: clamp(5rem, 26vw, 8rem);
+  }
+
+  .set-score {
+    font-size: clamp(1.5rem, 6vw, 2.5rem);
+    height: clamp(2.5rem, 13vw, 4rem);
+  }
 }
