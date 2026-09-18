@@ -126,7 +126,6 @@ function renderSummaryList(listElement) {
 }
 
 function updateScoreboardSummary() {
-  elements.scoreboardSummary.hidden = state.summaries.length === 0;
   renderSummaryList(elements.scoreboardSummaryList);
 }
 
