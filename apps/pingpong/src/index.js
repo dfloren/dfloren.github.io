@@ -70,6 +70,8 @@ const elements = {
   gameStatus: document.querySelector('#game-status'),
   matchControls: document.querySelector('.match-controls'),
   matchResetControls: document.querySelector('#match-reset-controls'),
+  scoreboardSummary: document.querySelector('#scoreboard-summary'),
+  scoreboardSummaryList: document.querySelector('#scoreboard-summary-list'),
   resetButton: document.querySelector('#reset-button'),
   newMatchButton: document.querySelector('#new-match-button'),
   backButton: document.querySelector('#back-button'),
@@ -112,6 +114,22 @@ function hideGameSummary() {
   elements.gameSummaryOverlay.hidden = true;
 }
 
+function renderSummaryList(listElement) {
+  listElement.replaceChildren(...state.summaries.map((summary) => {
+    const summaryElement = document.createElement('p');
+    summaryElement.className = 'set-summary';
+    summaryElement.textContent =
+      `Game ${summary.number}: ${state.players[summary.winner]} won ` +
+      `${summary.scores[0]}–${summary.scores[1]}`;
+    return summaryElement;
+  }));
+}
+
+function updateScoreboardSummary() {
+  elements.scoreboardSummary.hidden = state.summaries.length === 0;
+  renderSummaryList(elements.scoreboardSummaryList);
+}
+
 function showGameSummary() {
   const latest = state.summaries[state.summaries.length - 1];
   if (!latest) {
@@ -130,14 +148,7 @@ function showGameSummary() {
       `${state.players[latest.winner]} wins the game`;
   }
 
-  elements.gameSummaryList.replaceChildren(...state.summaries.map((summary) => {
-    const summaryElement = document.createElement('p');
-    summaryElement.className = 'set-summary';
-    summaryElement.textContent =
-      `Game ${summary.number}: ${state.players[summary.winner]} won ` +
-      `${summary.scores[0]}–${summary.scores[1]}`;
-    return summaryElement;
-  }));
+  renderSummaryList(elements.gameSummaryList);
   elements.gameSummaryClose.hidden = !state.matchOver;
   elements.gameSummaryContinue.hidden = state.matchOver;
   elements.gameSummaryReset.hidden = !state.matchOver;
@@ -227,6 +238,7 @@ function render() {
   });
   elements.backButton.disabled = history.length === 0;
   elements.serveSwitchButton.disabled = state.matchOver;
+  updateScoreboardSummary();
 
   if (winner !== null || state.matchOver) {
     showGameSummary();
