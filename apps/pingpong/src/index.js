@@ -37,8 +37,11 @@ const elements = {
   setupOptions: document.querySelector('#setup-options'),
   orientationPrompt: document.querySelector('#orientation-prompt'),
   sideDiagram: document.querySelector('#side-diagram'),
+  tableTopView: document.querySelector('.table-top-view'),
   sidePlayerOne: document.querySelector('#side-player-one'),
   sidePlayerTwo: document.querySelector('#side-player-two'),
+  sidePlayerOneName: document.querySelector('#side-player-one-name'),
+  sidePlayerTwoName: document.querySelector('#side-player-two-name'),
   sideSwitchButton: document.querySelector('#side-switch-button'),
   serveChoice: document.querySelector('#serve-choice'),
   setupBack: document.querySelector('#setup-back'),
@@ -66,12 +69,19 @@ const elements = {
   matchStatus: document.querySelector('#match-status'),
   gameStatus: document.querySelector('#game-status'),
   matchControls: document.querySelector('.match-controls'),
+  matchResetControls: document.querySelector('#match-reset-controls'),
   resetButton: document.querySelector('#reset-button'),
   newMatchButton: document.querySelector('#new-match-button'),
   backButton: document.querySelector('#back-button'),
   serveSwitchButton: document.querySelector('#serve-switch-button'),
   controlTooltips: Array.from(document.querySelectorAll('.control-with-tooltip')),
-  summaryList: document.querySelector('#set-summary-list')
+  gameSummaryOverlay: document.querySelector('#game-summary-overlay'),
+  gameSummaryTitle: document.querySelector('#game-summary-title'),
+  gameSummaryHeadline: document.querySelector('#game-summary-headline'),
+  gameSummaryList: document.querySelector('#game-summary-list'),
+  gameSummaryContinue: document.querySelector('#game-summary-continue'),
+  gameSummaryReset: document.querySelector('#game-summary-reset'),
+  gameSummaryNewMatch: document.querySelector('#game-summary-new-match')
 };
 
 function getServingPlayer() {
@@ -97,25 +107,55 @@ function getGameWinner() {
   return null;
 }
 
-function renderSummary() {
-  elements.summaryList.replaceChildren();
+function hideGameSummary() {
+  elements.gameSummaryOverlay.hidden = true;
+}
 
-  if (state.summaries.length === 0) {
-    const emptySummary = document.createElement('p');
-    emptySummary.className = 'empty-summary';
-    emptySummary.textContent = 'Completed sets will appear here.';
-    elements.summaryList.append(emptySummary);
+function showGameSummary() {
+  const latest = state.summaries[state.summaries.length - 1];
+  if (!latest) {
+    hideGameSummary();
     return;
   }
 
-  state.summaries.forEach((summary) => {
+  if (state.matchOver) {
+    const matchWinner = state.sets[0] > state.sets[1] ? 0 : 1;
+    elements.gameSummaryTitle.textContent = 'Match over';
+    elements.gameSummaryHeadline.textContent =
+      `${state.players[matchWinner]} wins the match`;
+  } else {
+    elements.gameSummaryTitle.textContent = `Game ${latest.number}`;
+    elements.gameSummaryHeadline.textContent =
+      `${state.players[latest.winner]} wins the game`;
+  }
+
+  elements.gameSummaryList.replaceChildren(...state.summaries.map((summary) => {
     const summaryElement = document.createElement('p');
     summaryElement.className = 'set-summary';
     summaryElement.textContent =
       `Game ${summary.number}: ${state.players[summary.winner]} won ` +
       `${summary.scores[0]}–${summary.scores[1]}`;
-    elements.summaryList.append(summaryElement);
-  });
+    return summaryElement;
+  }));
+  elements.gameSummaryContinue.hidden = state.matchOver;
+  elements.gameSummaryReset.hidden = !state.matchOver;
+  elements.gameSummaryNewMatch.hidden = !state.matchOver;
+  elements.gameSummaryOverlay.hidden = false;
+}
+
+function continueToNextGame() {
+  if (state.matchOver || getGameWinner() === null) {
+    return;
+  }
+
+  hideGameSummary();
+  state.scores = [0, 0];
+  state.gameNumber += 1;
+  state.firstServer = state.firstServer === 0 ? 1 : 0;
+  state.sides.reverse();
+  renderedScores[0] = null;
+  renderedScores[1] = null;
+  render();
 }
 
 function render() {
@@ -177,7 +217,14 @@ function render() {
   });
   elements.backButton.disabled = history.length === 0;
   elements.serveSwitchButton.disabled = state.matchOver;
-  renderSummary();
+
+  if (winner !== null || state.matchOver) {
+    showGameSummary();
+    elements.matchResetControls.hidden = true;
+  } else {
+    hideGameSummary();
+    elements.matchResetControls.hidden = false;
+  }
 
   if (state.matchOver) {
     const winnerIndex = state.sets[0] > state.sets[1] ? 0 : 1;
@@ -231,11 +278,6 @@ function awardPoint(playerIndex) {
     state.sets[winner] += 1;
     if (state.sets[winner] >= Math.ceil(state.bestOf / 2)) {
       state.matchOver = true;
-    } else {
-      state.scores = [0, 0];
-      state.gameNumber += 1;
-      state.firstServer = state.firstServer === 0 ? 1 : 0;
-      state.sides.reverse();
     }
   }
 
@@ -250,6 +292,15 @@ function switchFirstServer() {
     }
   });
   render();
+}
+
+function updateSideDiagramLayout() {
+  const portraitMobile = isMobileDevice() && !isLandscapeOrientation();
+  elements.sideDiagram.classList.toggle('side-diagram-portrait', portraitMobile);
+  elements.tableTopView.setAttribute(
+    'aria-label',
+    portraitMobile ? 'Left and right sides' : 'Top view of a ping pong table'
+  );
 }
 
 function showSetupStep() {
@@ -286,10 +337,11 @@ function showSetupStep() {
     elements.setupSkip.hidden = false;
   } else if (configStep === 2) {
     elements.setupInputLabel.textContent = 'Choose player sides';
-    elements.sidePlayerOne.textContent = setup.players[0];
-    elements.sidePlayerTwo.textContent = setup.players[1];
+    elements.sidePlayerOneName.textContent = setup.players[0];
+    elements.sidePlayerTwoName.textContent = setup.players[1];
     elements.sidePlayerOne.style.gridColumn = setup.playerOneSide === 0 ? '1 / 2' : '3 / 4';
     elements.sidePlayerTwo.style.gridColumn = setup.playerOneSide === 0 ? '3 / 4' : '1 / 2';
+    updateSideDiagramLayout();
   } else if (configStep === 3) {
     renderSetupOptions([
       ['11', '11 points'],
@@ -374,6 +426,7 @@ function handleOrientationChange() {
   if (isMobileDevice() && isLandscapeOrientation()) {
     completeOrientationStep();
   }
+  updateSideDiagramLayout();
 }
 
 function isLandscapeOrientation() {
@@ -413,11 +466,12 @@ function resetMatch() {
   state.matchOver = false;
   state.summaries = [];
   history.length = 0;
-  renderSummary();
+  hideGameSummary();
   showServeSelection();
 }
 
 function startNewMatch() {
+  hideGameSummary();
   elements.scoreboard.hidden = true;
   elements.setupPage.hidden = false;
   setup.step = 0;
@@ -516,6 +570,9 @@ window.addEventListener('resize', handleOrientationChange);
 screen.orientation?.addEventListener('change', handleOrientationChange);
 elements.resetButton.addEventListener('click', resetMatch);
 elements.newMatchButton.addEventListener('click', startNewMatch);
+elements.gameSummaryReset.addEventListener('click', resetMatch);
+elements.gameSummaryNewMatch.addEventListener('click', startNewMatch);
+elements.gameSummaryContinue.addEventListener('click', continueToNextGame);
 elements.backButton.addEventListener('click', undoLastPoint);
 elements.serveSwitchButton.addEventListener('click', switchFirstServer);
 

@@ -33,11 +33,19 @@
           <p>Turn your device horizontal for the best scoreboard view.</p>
         </div>
         <div id="side-diagram" class="side-diagram" hidden>
-          <div class="side-player side-player-one" id="side-player-one"></div>
+          <span class="side-edge-label side-edge-left">Left</span>
+          <div class="side-player side-player-one" id="side-player-one">
+            <img class="side-player-icon" src="../resources/paddle_blue.png" alt="">
+            <span class="side-player-name" id="side-player-one-name"></span>
+          </div>
           <div class="table-top-view" aria-label="Top view of a ping pong table">
             <div class="table-net"></div>
           </div>
-          <div class="side-player side-player-two" id="side-player-two"></div>
+          <div class="side-player side-player-two" id="side-player-two">
+            <img class="side-player-icon" src="../resources/paddle_red.png" alt="">
+            <span class="side-player-name" id="side-player-two-name"></span>
+          </div>
+          <span class="side-edge-label side-edge-right">Right</span>
         </div>
         <button class="side-switch-button" id="side-switch-button" type="button" aria-label="Switch player sides" title="Switch player sides" hidden>
           <img src="../resources/swap_sides.png" alt="" aria-hidden="true">
@@ -124,18 +132,24 @@
         </div>
       </div>
 
-      <section class="set-summaries" aria-labelledby="set-summary-title">
-        <h2 id="set-summary-title">Set summaries</h2>
-        <div id="set-summary-list" class="set-summary-list">
-          <p class="empty-summary">Completed sets will appear here.</p>
-        </div>
-      </section>
-
-      <div class="match-reset-controls">
+      <div class="match-reset-controls" id="match-reset-controls">
         <button type="button" class="reset-button" id="reset-button">Reset match</button>
         <button type="button" class="new-match-button" id="new-match-button">New match</button>
       </div>
     </main>
+
+    <div id="game-summary-overlay" class="game-summary-overlay" hidden>
+      <div class="game-summary-dialog" role="dialog" aria-modal="true" aria-labelledby="game-summary-title">
+        <h2 id="game-summary-title">Game summary</h2>
+        <p id="game-summary-headline" class="game-summary-headline"></p>
+        <div id="game-summary-list" class="game-summary-list"></div>
+        <button type="button" class="start-button" id="game-summary-continue" hidden>Next game</button>
+        <div class="match-reset-controls">
+          <button type="button" class="reset-button" id="game-summary-reset">Reset match</button>
+          <button type="button" class="new-match-button" id="game-summary-new-match">New match</button>
+        </div>
+      </div>
+    </div>
 
     <script type="module" src="index.js"></script>
   </body>
